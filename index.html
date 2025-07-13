@@ -3,86 +3,334 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My AI Journey</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Responsible AI and Me</title>
+  <link rel="stylesheet" href="output.css">
 </head>
-<body class="bg-gray-100 font-sans">
-  <!-- Header -->
-  <header class="bg-blue-600 text-white py-6 text-center">
-    <h1 class="text-4xl font-bold">My AI Journey</h1>
-    <p class="mt-2 text-lg">Documenting my adventures with Artificial Intelligence</p>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+  <header class="bg-gray-800 text-gray-100 py-6 text-center">
+    <h1 class="text-4xl font-bold">Responsible AI and Me</h1>
+    <p class="mt-2 text-lg">Exploring AI with curiosity and responsibility</p>
   </header>
 
-  <!-- Main Content -->
   <main class="max-w-4xl mx-auto p-6">
-    <!-- Form to Add Posts -->
-    <section class="mb-8 bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-2xl font-semibold mb-4">Write a New Post</h2>
-      <div class="space-y-4">
-        <input id="post-title" type="text" placeholder="Post Title" class="w-full p-2 border rounded">
-        <textarea id="post-content" placeholder="Share your AI journey..." class="w-full p-2 border rounded h-32"></textarea>
-        <button onclick="addPost()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Post</button>
+    <section class="mb-8 bg-gray-800 p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4">About My Journey</h2>
+      <p class="text-gray-300">
+        Welcome to my blog! I'm passionate about exploring AI responsibly. Here, I share my experiences with AI tools, news on responsible AI, useful prompts, and exciting AI experiments. Join me as I learn and grow in this fascinating field!
+      </p>
+    </section>
+
+    <section class="mb-8 bg-gray-800 p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold mb-4">Search & Filter Posts</h2>
+      <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <input id="search-input" type="text" placeholder="Search by title, content, category, or tags..." class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+        <select id="category-filter" class="w-full md:w-1/3 p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+          <option value="">All Categories</option>
+          <option value="AI Tools">AI Tools</option>
+          <option value="Responsible AI News">Responsible AI News</option>
+          <option value="Useful Prompts">Useful Prompts</option>
+          <option value="AI Experiments">AI Experiments</option>
+        </select>
+        <select id="tag-filter" class="w-full md:w-1/3 p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+          <option value="">All Tags</option>
+          </select>
+        <select id="sort-order" class="w-full md:w-1/3 p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+          <option value="newest">Sort: Newest First</option>
+          <option value="oldest">Sort: Oldest First</option>
+        </select>
       </div>
     </section>
 
-    <!-- Blog Posts -->
-    <section id="posts" class="space-y-6">
-      <!-- Posts will be dynamically added here -->
+    <section class="mb-8 bg-gray-800 p-6 rounded-lg shadow-md">
+      <h2 id="form-title" class="text-2xl font-semibold mb-4">Write a New Post</h2>
+      <div class="space-y-4">
+        <input id="post-title" type="text" placeholder="Post Title" class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+        <select id="post-category" class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+          <option value="AI Tools">AI Tools</option>
+          <option value="Responsible AI News">Responsible AI News</option>
+          <option value="Useful Prompts">Useful Prompts</option>
+          <option value="AI Experiments">AI Experiments</option>
+        </select>
+        <input id="post-tags" type="text" placeholder="Tags (comma-separated, e.g., ChatGPT, Ethics)" class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+        <textarea id="post-content" placeholder="Share your AI journey..." class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded h-32"></textarea>
+        <input id="post-image" type="text" placeholder="Image URL (optional)" class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+        <input id="post-id" type="hidden">
+        <div class="flex space-x-4">
+          <button onclick="addOrUpdatePost()" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700" id="submit-button">Add Post</button>
+          <button onclick="clearForm()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Clear Form</button>
+          <button onclick="clearPosts()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Clear All Posts</button>
+          <button onclick="downloadPosts()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Download Posts</button>
+          <label for="import-posts" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">Import Posts</label>
+          <input id="import-posts" type="file" accept=".json" class="hidden" onchange="importPosts(event)">
+        </div>
+      </div>
     </section>
+
+    <section id="posts" class="space-y-6">
+      </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-white text-center py-4">
-    <p>&copy; 2025 My AI Journey. All rights reserved.</p>
+  <footer class="bg-gray-800 text-gray-100 text-center py-4">
+    <p>© 2025 Responsible AI and Me. All rights reserved.</p>
   </footer>
 
   <script>
-    // Load posts from localStorage when the page loads
-    document.addEventListener('DOMContentLoaded', loadPosts);
+    // Load posts and tags when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPosts();
+      updateTagFilter();
+    });
 
-    function addPost() {
+    // Search, filter, and sort functionality
+    document.getElementById('search-input').addEventListener('input', loadPosts);
+    document.getElementById('category-filter').addEventListener('change', loadPosts);
+    document.getElementById('tag-filter').addEventListener('change', loadPosts);
+    document.getElementById('sort-order').addEventListener('change', loadPosts);
+
+    function addOrUpdatePost() {
       const title = document.getElementById('post-title').value;
+      const category = document.getElementById('post-category').value;
+      const tags = document.getElementById('post-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
       const content = document.getElementById('post-content').value;
+      const image = document.getElementById('post-image').value;
+      const postId = document.getElementById('post-id').value;
+
       if (!title || !content) {
         alert('Please enter both a title and content.');
         return;
       }
 
-      // Create post object
-      const post = {
-        title,
-        content,
-        date: new Date().toLocaleDateString()
-      };
-
-      // Save to localStorage
       let posts = JSON.parse(localStorage.getItem('posts')) || [];
-      posts.push(post);
+
+      if (postId) {
+        // Update existing post
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+          post.title = title;
+          post.category = category;
+          post.tags = tags;
+          post.content = content;
+          post.image = image;
+          post.date = new Date().toISOString();
+        }
+      } else {
+        // Add new post
+        const post = {
+          id: Date.now().toString(),
+          title,
+          category,
+          tags,
+          content,
+          image,
+          date: new Date().toISOString(),
+          comments: []
+        };
+        posts.push(post);
+      }
+
       localStorage.setItem('posts', JSON.stringify(posts));
-
-      // Clear form
-      document.getElementById('post-title').value = '';
-      document.getElementById('post-content').value = '';
-
-      // Refresh posts
+      clearForm();
       loadPosts();
+      updateTagFilter();
+    }
+
+    function editPost(postId) {
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const post = posts.find(p => p.id === postId);
+      if (post) {
+        document.getElementById('post-title').value = post.title;
+        document.getElementById('post-category').value = post.category;
+        document.getElementById('post-tags').value = post.tags ? post.tags.join(', ') : '';
+        document.getElementById('post-content').value = post.content;
+        document.getElementById('post-image').value = post.image || '';
+        document.getElementById('post-id').value = post.id;
+        document.getElementById('form-title').textContent = 'Edit Post';
+        document.getElementById('submit-button').textContent = 'Update Post';
+      }
+    }
+
+    function deletePost(postId) {
+      if (confirm('Are you sure you want to delete this post?')) {
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts = posts.filter(p => p.id !== postId);
+        localStorage.setItem('posts', JSON.stringify(posts));
+        loadPosts();
+        updateTagFilter();
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('post-title').value = '';
+      document.getElementById('post-category').value = 'AI Tools';
+      document.getElementById('post-tags').value = '';
+      document.getElementById('post-content').value = '';
+      document.getElementById('post-image').value = '';
+      document.getElementById('post-id').value = '';
+      document.getElementById('form-title').textContent = 'Write a New Post';
+      document.getElementById('submit-button').textContent = 'Add Post';
+    }
+
+    function addComment(postId) {
+      const commentInput = document.getElementById(`comment-input-${postId}`);
+      const comment = commentInput.value.trim();
+      if (!comment) {
+        alert('Please enter a comment.');
+        return;
+      }
+
+      let posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const post = posts.find(p => p.id === postId);
+      if (post) {
+        post.comments = post.comments || [];
+        post.comments.push({
+          text: comment,
+          date: new Date().toLocaleDateString()
+        });
+        localStorage.setItem('posts', JSON.stringify(posts));
+        commentInput.value = '';
+        loadPosts();
+      }
     }
 
     function loadPosts() {
       const postsContainer = document.getElementById('posts');
       postsContainer.innerHTML = '';
-      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const categoryFilter = document.getElementById('category-filter').value;
+      const tagFilter = document.getElementById('tag-filter').value;
+      const sortOrder = document.getElementById('sort-order').value;
 
-      posts.reverse().forEach(post => {
+      let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+      // Ensure all posts have comments and tags arrays
+      posts = posts.map(post => ({
+        ...post,
+        id: post.id || Date.now().toString(),
+        comments: post.comments || [],
+        tags: post.tags || []
+      }));
+      localStorage.setItem('posts', JSON.stringify(posts));
+
+      // Filter posts
+      posts = posts.filter(post => {
+        if (categoryFilter && post.category !== categoryFilter) return false;
+        if (tagFilter && (!post.tags || !post.tags.includes(tagFilter))) return false;
+        if (!searchQuery) return true;
+        return post.title.toLowerCase().includes(searchQuery) ||
+                       post.content.toLowerCase().includes(searchQuery) ||
+                       post.category.toLowerCase().includes(searchQuery) ||
+                       (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchQuery)));
+      });
+
+      // Sort posts
+      posts.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+      });
+
+      posts.forEach(post => {
         const postElement = document.createElement('article');
-        postElement.className = 'bg-white p-6 rounded-lg shadow-md';
+        postElement.className = 'bg-gray-800 p-6 rounded-lg shadow-md';
+        const blogUrl = window.location.href;
+        const shareText = encodeURIComponent(`Check out my post: "${post.title}" on Responsible AI and Me! ${blogUrl}`);
         postElement.innerHTML = `
-          <h3 class="text-xl font-semibold mb-2">${post.title}</h3>
-          <p class="text-gray-600 text-sm mb-2">${post.date}</p>
-          <p class="text-gray-800">${post.content}</p>
+          <h3 class="text-xl font-semibold mb-2 text-teal-400">${post.title}</h3>
+          <p class="text-gray-400 text-sm mb-2">Category: ${post.category} | ${new Date(post.date).toLocaleDateString()}</p>
+          ${post.tags && post.tags.length ? `<p class="text-gray-400 text-sm mb-2">Tags: ${post.tags.join(', ')}</p>` : ''}
+          <p class="text-gray-300 mb-4">${post.content}</p>
+          ${post.image ? `<img src="${post.image}" alt="${post.title}" class="w-full h-auto rounded mb-4" onerror="this.style.display='none'">">` : ''}
+          <div class="flex space-x-4 mb-4">
+            <a href="https://x.com/intent/tweet?text=${shareText}" target="_blank" class="bg-teal-600 text-white px-3 py-1 rounded hover:bg-teal-700">Share to X</a>
+            <button onclick="editPost('${post.id}')" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700">Edit</button>
+            <button onclick="deletePost('${post.id}')" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
+          </div>
+          <div class="mt-4">
+            <h4 class="text-lg font-semibold mb-2">Comments</h4>
+            <div class="space-y-2 mb-4">
+              ${(Array.isArray(post.comments) ? post.comments : []).map(c => `
+                <div class="bg-gray-700 p-3 rounded">
+                  <p class="text-gray-300">${c.text}</p>
+                  <p class="text-gray-400 text-sm">${c.date}</p>
+                </div>
+              `).join('')}
+            </div>
+            <div class="flex space-x-2">
+              <input id="comment-input-${post.id}" type="text" placeholder="Add a comment..." class="w-full p-2 bg-gray-700 text-gray-100 border border-gray-600 rounded">
+              <button onclick="addComment('${post.id}')" class="bg-teal-600 text-white px-3 py-1 rounded hover:bg-teal-700">Comment</button>
+            </div>
+          </div>
         `;
         postsContainer.appendChild(postElement);
       });
+    }
+
+    function updateTagFilter() {
+      const tagFilter = document.getElementById('tag-filter');
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const allTags = new Set();
+      posts.forEach(post => {
+        if (post.tags) post.tags.forEach(tag => allTags.add(tag));
+      });
+      tagFilter.innerHTML = '<option value="">All Tags</option>';
+      allTags.forEach(tag => {
+        const option = document.createElement('option');
+        option.value = tag;
+        option.textContent = tag;
+        tagFilter.appendChild(option);
+      });
+    }
+
+    function clearPosts() {
+      if (confirm('Are you sure you want to delete all posts and comments?')) {
+        localStorage.removeItem('posts');
+        loadPosts();
+        updateTagFilter();
+      }
+    }
+
+    function downloadPosts() {
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(posts, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', 'responsible-ai-posts.json');
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      document.body.removeChild(downloadAnchor);
+    }
+
+    function importPosts(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedPosts = JSON.parse(e.target.result);
+          if (!Array.isArray(importedPosts)) {
+            alert('Invalid JSON file. Please upload a valid posts file.');
+            return;
+          }
+          // Ensure imported posts have required fields
+          const validPosts = importedPosts.map(post => ({
+            id: post.id || Date.now().toString(),
+            title: post.title || '',
+            category: post.category || 'AI Tools',
+            tags: Array.isArray(post.tags) ? post.tags : [],
+            content: post.content || '',
+            image: post.image || '',
+            date: post.date || new Date().toISOString(),
+            comments: Array.isArray(post.comments) ? post.comments : []
+          }));
+          localStorage.setItem('posts', JSON.stringify(validPosts));
+          loadPosts();
+          updateTagFilter();
+          alert('Posts imported successfully!');
+        } catch (error) {
+          alert('Error importing posts: ' + error.message);
+        }
+      };
+      reader.readAsText(file);
     }
   </script>
 </body>
