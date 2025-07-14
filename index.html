@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsible AI and Me</title>
+  <title>Responsible AI and Me</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -658,7 +659,20 @@
         document.getElementById('sortFilter').addEventListener('change', sortPosts);
 
         // Initialize
-        loadPosts();
+        // Initialize
+loadPosts();
+
+// Netlify Identity Widget
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+        if (!user) {
+            window.netlifyIdentity.on("login", () => {
+                document.location.href = "/admin/";
+            });
+        }
+    });
+}
+</script>
     </script>
 </body>
 </html>
