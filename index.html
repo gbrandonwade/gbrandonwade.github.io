@@ -238,6 +238,13 @@
             border-bottom-color: #64ffda;
         }
 
+        .post-content hr {
+            border: none;
+            height: 1px;
+            background: #333;
+            margin: 2rem 0;
+        }
+
         .post-image {
             width: 100%;
             max-width: 600px;
@@ -532,40 +539,52 @@
 
         function formatContent(content) {
             // Enhanced markdown parsing
-            return content
-                // Headers
+            let formatted = content
+                // First handle headers
                 .replace(/^### (.*$)/gm, '<h3>$1</h3>')
                 .replace(/^## (.*$)/gm, '<h2>$1</h2>')
                 .replace(/^# (.*$)/gm, '<h1>$1</h1>')
                 
-                // Bold and italic
+                // Handle links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                
+                // Handle bold and italic
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 
-                // Links
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                // Handle blockquotes
+                .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+            
+            // Handle bullet lists
+            formatted = formatted.replace(/^- (.+)$/gm, '<li>$1</li>');
+            formatted = formatted.replace(/(<li>.*<\/li>\s*)+/gs, function(match) {
+                return '<ul>' + match + '</ul>';
+            });
+            
+            // Handle numbered lists
+            formatted = formatted.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+            
+            // Handle horizontal rules
+            formatted = formatted.replace(/^---$/gm, '<hr>');
+            
+            // Split into paragraphs and handle line breaks
+            let paragraphs = formatted.split(/\n\s*\n/);
+            paragraphs = paragraphs.map(para => {
+                para = para.trim();
+                if (!para) return '';
                 
-                // Lists
-                .replace(/^\- (.*$)/gm, '<li>$1</li>')
-                .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
-                .replace(/^\d+\. (.*$)/gm, '<li>$1</li>')
+                // Don't wrap headers, lists, blockquotes, or hr in p tags
+                if (para.match(/^<(h[1-6]|ul|ol|blockquote|hr)/)) {
+                    return para;
+                }
                 
-                // Blockquotes
-                .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>')
+                // Convert single line breaks to <br> within paragraphs
+                para = para.replace(/\n/g, '<br>');
                 
-                // Paragraphs
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>')
-                
-                // Wrap in paragraph tags
-                .replace(/^(.)/gm, '<p>$1')
-                .replace(/(.)$/gm, '$1</p>')
-                
-                // Clean up duplicate paragraph tags around headers and lists
-                .replace(/<p>(<h[1-6]>.*<\/h[1-6]>)<\/p>/g, '$1')
-                .replace(/<p>(<ul>.*<\/ul>)<\/p>/g, '$1')
-                .replace(/<p>(<blockquote>.*<\/blockquote>)<\/p>/g, '$1')
-                .replace(/<p><\/p>/g, '');
+                return '<p>' + para + '</p>';
+            });
+            
+            return paragraphs.join('\n');
         }
 
         function getCategoryLabel(category) {
