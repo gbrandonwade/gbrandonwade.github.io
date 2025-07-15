@@ -548,15 +548,15 @@
                 // Handle links
                 .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
                 
-                // Handle bold and italic
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                
                 // Handle blockquotes
                 .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
             
-            // Handle bullet lists
-            formatted = formatted.replace(/^- (.+)$/gm, '<li>$1</li>');
+            // Handle bold and italic (but be careful not to conflict with bullet points)
+            formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            formatted = formatted.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+            
+            // Handle bullet lists (both - and * syntax)
+            formatted = formatted.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
             formatted = formatted.replace(/(<li>.*<\/li>\s*)+/gs, function(match) {
                 return '<ul>' + match + '</ul>';
             });
