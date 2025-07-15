@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsible AI and Me</title>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>Responsible AI and Me</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <style>
         * {
             margin: 0;
@@ -184,6 +184,58 @@
 
         .post-content {
             margin-bottom: 1.5rem;
+        }
+
+        .post-content h1, .post-content h2, .post-content h3 {
+            color: #64ffda;
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .post-content h1 {
+            font-size: 1.8rem;
+        }
+
+        .post-content h2 {
+            font-size: 1.5rem;
+        }
+
+        .post-content h3 {
+            font-size: 1.3rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1rem;
+        }
+
+        .post-content ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .post-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content blockquote {
+            border-left: 4px solid #64ffda;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            background: rgba(100, 255, 218, 0.1);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .post-content a {
+            color: #64ffda;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .post-content a:hover {
+            border-bottom-color: #64ffda;
         }
 
         .post-image {
@@ -479,12 +531,41 @@
         }
 
         function formatContent(content) {
-            // Simple markdown-like formatting
+            // Enhanced markdown parsing
             return content
+                // Headers
+                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                
+                // Bold and italic
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                
+                // Lists
+                .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                .replace(/^\d+\. (.*$)/gm, '<li>$1</li>')
+                
+                // Blockquotes
+                .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>')
+                
+                // Paragraphs
                 .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>');
+                .replace(/\n/g, '<br>')
+                
+                // Wrap in paragraph tags
+                .replace(/^(.)/gm, '<p>$1')
+                .replace(/(.)$/gm, '$1</p>')
+                
+                // Clean up duplicate paragraph tags around headers and lists
+                .replace(/<p>(<h[1-6]>.*<\/h[1-6]>)<\/p>/g, '$1')
+                .replace(/<p>(<ul>.*<\/ul>)<\/p>/g, '$1')
+                .replace(/<p>(<blockquote>.*<\/blockquote>)<\/p>/g, '$1')
+                .replace(/<p><\/p>/g, '');
         }
 
         function getCategoryLabel(category) {
@@ -521,7 +602,7 @@
                     ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
                     
                     <div class="post-content">
-                        <p>${formatContent(post.content)}</p>
+                        <div>${formatContent(post.content)}</div>
                     </div>
                     
                     <div class="post-actions">
@@ -659,20 +740,18 @@
         document.getElementById('sortFilter').addEventListener('change', sortPosts);
 
         // Initialize
-        // Initialize
-loadPosts();
+        loadPosts();
 
-// Netlify Identity Widget
-if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-        if (!user) {
-            window.netlifyIdentity.on("login", () => {
-                document.location.href = "/admin/";
+        // Netlify Identity Widget
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
             });
         }
-    });
-}
-</script>
     </script>
 </body>
 </html>
