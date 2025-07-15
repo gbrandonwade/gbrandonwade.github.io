@@ -547,53 +547,104 @@
         }
 
         function formatContent(content) {
-            // Enhanced markdown parsing
-            let formatted = content
-                // First handle horizontal rules (before other processing)
-                .replace(/^---\s*$/gm, '<hr>')
-                
-                // Then handle headers
-                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-                
-                // Handle links
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
-                
-                // Handle blockquotes
-                .replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+            // Much simpler and more reliable markdown parsing
+            let lines = content.split('\n');
+            let result = [];
+            let inList = false;
             
-            // Handle bold and italic (but be careful not to conflict with bullet points)
-            formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-            formatted = formatted.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
-            
-            // Handle bullet lists (both - and * syntax)
-            formatted = formatted.replace(/^[-*] (.+)$/gm, '<li>$1</li>');
-            formatted = formatted.replace(/(<li>.*<\/li>\s*)+/gs, function(match) {
-                return '<ul>' + match + '</ul>';
-            });
-            
-            // Handle numbered lists
-            formatted = formatted.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-            
-            // Split into paragraphs and handle line breaks
-            let paragraphs = formatted.split(/\n\s*\n/);
-            paragraphs = paragraphs.map(para => {
-                para = para.trim();
-                if (!para) return '';
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
                 
-                // Don't wrap headers, lists, blockquotes, or hr in p tags
-                if (para.match(/^<(h[1-6]|ul|ol|blockquote|hr)/)) {
-                    return para;
+                // Skip empty lines
+                if (!line) {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<br>');
+                    continue;
                 }
                 
-                // Convert single line breaks to <br> within paragraphs
-                para = para.replace(/\n/g, '<br>');
+                // Handle horizontal rules
+                if (line === '---') {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<hr>');
+                    continue;
+                }
                 
-                return '<p>' + para + '</p>';
-            });
+                // Handle headers
+                if (line.startsWith('### ')) {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<h3>' + line.substring(4) + '</h3>');
+                    continue;
+                }
+                if (line.startsWith('## ')) {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<h2>' + line.substring(3) + '</h2>');
+                    continue;
+                }
+                if (line.startsWith('# ')) {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<h1>' + line.substring(2) + '</h1>');
+                    continue;
+                }
+                
+                // Handle bullet points
+                if (line.startsWith('* ') || line.startsWith('- ')) {
+                    if (!inList) {
+                        result.push('<ul>');
+                        inList = true;
+                    }
+                    let listItem = line.substring(2);
+                    // Handle bold/italic in list items
+                    listItem = listItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                    listItem = listItem.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+                    result.push('<li>' + listItem + '</li>');
+                    continue;
+                }
+                
+                // Handle blockquotes
+                if (line.startsWith('> ')) {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<blockquote>' + line.substring(2) + '</blockquote>');
+                    continue;
+                }
+                
+                // Regular paragraph
+                if (inList) {
+                    result.push('</ul>');
+                    inList = false;
+                }
+                
+                // Handle bold/italic and links in regular text
+                line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                line = line.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+                line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+                
+                result.push('<p>' + line + '</p>');
+            }
             
-            return paragraphs.join('\n');
+            // Close any open list
+            if (inList) {
+                result.push('</ul>');
+            }
+            
+            return result.join('\n');
         }
 
         function getCategoryLabel(category) {
