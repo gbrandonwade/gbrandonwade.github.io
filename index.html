@@ -540,7 +540,10 @@
         function formatContent(content) {
             // Enhanced markdown parsing
             let formatted = content
-                // First handle headers
+                // First handle horizontal rules (before other processing)
+                .replace(/^---\s*$/gm, '<hr>')
+                
+                // Then handle headers
                 .replace(/^### (.*$)/gm, '<h3>$1</h3>')
                 .replace(/^## (.*$)/gm, '<h2>$1</h2>')
                 .replace(/^# (.*$)/gm, '<h1>$1</h1>')
@@ -563,9 +566,6 @@
             
             // Handle numbered lists
             formatted = formatted.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-            
-            // Handle horizontal rules
-            formatted = formatted.replace(/^---$/gm, '<hr>');
             
             // Split into paragraphs and handle line breaks
             let paragraphs = formatted.split(/\n\s*\n/);
