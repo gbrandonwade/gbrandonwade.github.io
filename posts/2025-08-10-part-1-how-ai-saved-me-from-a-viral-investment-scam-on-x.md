@@ -6,13 +6,13 @@ image: /images/89b38df0-97b9-498b-b9f9-ad44755c9953.jpg
 ---
 *I almost threw $2,000 at a trending ETF before asking AI to fact-check the hype. What I discovered was shocking.*
 
-- - -
+***
 
 ## TL;DR
 
 Saw ULTY ETF trending on X with claims of "85% yields" and weekly payouts. Red flags went off, so I used AI to analyze it properly. Turns out it had dropped 68% since launch and 100% of distributions were just returning my own money back to me. AI analysis revealed the math behind the marketing hype. Also checked BTCI (Bitcoin income ETF) and found similar issues. The lesson: use AI to verify social media investment claims before investing.
 
-- - -
+***
 
 ## The Twitter Rabbit Hole That Almost Cost Me Everything
 
@@ -100,7 +100,7 @@ But this was just the beginning. After avoiding those yield traps, I still had m
 
 In Part 2, I'll show you how the AI helped me design an aggressive but systematic growth strategy, complete with a custom trading app that keeps me disciplined. The tools and approach we developed together ended up being more valuable than any individual stock pick.
 
-- - -
+***
 
 *Next up: How AI helped me build a 25x growth strategy and create a custom portfolio tracker that thinks like a professional trader.*
 
