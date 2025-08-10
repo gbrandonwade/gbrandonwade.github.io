@@ -5,9 +5,9 @@ category: prompt-engineering
 image: ""
 ---
 
-Effective prompting is an art form. Here are my top 10 prompts that have consistently delivered better results across different AI models.
+Effective prompting is an art form. Here are my top 5 prompts that have consistently delivered better results across different AI models.
 
-## The Top 10 Prompts
+## The Top 5 Prompts
 
 1. **"Think step by step"** - Encourages logical reasoning
 2. **"Explain like I'm 5"** - Gets simple, clear explanations
