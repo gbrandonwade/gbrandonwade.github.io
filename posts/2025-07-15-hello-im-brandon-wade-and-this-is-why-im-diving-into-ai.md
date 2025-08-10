@@ -1,4 +1,4 @@
-***
+---
 title: Hello, I'm Brandon Wade - And This is Why I'm Diving Into AI
 date: 2025-07-15T02:08:15.505Z
 category: ethics
