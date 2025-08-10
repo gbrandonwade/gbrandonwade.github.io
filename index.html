@@ -575,6 +575,16 @@
                     continue;
                 }
                 
+                // Handle horizontal rules FIRST (before bullet points)
+                if (line === '---') {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    result.push('<hr>');
+                    continue;
+                }
+                
                 // Handle headers
                 if (line.startsWith('### ')) {
                     if (inList) {
