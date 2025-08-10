@@ -452,9 +452,9 @@
             const frontmatter = {};
             let contentStart = 0;
             
-            if (lines[0] === '---') {
+            if (lines[0] === '***') {
                 let i = 1;
-                while (i < lines.length && lines[i] !== '---') {
+                while (i < lines.length && lines[i] !== '***') {
                     const line = lines[i].trim();
                     if (line) {
                         const [key, ...valueParts] = line.split(':');
@@ -566,7 +566,7 @@
                 }
                 
                 // Handle horizontal rules
-                if (line === '---') {
+                if (line === '***') {
                     if (inList) {
                         result.push('</ul>');
                         inList = false;
@@ -576,7 +576,7 @@
                 }
                 
                 // Handle horizontal rules FIRST (before bullet points)
-                if (line === '---') {
+                if (line === '***') {
                     if (inList) {
                         result.push('</ul>');
                         inList = false;
