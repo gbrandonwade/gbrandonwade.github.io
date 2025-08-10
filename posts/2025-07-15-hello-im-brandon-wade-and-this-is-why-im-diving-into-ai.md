@@ -1,9 +1,9 @@
----
+***
 title: Hello, I'm Brandon Wade - And This is Why I'm Diving Into AI
 date: 2025-07-15T02:08:15.505Z
 category: ethics
 image: /images/wellness-pic.jpg
----
+***
 Welcome to "Responsible AI and Me" - a blog documenting one project manager's journey from AI curious to AI capable. If you're reading this, chances are you're on a similar path: intrigued by AI's possibilities but maybe not sure where to start, especially if you don't have a coding background.
 
 ## Who Am I?
@@ -64,6 +64,6 @@ Because if a project manager from Columbus, Ohio can learn to leverage AI respon
 
 Let's figure this out together.
 
-- - -
+***
 
 *What's your AI story? Are you just getting started, or have you had your own "game-changing" moment? I'd love to hear about it in the comments below.*
