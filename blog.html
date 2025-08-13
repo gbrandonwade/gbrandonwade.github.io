@@ -1264,6 +1264,48 @@
             addInlineNewsletterSignup();
         }
 
+        // Post expansion functionality - MUST BE DEFINED BEFORE attachPostEventListeners
+        function togglePostExpansion(postId) {
+            console.log('Expanding post:', postId); // Debug log
+            
+            const post = document.querySelector(`[data-post-id="${postId}"]`);
+            const content = document.getElementById(`content-${postId}`);
+            const indicator = document.getElementById(`expand-${postId}`);
+            
+            console.log('Found elements:', {
+                post: !!post,
+                content: !!content, 
+                indicator: !!indicator
+            }); // Debug log
+            
+            if (!post || !content || !indicator) {
+                console.error('Could not find required elements for post:', postId);
+                return;
+            }
+            
+            const isExpanded = post.classList.contains('expanded');
+            console.log('Current state expanded:', isExpanded); // Debug log
+            
+            if (isExpanded) {
+                // Collapse the post
+                post.classList.remove('expanded');
+                content.classList.remove('expanded');
+                indicator.innerHTML = '<span>Click to read more</span><span class="expand-arrow">▼</span>';
+                
+                // Scroll to post title
+                setTimeout(() => {
+                    post.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                // Expand the post
+                post.classList.add('expanded');
+                content.classList.add('expanded');
+                indicator.innerHTML = '<span>Click to collapse</span><span class="expand-arrow">▼</span>';
+            }
+            
+            console.log('New state expanded:', post.classList.contains('expanded')); // Debug log
+        }
+
         // Attach event listeners to posts after HTML is created
         function attachPostEventListeners() {
             // Post expansion click handlers
