@@ -293,28 +293,27 @@
         .post-content {
             margin-bottom: 2rem;
             overflow: hidden;
-            max-height: 120px;
-            transition: max-height 0.5s ease, opacity 0.3s ease;
+            max-height: 150px;
+            transition: max-height 0.5s ease;
             position: relative;
         }
 
         .post-content.expanded {
-            max-height: none;
+            max-height: 2000px;
         }
 
-        .post-content::after {
-            content: '';
+        .post-content .fade-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 40px;
-            background: linear-gradient(transparent, var(--card-bg));
+            height: 60px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 0.05));
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
-        .post-content.expanded::after {
+        .post-content.expanded .fade-overlay {
             opacity: 0;
         }
 
@@ -331,6 +330,7 @@
             border: 1px solid rgba(100, 255, 218, 0.2);
             border-radius: 8px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .expand-indicator:hover {
@@ -1206,6 +1206,7 @@
                     
                     <div class="post-content" id="content-${post.id}">
                         ${formatContent(post.content)}
+                        <div class="fade-overlay"></div>
                     </div>
                     
                     <div class="expand-indicator" id="expand-${post.id}">
