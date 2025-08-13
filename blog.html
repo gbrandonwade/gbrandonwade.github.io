@@ -293,6 +293,56 @@
         .post-content {
             margin-bottom: 2rem;
             overflow: hidden;
+            max-height: 120px;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            position: relative;
+        }
+
+        .post-content.expanded {
+            max-height: none;
+        }
+
+        .post-content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(transparent, var(--card-bg));
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .post-content.expanded::after {
+            opacity: 0;
+        }
+
+        .expand-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .expand-indicator:hover {
+            background: rgba(100, 255, 218, 0.2);
+        }
+
+        .expand-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .post.expanded .expand-arrow {
+            transform: rotate(180deg);
         }
 
         .post-content h1, .post-content h2, .post-content h3 {
@@ -579,7 +629,182 @@
             }
         }
 
-        /* Accessibility Improvements */
+        /* Newsletter Signup Styles */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(100, 255, 218, 0.05) 100%);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .newsletter-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .newsletter-description {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .newsletter-btn {
+            padding: 0.9rem 2rem;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .newsletter-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
+        }
+
+        .newsletter-btn:active {
+            transform: translateY(0);
+        }
+
+        .newsletter-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-benefit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .newsletter-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .newsletter-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Inline Newsletter Signup (for between posts) */
+        .inline-newsletter {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .inline-newsletter .newsletter-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .inline-newsletter .newsletter-description {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .newsletter-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .newsletter-input {
+                min-width: unset;
+            }
+            
+            .newsletter-benefits {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: center;
+            }
+            
+            .newsletter-title {
+                font-size: 1.5rem;
+            }
+        }
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -645,6 +870,54 @@
         <div class="posts-container" id="postsContainer" style="display: none;">
             <!-- Posts will be loaded dynamically -->
         </div>
+
+        <!-- Newsletter Signup Section -->
+        <section class="newsletter-section" id="newsletterSection">
+            <h2 class="newsletter-title">🚀 Join the AI Journey</h2>
+            <p class="newsletter-description">
+                Get weekly insights on AI tools, responsible practices, and real-world experiments. 
+                No spam, just actionable content to help you navigate the AI revolution.
+            </p>
+            
+            <form class="newsletter-form" id="newsletterForm" name="newsletter" method="POST" data-netlify="true" onsubmit="handleNewsletterSignup(event)">
+                <input type="hidden" name="form-name" value="newsletter" />
+                <input 
+                    type="email" 
+                    name="email"
+                    class="newsletter-input" 
+                    id="newsletterEmail"
+                    placeholder="Enter your email address" 
+                    required
+                    aria-label="Email address for newsletter signup"
+                >
+                <button type="submit" class="newsletter-btn" id="newsletterSubmitBtn">
+                    Subscribe Free
+                </button>
+            </form>
+            
+            <div class="newsletter-benefits">
+                <div class="newsletter-benefit">
+                    <span>📧</span>
+                    <span>Weekly AI insights</span>
+                </div>
+                <div class="newsletter-benefit">
+                    <span>🔒</span>
+                    <span>No spam, ever</span>
+                </div>
+                <div class="newsletter-benefit">
+                    <span>📈</span>
+                    <span>Exclusive content</span>
+                </div>
+            </div>
+            
+            <div class="newsletter-success" id="newsletterSuccess">
+                <strong>🎉 Welcome aboard!</strong> Check your email to confirm your subscription.
+            </div>
+            
+            <div class="newsletter-error" id="newsletterError">
+                <strong>⚠️ Oops!</strong> Something went wrong. Please try again.
+            </div>
+        </section>
 
         <div class="saved-posts" id="savedPosts" style="display: none;">
             <h2>📚 Your Saved Posts</h2>
@@ -916,7 +1189,7 @@
             }
 
             container.innerHTML = posts.map(post => `
-                <article class="post" role="article">
+                <article class="post" role="article" onclick="togglePostExpansion('${post.id}')" data-post-id="${post.id}">
                     <div class="post-header">
                         <h2 class="post-title">${escapeHtml(post.title)}</h2>
                         <div class="post-meta">
@@ -931,11 +1204,16 @@
                     
                     ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image" loading="lazy">` : ''}
                     
-                    <div class="post-content">
+                    <div class="post-content" id="content-${post.id}">
                         ${formatContent(post.content)}
                     </div>
                     
-                    <div class="post-actions">
+                    <div class="expand-indicator" id="expand-${post.id}">
+                        <span>Click to read more</span>
+                        <span class="expand-arrow">▼</span>
+                    </div>
+                    
+                    <div class="post-actions" onclick="event.stopPropagation()">
                         <button class="action-btn" onclick="toggleSavePost('${post.id}')" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
                             ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
                         </button>
@@ -948,7 +1226,7 @@
                         </button>
                     </div>
                     
-                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
+                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}" onclick="event.stopPropagation()">
                         <div class="comments-header">💭 Comments</div>
                         <div class="comment-form">
                             <textarea class="comment-input" placeholder="Share your thoughts..." 
@@ -977,6 +1255,9 @@
                     </div>
                 </article>
             `).join('');
+            
+            // Add inline newsletter signup if we have multiple posts
+            addInlineNewsletterSignup();
         }
 
         // Utility function to escape HTML
@@ -1178,7 +1459,276 @@
             });
         }
 
-        // Initialize the blog
+        // Email service configuration
+        const EMAIL_CONFIG = {
+            service: 'netlify', // Options: 'netlify', 'convertkit', 'buttondown'
+            
+            // ConvertKit config (if using ConvertKit)
+            convertkit: {
+                formId: 'YOUR_CONVERTKIT_FORM_ID', // Replace with your form ID
+                apiKey: 'YOUR_CONVERTKIT_API_KEY'  // Replace with your API key
+            },
+            
+            // Buttondown config (if using Buttondown)
+            buttondown: {
+                username: 'YOUR_BUTTONDOWN_USERNAME' // Replace with your username
+            }
+        };
+
+        // Newsletter signup functionality
+        function handleNewsletterSignup(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('newsletterEmail').value.trim();
+            const submitBtn = document.getElementById('newsletterSubmitBtn');
+            const successMsg = document.getElementById('newsletterSuccess');
+            const errorMsg = document.getElementById('newsletterError');
+            
+            // Reset messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                showNewsletterError('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.textContent = 'Subscribing...';
+            submitBtn.disabled = true;
+            
+            // Subscribe based on configured service
+            subscribeToEmailService(email)
+                .then(() => {
+                    // Success
+                    successMsg.style.display = 'block';
+                    document.getElementById('newsletterForm').reset();
+                    
+                    // Track the signup
+                    trackNewsletterSignup(email);
+                    
+                    // Scroll to success message
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .catch((error) => {
+                    // Error
+                    console.error('Newsletter signup error:', error);
+                    if (error.message.includes('already subscribed')) {
+                        showNewsletterError("You're already subscribed! Check your email for our latest updates.");
+                    } else {
+                        showNewsletterError('Unable to subscribe right now. Please try again later.');
+                    }
+                })
+                .finally(() => {
+                    // Reset button
+                    submitBtn.textContent = 'Subscribe Free';
+                    submitBtn.disabled = false;
+                });
+        }
+        
+        async function subscribeToEmailService(email) {
+            switch (EMAIL_CONFIG.service) {
+                case 'netlify':
+                    return subscribeNetlifyForms(email);
+                case 'convertkit':
+                    return subscribeConvertKit(email);
+                case 'buttondown':
+                    return subscribeButtondown(email);
+                default:
+                    return simulateNewsletterSignup(email);
+            }
+        }
+        
+        async function subscribeNetlifyForms(email) {
+            try {
+                const formData = new FormData();
+                formData.append('form-name', 'newsletter');
+                formData.append('email', email);
+                
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString()
+                });
+                
+                if (response.ok) {
+                    // Store locally for tracking
+                    storeSubscriberLocally(email, 'netlify');
+                    return { status: 'subscribed', service: 'netlify' };
+                } else {
+                    throw new Error('Netlify form submission failed');
+                }
+            } catch (error) {
+                console.error('Netlify forms error:', error);
+                throw error;
+            }
+        }
+        
+        async function subscribeConvertKit(email) {
+            const { formId, apiKey } = EMAIL_CONFIG.convertkit;
+            
+            if (!formId || !apiKey || formId.includes('YOUR_') || apiKey.includes('YOUR_')) {
+                throw new Error('ConvertKit not configured');
+            }
+            
+            try {
+                const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        api_key: apiKey,
+                        email: email,
+                        tags: ['Blog Subscriber']
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    storeSubscriberLocally(email, 'convertkit');
+                    return { status: 'subscribed', service: 'convertkit' };
+                } else {
+                    throw new Error(result.message || 'ConvertKit subscription failed');
+                }
+            } catch (error) {
+                console.error('ConvertKit error:', error);
+                throw error;
+            }
+        }
+        
+        async function subscribeButtondown(email) {
+            const { username } = EMAIL_CONFIG.buttondown;
+            
+            if (!username || username.includes('YOUR_')) {
+                throw new Error('Buttondown not configured');
+            }
+            
+            try {
+                const response = await fetch(`https://buttondown.email/api/emails/embed-subscribe/${username}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        tag: 'blog-subscriber'
+                    })
+                });
+                
+                if (response.ok) {
+                    storeSubscriberLocally(email, 'buttondown');
+                    return { status: 'subscribed', service: 'buttondown' };
+                } else {
+                    throw new Error('Buttondown subscription failed');
+                }
+            } catch (error) {
+                console.error('Buttondown error:', error);
+                throw error;
+            }
+        }
+        
+        function storeSubscriberLocally(email, service) {
+            try {
+                let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+                
+                // Check if already exists
+                const existing = subscribers.find(sub => sub.email === email);
+                if (!existing) {
+                    subscribers.push({
+                        email: email,
+                        service: service,
+                        subscribed_at: new Date().toISOString(),
+                        status: 'subscribed'
+                    });
+                    localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+                }
+            } catch (error) {
+                console.error('Local storage error:', error);
+            }
+        }
+        
+        function simulateNewsletterSignup(email) {
+            // Fallback simulation
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    try {
+                        storeSubscriberLocally(email, 'local');
+                        resolve({ status: 'subscribed', service: 'local' });
+                    } catch (error) {
+                        reject(error);
+                    }
+                }, 1000);
+            });
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function showNewsletterError(message) {
+            const errorMsg = document.getElementById('newsletterError');
+            errorMsg.innerHTML = `<strong>⚠️ Oops!</strong> ${message}`;
+            errorMsg.style.display = 'block';
+            errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function trackNewsletterSignup(email) {
+            // Add analytics tracking here
+            console.log('Newsletter signup tracked:', email);
+            
+            // Example: Google Analytics event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'newsletter_signup', {
+                    event_category: 'engagement',
+                    event_label: 'footer_signup'
+                });
+            }
+        }
+        
+        // Add inline newsletter signup between posts (optional)
+        function addInlineNewsletterSignup() {
+            if (currentPosts.length >= 3) {
+                const container = document.getElementById('postsContainer');
+                const posts = container.children;
+                
+                // Add newsletter signup after every 3rd post
+                if (posts.length >= 3) {
+                    const inlineSignup = document.createElement('div');
+                    inlineSignup.className = 'inline-newsletter';
+                    inlineSignup.innerHTML = `
+                        <h3 class="newsletter-title">📬 Don't Miss New Posts</h3>
+                        <p class="newsletter-description">
+                            Join 500+ readers getting weekly AI insights and tool reviews.
+                        </p>
+                        <form class="newsletter-form" name="newsletter-inline" method="POST" data-netlify="true" onsubmit="handleInlineNewsletterSignup(event)" onclick="event.stopPropagation()">
+                            <input type="hidden" name="form-name" value="newsletter-inline" />
+                            <input 
+                                type="email"
+                                name="email"
+                                class="newsletter-input" 
+                                placeholder="Your email address" 
+                                required
+                                aria-label="Email address for newsletter signup"
+                            >
+                            <button type="submit" class="newsletter-btn">
+                                Get Updates
+                            </button>
+                        </form>
+                    `;
+                    
+                    // Insert after 3rd post
+                    if (posts[2] && posts[2].nextSibling) {
+                        container.insertBefore(inlineSignup, posts[2].nextSibling);
+                    } else {
+                        container.appendChild(inlineSignup);
+                    }
+                }
+            }
+        }
         document.addEventListener('DOMContentLoaded', function() {
             loadPosts();
             
