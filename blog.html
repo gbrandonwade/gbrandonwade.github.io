@@ -1190,7 +1190,7 @@
 
             container.innerHTML = posts.map(post => `
                 <article class="post" role="article" data-post-id="${post.id}">
-                    <div class="post-header" onclick="togglePostExpansion('${post.id}')">
+                    <div class="post-header post-clickable" data-post-id="${post.id}">
                         <h2 class="post-title">${escapeHtml(post.title)}</h2>
                         <div class="post-meta">
                             <span class="post-category">${getCategoryLabel(post.category)}</span>
@@ -1202,27 +1202,27 @@
                         </div>
                     </div>
                     
-                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image" loading="lazy" onclick="togglePostExpansion('${post.id}')">` : ''}
+                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image post-clickable" data-post-id="${post.id}" loading="lazy">` : ''}
                     
-                    <div class="post-content" id="content-${post.id}" onclick="togglePostExpansion('${post.id}')">
+                    <div class="post-content post-clickable" id="content-${post.id}" data-post-id="${post.id}">
                         ${formatContent(post.content)}
                         <div class="fade-overlay"></div>
                     </div>
                     
-                    <div class="expand-indicator" id="expand-${post.id}" onclick="togglePostExpansion('${post.id}')">
+                    <div class="expand-indicator post-clickable" id="expand-${post.id}" data-post-id="${post.id}">
                         <span>Click to read more</span>
                         <span class="expand-arrow">▼</span>
                     </div>
                     
                     <div class="post-actions">
-                        <button class="action-btn" onclick="event.stopPropagation(); toggleSavePost('${post.id}')" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
+                        <button class="action-btn save-btn" data-post-id="${post.id}" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
                             ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
                         </button>
                         <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
-                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)" onclick="event.stopPropagation()">
+                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
                             🐦 Share on X
                         </a>
-                        <button class="action-btn" onclick="event.stopPropagation(); toggleComments('${post.id}')" aria-label="Toggle comments section">
+                        <button class="action-btn comment-btn" data-post-id="${post.id}" aria-label="Toggle comments section">
                             💬 Comments (${post.comments.length})
                         </button>
                     </div>
@@ -1233,9 +1233,8 @@
                             <textarea class="comment-input" placeholder="Share your thoughts..." 
                                     id="comment-input-${post.id}" 
                                     aria-label="Write a comment"
-                                    rows="3"
-                                    onclick="event.stopPropagation()"></textarea>
-                            <button class="btn" onclick="event.stopPropagation(); addComment('${post.id}')" aria-label="Post comment">Post Comment</button>
+                                    rows="3"></textarea>
+                            <button class="btn comment-submit-btn" data-post-id="${post.id}" aria-label="Post comment">Post Comment</button>
                         </div>
                         <div class="comments-list" id="comments-list-${post.id}">
                             ${post.comments.map(comment => `
@@ -1257,6 +1256,9 @@
                     </div>
                 </article>
             `).join('');
+            
+            // Add event listeners after HTML is created
+            attachPostEventListeners();
             
             // Add inline newsletter signup if we have multiple posts
             addInlineNewsletterSignup();
