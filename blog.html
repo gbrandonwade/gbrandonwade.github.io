@@ -1189,8 +1189,8 @@
             }
 
             container.innerHTML = posts.map(post => `
-                <article class="post" role="article" onclick="togglePostExpansion('${post.id}')" data-post-id="${post.id}">
-                    <div class="post-header">
+                <article class="post" role="article" data-post-id="${post.id}">
+                    <div class="post-header" onclick="togglePostExpansion('${post.id}')">
                         <h2 class="post-title">${escapeHtml(post.title)}</h2>
                         <div class="post-meta">
                             <span class="post-category">${getCategoryLabel(post.category)}</span>
@@ -1202,39 +1202,40 @@
                         </div>
                     </div>
                     
-                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image" loading="lazy">` : ''}
+                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image" loading="lazy" onclick="togglePostExpansion('${post.id}')">` : ''}
                     
-                    <div class="post-content" id="content-${post.id}">
+                    <div class="post-content" id="content-${post.id}" onclick="togglePostExpansion('${post.id}')">
                         ${formatContent(post.content)}
                         <div class="fade-overlay"></div>
                     </div>
                     
-                    <div class="expand-indicator" id="expand-${post.id}">
+                    <div class="expand-indicator" id="expand-${post.id}" onclick="togglePostExpansion('${post.id}')">
                         <span>Click to read more</span>
                         <span class="expand-arrow">▼</span>
                     </div>
                     
-                    <div class="post-actions" onclick="event.stopPropagation()">
-                        <button class="action-btn" onclick="toggleSavePost('${post.id}')" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="event.stopPropagation(); toggleSavePost('${post.id}')" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
                             ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
                         </button>
                         <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
-                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
+                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)" onclick="event.stopPropagation()">
                             🐦 Share on X
                         </a>
-                        <button class="action-btn" onclick="toggleComments('${post.id}')" aria-label="Toggle comments section">
+                        <button class="action-btn" onclick="event.stopPropagation(); toggleComments('${post.id}')" aria-label="Toggle comments section">
                             💬 Comments (${post.comments.length})
                         </button>
                     </div>
                     
-                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}" onclick="event.stopPropagation()">
+                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
                         <div class="comments-header">💭 Comments</div>
                         <div class="comment-form">
                             <textarea class="comment-input" placeholder="Share your thoughts..." 
                                     id="comment-input-${post.id}" 
                                     aria-label="Write a comment"
-                                    rows="3"></textarea>
-                            <button class="btn" onclick="addComment('${post.id}')" aria-label="Post comment">Post Comment</button>
+                                    rows="3"
+                                    onclick="event.stopPropagation()"></textarea>
+                            <button class="btn" onclick="event.stopPropagation(); addComment('${post.id}')" aria-label="Post comment">Post Comment</button>
                         </div>
                         <div class="comments-list" id="comments-list-${post.id}">
                             ${post.comments.map(comment => `
