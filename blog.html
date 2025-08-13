@@ -294,12 +294,13 @@
             margin-bottom: 2rem;
             overflow: hidden;
             max-height: 150px;
-            transition: max-height 0.5s ease;
+            transition: max-height 0.8s ease;
             position: relative;
         }
 
         .post-content.expanded {
-            max-height: 2000px;
+            max-height: 5000px;
+            transition: max-height 1.2s ease;
         }
 
         .post-content .fade-overlay {
@@ -310,7 +311,8 @@
             height: 60px;
             background: linear-gradient(transparent, rgba(255, 255, 255, 0.05));
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
+            opacity: 1;
         }
 
         .post-content.expanded .fade-overlay {
@@ -325,7 +327,7 @@
             color: var(--primary-color);
             font-weight: 600;
             margin: 1rem 0;
-            padding: 0.5rem;
+            padding: 0.8rem;
             background: rgba(100, 255, 218, 0.1);
             border: 1px solid rgba(100, 255, 218, 0.2);
             border-radius: 8px;
@@ -335,14 +337,24 @@
 
         .expand-indicator:hover {
             background: rgba(100, 255, 218, 0.2);
+            transform: translateY(-1px);
         }
 
         .expand-arrow {
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+            font-size: 0.9rem;
         }
 
         .post.expanded .expand-arrow {
             transform: rotate(180deg);
+        }
+
+        .post-clickable {
+            cursor: pointer;
+        }
+
+        .post-clickable:hover {
+            opacity: 0.9;
         }
 
         .post-content h1, .post-content h2, .post-content h3 {
