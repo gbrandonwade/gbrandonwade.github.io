@@ -2,6 +2,9 @@ backend:
   name: git-gateway
   branch: main
 
+# Enable editorial workflow for draft/review/ready states
+publish_mode: editorial_workflow
+
 media_folder: "images"
 public_folder: "/images"
 
@@ -11,9 +14,13 @@ collections:
     folder: "posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog.html#{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: "HH:mm", format: "YYYY-MM-DDTHH:mm:ss.sssZ"}
       - {label: "Category", name: "category", widget: "select", options: ["tool-reviews", "prompt-engineering", "ai-experiments", "tutorials", "ethics"]}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Status", name: "status", widget: "select", options: ["draft", "scheduled", "published"], default: "draft"}
       - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "SEO Description", name: "description", widget: "text", required: false, hint: "Brief description for search engines (max 160 characters)"}
+      - {label: "Tags", name: "tags", widget: "list", required: false, hint: "Comma-separated tags for better organization"}
