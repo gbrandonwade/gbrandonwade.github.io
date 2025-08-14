@@ -14,7 +14,7 @@ Saw ULTY ETF trending on X with claims of "85% yields" and weekly payouts. Red f
 
 ***
 
-## The Twitter Rabbit Hole That Almost Cost Me Everything
+## The Twitter Rabbit Hole That Almost Cost Me
 
 So I'm scrolling through X during lunch when this financial influencer's post catches my eye. Screenshots of weekly payouts everywhere. Claims of "80%+ yields." Rocket ship emojis all over the place.
 
@@ -32,7 +32,7 @@ Instead of throwing my $2,000 at what looked like easy money, I decided to try s
 
 What happened next saved me from a costly mistake.
 
-## The Deep Analysis That Changed Everything
+## The Deep Analysis
 
 Rather than trusting social media hype, I asked Claude (my AI assistant) to do a real analysis of ULTY. No emotional bias. No social proof pressure. Just data.
 
@@ -92,7 +92,7 @@ The contrast hit me hard. Social media showed cherry-picked success stories and 
 
 **Verify specific claims.** Those "85% yield" claims sound impressive until AI shows you it's mostly return of capital.
 
-## The Big Picture
+## Up Next
 
 This experience was my first real taste of what AI-assisted investing could look like. Instead of relying on gut feelings, social proof, or marketing materials, I had access to objective, data-driven analysis.
 
