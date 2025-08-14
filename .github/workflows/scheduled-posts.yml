@@ -1,0 +1,129 @@
+# .github/workflows/scheduled-posts.yml
+name: Publish Scheduled Posts
+
+on:
+  schedule:
+    # Run every hour to check for posts to publish
+    - cron: '0 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Check for scheduled posts
+        id: check_posts
+        run: |
+          # Install dependencies for date parsing
+          npm install js-yaml moment-timezone
+
+          # Create script to check scheduled posts
+          cat > check_posts.js << 'EOF'
+          const fs = require('fs');
+          const yaml = require('js-yaml');
+          const moment = require('moment-timezone');
+
+          const postsDir = './posts';
+          const indexFile = './posts/index.json';
+          const now = moment().tz('America/Los_Angeles'); // Adjust timezone as needed
+
+          let hasChanges = false;
+          let publishedPosts = [];
+
+          if (fs.existsSync(postsDir)) {
+            const files = fs.readdirSync(postsDir)
+              .filter(file => file.endsWith('.md') && file !== 'index.json');
+
+            files.forEach(file => {
+              const filePath = `${postsDir}/${file}`;
+              const content = fs.readFileSync(filePath, 'utf8');
+              
+              // Parse frontmatter
+              const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+              if (frontmatterMatch) {
+                try {
+                  const frontmatter = yaml.load(frontmatterMatch[1]);
+                  
+                  // Check if post should be published
+                  if (frontmatter.status === 'scheduled' && frontmatter.date) {
+                    const publishDate = moment(frontmatter.date);
+                    
+                    if (publishDate.isSameOrBefore(now)) {
+                      // Update status to published
+                      const updatedContent = content.replace(
+                        /status:\s*["']?scheduled["']?/,
+                        'status: published'
+                      );
+                      
+                      fs.writeFileSync(filePath, updatedContent);
+                      hasChanges = true;
+                      publishedPosts.push({
+                        file: file,
+                        title: frontmatter.title,
+                        publishDate: publishDate.format()
+                      });
+                      
+                      console.log(`Published: ${frontmatter.title}`);
+                    }
+                  }
+                } catch (error) {
+                  console.error(`Error parsing ${file}:`, error);
+                }
+              }
+            });
+
+            // Update index.json if needed
+            if (hasChanges) {
+              const publishedFiles = files.filter(file => {
+                const content = fs.readFileSync(`${postsDir}/${file}`, 'utf8');
+                const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+                if (frontmatterMatch) {
+                  const frontmatter = yaml.load(frontmatterMatch[1]);
+                  return frontmatter.status === 'published';
+                }
+                return false;
+              });
+
+              const indexData = { files: publishedFiles };
+              fs.writeFileSync(indexFile, JSON.stringify(indexData, null, 2));
+            }
+          }
+
+          // Output results
+          console.log('has_changes=' + hasChanges);
+          console.log('published_posts=' + JSON.stringify(publishedPosts));
+          process.exit(0);
+          EOF
+
+          # Run the check
+          node check_posts.js > output.txt 2>&1
+          cat output.txt
+
+          # Extract results
+          HAS_CHANGES=$(node check_posts.js 2>/dev/null | grep "has_changes=" | cut -d'=' -f2)
+          echo "has_changes=$HAS_CHANGES" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.check_posts.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "Auto-publish scheduled posts [skip ci]"
+          git push
+
+      - name: Trigger Netlify build
+        if: steps.check_posts.outputs.has_changes == 'true'
+        run: |
+          curl -X POST -d {} "${{ secrets.NETLIFY_BUILD_HOOK_URL }}"
