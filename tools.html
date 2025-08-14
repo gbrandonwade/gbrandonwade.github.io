@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools - Responsible AI and Me</title>
+    <meta name="description" content="Free AI tools and resources built to help professionals work more effectively with artificial intelligence. Created by a project manager transitioning into AI consulting.">
+    <meta name="keywords" content="AI tools, prompt builder, AI resources, artificial intelligence tools, responsible AI">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Free AI Tools - Responsible AI and Me">
+    <meta property="og:description" content="Practical AI tools built by someone learning alongside you.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://responsibleaiandme.netlify.app/tools.html">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free AI Tools - Responsible AI and Me">
+    <meta name="twitter:description" content="Practical AI tools built by someone learning alongside you.">
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #64ffda;
+            --primary-dark: #4fd1c7;
+            --accent-color: #00bcd4;
+            --bg-dark: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e0e6ed;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --hover-bg: rgba(100, 255, 218, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --gradient-bg: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gradient-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.03) 0%, rgba(0, 188, 212, 0.03) 100%);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .tool-features li {
+            padding: 0.3rem 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tool-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .status-live {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .status-coming {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        /* Coming Soon Tools */
+        .coming-soon-section {
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .coming-soon-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .coming-soon-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            opacity: 1;
+        }
+
+        .coming-soon-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Newsletter CTA */
+        .newsletter-cta {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(0, 188, 212, 0.1) 100%);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter-cta h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 46, 0.8);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .newsletter-input {
+                min-width: unset;
+            }
+
+            .tool-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">Responsible AI and Me</a>
+                <nav class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/blog.html">Blog</a>
+                    <a href="/tools.html" class="active">Tools</a>
+                    <a href="/admin">Admin</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI Tools & Resources</h1>
+                <p class="hero-subtitle">
+                    Practical tools built to help professionals work more effectively with AI. Created by someone learning alongside you, focused on real-world applications and responsible practices.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Tools Available</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Coming Soon</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free to Use</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Tools -->
+    <section class="tools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Available Tools</h2>
+                <p class="section-subtitle">
+                    Ready-to-use tools that solve real problems I've encountered in my AI journey
+                </p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔧</div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <h3 class="tool-title">Claude Prompt Builder</h3>
+                        <span class="status-badge status-live">Live</span>
+                    </div>
+                    <p class="tool-description">
+                        A guided interface for creating professional, effective prompts for Claude and other AI models. Choose from templates or build from scratch with proven frameworks.
+                    </p>
+                    
+                    <ul class="tool-features">
+                        <li>6 pre-built templates for common use cases</li>
+                        <li>3 complexity levels (Quick, Standard, Advanced)</li>
+                        <li>Real-time preview as you build</li>
+                        <li>Export to clipboard or markdown</li>
+                        <li>Mobile-responsive design</li>
+                    </ul>
+                    
+                    <div class="tool-actions">
+                        <a href="/tools/prompt-builder.html" class="btn btn-primary">
+                            Launch Tool →
+                        </a>
+                        <a href="/blog.html" class="btn btn-secondary">
+                            Read About It
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Add more tool cards here as you build them -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Tools -->
+    <section class="coming-soon-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Coming Soon</h2>
+                <p class="section-subtitle">
+                    Tools currently in development based on real needs from my AI consulting journey
+                </p>
+            </div>
+
+            <div class="coming-soon-grid">
+                <div class="coming-soon-card">
+                    <h3>AI Response Analyzer</h3>
+                    <p>Evaluate AI responses for quality, bias, and effectiveness. Get scoring and improvement suggestions.</p>
+                    <span class="status-badge status-coming">In Development</span>
+                </div>
+
+                <div class="coming-soon-card">
+                    <h3>ROI Calculator for AI Tools</h3>
+                    <p>Calculate the time and cost savings from implementing AI tools in your workflow.</p>
+                    <span class="status-badge status-coming">Planned</span>
+                </div>
+
+                <div class="coming-soon-card">
+                    <h3>AI Ethics Checklist</h3>
+                    <p>Interactive checklist to ensure responsible AI implementation in your projects and organization.</p>
+                    <span class="status-badge status-coming">Planned</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="newsletter-cta">
+        <div class="container">
+            <h3>Get Notified of New Tools</h3>
+            <p>Be the first to know when I release new AI tools and resources.</p>
+            
+            <form class="newsletter-form" name="tools-newsletter" method="POST" data-netlify="true" onsubmit="handleNewsletterSignup(event)">
+                <input type="hidden" name="form-name" value="tools-newsletter" />
+                <input 
+                    type="email" 
+                    name="email"
+                    class="newsletter-input" 
+                    placeholder="Enter your email address" 
+                    required
+                >
+                <button type="submit" class="btn btn-primary">
+                    Subscribe Free
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Responsible AI and Me. Built with curiosity, powered by AI.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="/">Home</a> | 
+                <a href="/blog.html">Blog</a> | 
+                <a href="/tools.html">Tools</a> |
+                <a href="mailto:contact@responsibleaiandme.com">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Newsletter signup functionality
+        function handleNewsletterSignup(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const email = form.querySelector('input[type="email"]').value.trim();
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Subscribing...';
+            submitBtn.disabled = true;
+            
+            // Submit to Netlify Forms
+            const formData = new FormData();
+            formData.append('form-name', 'tools-newsletter');
+            formData.append('email', email);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => {
+                if (response.ok) {
+                    form.reset();
+                    submitBtn.textContent = 'Subscribed!';
+                    submitBtn.style.background = '#22c55e';
+                    
+                    // Track the signup
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'newsletter_signup', {
+                            event_category: 'engagement',
+                            event_label: 'tools_page'
+                        });
+                    }
+                    
+                    // Reset button after delay
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Subscription failed');
+                }
+            })
+            .catch(error => {
+                console.error('Newsletter signup error:', error);
+                alert('Unable to subscribe right now. Please try again later.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Netlify Identity Widget
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
