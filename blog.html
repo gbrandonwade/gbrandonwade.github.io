@@ -206,6 +206,72 @@
             transform: translateY(0);
         }
 
+        /* Scheduled post styling (visible only to admins) */
+        .post.scheduled-post {
+            position: relative;
+            opacity: 0.8;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .post.scheduled-post::before {
+            content: '📅 SCHEDULED';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: rgba(251, 191, 36, 0.9);
+            color: var(--bg-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .post.scheduled-post:hover {
+            opacity: 1;
+            border-color: #fbbf24;
+        }
+
+        /* Admin controls styling */
+        #scheduled-posts-btn {
+            background: rgba(251, 191, 36, 0.1) !important;
+            color: #fbbf24 !important;
+            border: 1px solid rgba(251, 191, 36, 0.3) !important;
+        }
+
+        #scheduled-posts-btn:hover {
+            background: rgba(251, 191, 36, 0.2) !important;
+            transform: translateY(-1px);
+        }
+
+        /* Post status badges */
+        .post-status {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+        }
+
+        .post-status.draft {
+            background: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+        }
+
+        .post-status.scheduled {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .post-status.published {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
         /* Posts Styles */
         .posts-container {
             display: grid;
@@ -625,6 +691,13 @@
             .comment-form {
                 flex-direction: column;
             }
+
+            .post.scheduled-post::before {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.6rem;
+                top: -10px;
+                right: 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -817,6 +890,7 @@
                 font-size: 1.5rem;
             }
         }
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 animation-duration: 0.01ms !important;
@@ -843,7 +917,7 @@
                     <nav class="nav-links">
                         <a href="/">Home</a>
                         <a href="/tools.html">Tools</a>
-                        <a href="/contact.html">Contact</a>
+                        <a href="#contact">Contact</a>
                         <a href="/admin" class="btn">Admin</a>
                     </nav>
                     <div class="search-container">
@@ -1119,7 +1193,35 @@
             return { frontmatter, content: bodyContent };
         }
 
-        // Load posts from markdown files
+        // Function to determine if a post should be shown
+        function shouldShowPost(post, currentTime = new Date()) {
+            // Never show draft posts
+            if (post.status === 'draft') {
+                return false;
+            }
+            
+            // Don't show scheduled posts that aren't ready yet
+            if (post.status === 'scheduled') {
+                const publishDate = new Date(post.date);
+                return publishDate <= currentTime;
+            }
+            
+            // Show published posts
+            if (post.status === 'published') {
+                const publishDate = new Date(post.date);
+                return publishDate <= currentTime;
+            }
+            
+            // Default to showing the post if status is unclear
+            return true;
+        }
+
+        // Check if user is logged in (basic check)
+        function isUserLoggedIn() {
+            return window.netlifyIdentity && window.netlifyIdentity.currentUser();
+        }
+
+        // Load posts from markdown files with scheduling logic
         async function loadPosts() {
             try {
                 const response = await fetch('/posts/index.json');
@@ -1127,6 +1229,7 @@
                 
                 const postsIndex = await response.json();
                 const posts = [];
+                const now = new Date();
                 
                 for (const filename of postsIndex.files) {
                     try {
@@ -1135,15 +1238,23 @@
                             const content = await postResponse.text();
                             const { frontmatter, content: bodyContent } = parseMarkdown(content);
                             
-                            posts.push({
+                            const post = {
                                 id: filename.replace('.md', ''),
                                 title: frontmatter.title || 'Untitled',
                                 content: bodyContent,
                                 category: frontmatter.category || 'uncategorized',
                                 date: frontmatter.date || new Date().toISOString().split('T')[0],
                                 image: frontmatter.image || '',
+                                status: frontmatter.status || 'published',
+                                description: frontmatter.description || '',
+                                tags: frontmatter.tags || [],
                                 comments: allComments[filename] || []
-                            });
+                            };
+                            
+                            // Only show posts that should be visible
+                            if (shouldShowPost(post, now)) {
+                                posts.push(post);
+                            }
                         }
                     } catch (error) {
                         console.error(`Error loading post ${filename}:`, error);
@@ -1173,6 +1284,7 @@
                     category: "general",
                     date: "2024-08-10",
                     image: "",
+                    status: "published",
                     comments: []
                 }
             ];
@@ -1195,6 +1307,7 @@
             return labels[category] || category.charAt(0).toUpperCase() + category.slice(1);
         }
 
+        // Enhanced post rendering with scheduling info for admins
         function renderPosts(posts) {
             const container = document.getElementById('postsContainer');
             
@@ -1203,74 +1316,92 @@
                 return;
             }
 
-            container.innerHTML = posts.map(post => `
-                <article class="post" role="article" data-post-id="${post.id}">
-                    <div class="post-header post-clickable" data-post-id="${post.id}">
-                        <h2 class="post-title">${escapeHtml(post.title)}</h2>
-                        <div class="post-meta">
-                            <span class="post-category">${getCategoryLabel(post.category)}</span>
-                            <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric' 
-                            })}</span>
+            container.innerHTML = posts.map(post => {
+                const isAdmin = isUserLoggedIn();
+                const publishDate = new Date(post.date);
+                const now = new Date();
+                const isScheduled = post.status === 'scheduled' && publishDate > now;
+                
+                return `
+                    <article class="post ${isScheduled ? 'scheduled-post' : ''}" role="article" data-post-id="${post.id}">
+                        ${isAdmin && isScheduled ? `
+                            <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; padding: 0.5rem; margin-bottom: 1rem; color: #fbbf24; font-size: 0.9rem;">
+                                📅 Scheduled for: ${publishDate.toLocaleString()}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="post-header post-clickable" data-post-id="${post.id}">
+                            <h2 class="post-title">${escapeHtml(post.title)}</h2>
+                            <div class="post-meta">
+                                <span class="post-category">${getCategoryLabel(post.category)}</span>
+                                <span class="post-date">${publishDate.toLocaleDateString('en-US', { 
+                                    year: 'numeric', 
+                                    month: 'long', 
+                                    day: 'numeric' 
+                                })}</span>
+                                ${isAdmin && post.status !== 'published' ? `
+                                    <span class="post-status ${post.status}">
+                                        ${post.status}
+                                    </span>
+                                ` : ''}
+                            </div>
                         </div>
-                    </div>
-                    
-                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image post-clickable" data-post-id="${post.id}" loading="lazy">` : ''}
-                    
-                    <div class="post-content post-clickable" id="content-${post.id}" data-post-id="${post.id}">
-                        ${formatContent(post.content)}
-                        <div class="fade-overlay"></div>
-                    </div>
-                    
-                    <div class="expand-indicator post-clickable" id="expand-${post.id}" data-post-id="${post.id}">
-                        <span>Click to read more</span>
-                        <span class="expand-arrow">▼</span>
-                    </div>
-                    
-                    <div class="post-actions">
-                        <button class="action-btn save-btn" data-post-id="${post.id}" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
-                            ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
-                        </button>
-                        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
-                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
-                            🐦 Share on X
-                        </a>
-                        <button class="action-btn comment-btn" data-post-id="${post.id}" aria-label="Toggle comments section">
-                            💬 Comments (${post.comments.length})
-                        </button>
-                    </div>
-                    
-                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
-                        <div class="comments-header">💭 Comments</div>
-                        <div class="comment-form">
-                            <textarea class="comment-input" placeholder="Share your thoughts..." 
-                                    id="comment-input-${post.id}" 
-                                    aria-label="Write a comment"
-                                    rows="3"></textarea>
-                            <button class="btn comment-submit-btn" data-post-id="${post.id}" aria-label="Post comment">Post Comment</button>
+                        
+                        ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image post-clickable" data-post-id="${post.id}" loading="lazy">` : ''}
+                        
+                        <div class="post-content post-clickable" id="content-${post.id}" data-post-id="${post.id}">
+                            ${formatContent(post.content)}
+                            <div class="fade-overlay"></div>
                         </div>
-                        <div class="comments-list" id="comments-list-${post.id}">
-                            ${post.comments.map(comment => `
-                                <div class="comment">
-                                    <div class="comment-author">👤 Anonymous Reader</div>
-                                    <div>${escapeHtml(comment.text)}</div>
-                                    <div class="comment-date">
-                                        ${new Date(comment.date).toLocaleString('en-US', {
-                                            year: 'numeric',
-                                            month: 'short',
-                                            day: 'numeric',
-                                            hour: '2-digit',
-                                            minute: '2-digit'
-                                        })}
+                        
+                        <div class="expand-indicator post-clickable" id="expand-${post.id}" data-post-id="${post.id}">
+                            <span>Click to read more</span>
+                            <span class="expand-arrow">▼</span>
+                        </div>
+                        
+                        <div class="post-actions">
+                            <button class="action-btn save-btn" data-post-id="${post.id}" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
+                                ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
+                            </button>
+                            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
+                               target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
+                                🐦 Share on X
+                            </a>
+                            <button class="action-btn comment-btn" data-post-id="${post.id}" aria-label="Toggle comments section">
+                                💬 Comments (${post.comments.length})
+                            </button>
+                        </div>
+                        
+                        <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
+                            <div class="comments-header">💭 Comments</div>
+                            <div class="comment-form">
+                                <textarea class="comment-input" placeholder="Share your thoughts..." 
+                                        id="comment-input-${post.id}" 
+                                        aria-label="Write a comment"
+                                        rows="3"></textarea>
+                                <button class="btn comment-submit-btn" data-post-id="${post.id}" aria-label="Post comment">Post Comment</button>
+                            </div>
+                            <div class="comments-list" id="comments-list-${post.id}">
+                                ${post.comments.map(comment => `
+                                    <div class="comment">
+                                        <div class="comment-author">👤 Anonymous Reader</div>
+                                        <div>${escapeHtml(comment.text)}</div>
+                                        <div class="comment-date">
+                                            ${new Date(comment.date).toLocaleString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            `).join('')}
+                                `).join('')}
+                            </div>
                         </div>
-                    </div>
-                </article>
-            `).join('');
+                    </article>
+                `;
+            }).join('');
             
             // Add event listeners after HTML is created
             attachPostEventListeners();
@@ -1279,19 +1410,11 @@
             addInlineNewsletterSignup();
         }
 
-        // Post expansion functionality - MUST BE DEFINED BEFORE attachPostEventListeners
+        // Post expansion functionality
         function togglePostExpansion(postId) {
-            console.log('Expanding post:', postId); // Debug log
-            
             const post = document.querySelector(`[data-post-id="${postId}"]`);
             const content = document.getElementById(`content-${postId}`);
             const indicator = document.getElementById(`expand-${postId}`);
-            
-            console.log('Found elements:', {
-                post: !!post,
-                content: !!content, 
-                indicator: !!indicator
-            }); // Debug log
             
             if (!post || !content || !indicator) {
                 console.error('Could not find required elements for post:', postId);
@@ -1299,7 +1422,6 @@
             }
             
             const isExpanded = post.classList.contains('expanded');
-            console.log('Current state expanded:', isExpanded); // Debug log
             
             if (isExpanded) {
                 // Collapse the post
@@ -1317,8 +1439,6 @@
                 content.classList.add('expanded');
                 indicator.innerHTML = '<span>Click to collapse</span><span class="expand-arrow">▼</span>';
             }
-            
-            console.log('New state expanded:', post.classList.contains('expanded')); // Debug log
         }
 
         // Attach event listeners to posts after HTML is created
@@ -1530,6 +1650,132 @@
             filterPosts();
         }
 
+        // Admin function to preview scheduled posts
+        function showScheduledPosts() {
+            if (!isUserLoggedIn()) {
+                alert('You must be logged in to view scheduled posts.');
+                return;
+            }
+            
+            fetch('/posts/index.json')
+                .then(response => response.json())
+                .then(async (postsIndex) => {
+                    const scheduledPosts = [];
+                    const now = new Date();
+                    
+                    for (const filename of postsIndex.files) {
+                        try {
+                            const postResponse = await fetch(`/posts/${filename}`);
+                            if (postResponse.ok) {
+                                const content = await postResponse.text();
+                                const { frontmatter } = parseMarkdown(content);
+                                
+                                if (frontmatter.status === 'scheduled') {
+                                    const publishDate = new Date(frontmatter.date);
+                                    scheduledPosts.push({
+                                        title: frontmatter.title,
+                                        publishDate: publishDate,
+                                        filename: filename,
+                                        isOverdue: publishDate <= now
+                                    });
+                                }
+                            }
+                        } catch (error) {
+                            console.error(`Error checking ${filename}:`, error);
+                        }
+                    }
+                    
+                    // Display scheduled posts
+                    displayScheduledPostsAdmin(scheduledPosts);
+                })
+                .catch(error => {
+                    console.error('Error loading scheduled posts:', error);
+                });
+        }
+
+        function displayScheduledPostsAdmin(scheduledPosts) {
+            const adminPanel = document.createElement('div');
+            adminPanel.id = 'scheduled-posts-admin';
+            adminPanel.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 16px;
+                padding: 2rem;
+                max-width: 600px;
+                max-height: 80vh;
+                overflow-y: auto;
+                z-index: 1000;
+                backdrop-filter: blur(20px);
+            `;
+            
+            adminPanel.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--primary-color);">Scheduled Posts</h3>
+                    <button onclick="document.getElementById('scheduled-posts-admin').remove(); document.querySelector('.admin-overlay').remove()" 
+                            style="background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer;">×</button>
+                </div>
+                
+                ${scheduledPosts.length === 0 ? 
+                    '<p style="color: var(--text-secondary);">No scheduled posts found.</p>' :
+                    scheduledPosts.map(post => `
+                        <div style="background: var(--hover-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">${escapeHtml(post.title)}</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                Scheduled for: ${post.publishDate.toLocaleString()}
+                                ${post.isOverdue ? '<span style="color: #ef4444;"> (Overdue - check GitHub Actions)</span>' : ''}
+                            </p>
+                        </div>
+                    `).join('')
+                }
+                
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <p style="color: var(--text-secondary); font-size: 0.8rem;">
+                        Scheduled posts are automatically published by GitHub Actions every hour.
+                        <br>Posts marked as overdue may indicate an issue with the automation.
+                    </p>
+                </div>
+            `;
+            
+            document.body.appendChild(adminPanel);
+            
+            // Add overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'admin-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            `;
+            overlay.onclick = () => {
+                document.getElementById('scheduled-posts-admin').remove();
+                overlay.remove();
+            };
+            document.body.appendChild(overlay);
+        }
+
+        // Add admin controls to the page if user is logged in
+        function addAdminControls() {
+            if (isUserLoggedIn()) {
+                const controls = document.querySelector('.controls .filters');
+                if (controls && !document.getElementById('scheduled-posts-btn')) {
+                    const scheduledBtn = document.createElement('button');
+                    scheduledBtn.id = 'scheduled-posts-btn';
+                    scheduledBtn.className = 'btn';
+                    scheduledBtn.textContent = '📅 Scheduled Posts';
+                    scheduledBtn.onclick = showScheduledPosts;
+                    controls.appendChild(scheduledBtn);
+                }
+            }
+        }
+
         // Event listeners
         document.getElementById('searchInput').addEventListener('input', debounce(filterPosts, 300));
         document.getElementById('categoryFilter').addEventListener('change', filterPosts);
@@ -1643,16 +1889,8 @@
         }
         
         async function subscribeToEmailService(email) {
-            switch (EMAIL_CONFIG.service) {
-                case 'netlify':
-                    return subscribeNetlifyForms(email);
-                case 'convertkit':
-                    return subscribeConvertKit(email);
-                case 'buttondown':
-                    return subscribeButtondown(email);
-                default:
-                    return simulateNewsletterSignup(email);
-            }
+            // Default to Netlify Forms
+            return subscribeNetlifyForms(email);
         }
         
         async function subscribeNetlifyForms(email) {
@@ -1680,71 +1918,6 @@
             }
         }
         
-        async function subscribeConvertKit(email) {
-            const { formId, apiKey } = EMAIL_CONFIG.convertkit;
-            
-            if (!formId || !apiKey || formId.includes('YOUR_') || apiKey.includes('YOUR_')) {
-                throw new Error('ConvertKit not configured');
-            }
-            
-            try {
-                const response = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        api_key: apiKey,
-                        email: email,
-                        tags: ['Blog Subscriber']
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (response.ok) {
-                    storeSubscriberLocally(email, 'convertkit');
-                    return { status: 'subscribed', service: 'convertkit' };
-                } else {
-                    throw new Error(result.message || 'ConvertKit subscription failed');
-                }
-            } catch (error) {
-                console.error('ConvertKit error:', error);
-                throw error;
-            }
-        }
-        
-        async function subscribeButtondown(email) {
-            const { username } = EMAIL_CONFIG.buttondown;
-            
-            if (!username || username.includes('YOUR_')) {
-                throw new Error('Buttondown not configured');
-            }
-            
-            try {
-                const response = await fetch(`https://buttondown.email/api/emails/embed-subscribe/${username}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        tag: 'blog-subscriber'
-                    })
-                });
-                
-                if (response.ok) {
-                    storeSubscriberLocally(email, 'buttondown');
-                    return { status: 'subscribed', service: 'buttondown' };
-                } else {
-                    throw new Error('Buttondown subscription failed');
-                }
-            } catch (error) {
-                console.error('Buttondown error:', error);
-                throw error;
-            }
-        }
-        
         function storeSubscriberLocally(email, service) {
             try {
                 let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
@@ -1763,20 +1936,6 @@
             } catch (error) {
                 console.error('Local storage error:', error);
             }
-        }
-        
-        function simulateNewsletterSignup(email) {
-            // Fallback simulation
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    try {
-                        storeSubscriberLocally(email, 'local');
-                        resolve({ status: 'subscribed', service: 'local' });
-                    } catch (error) {
-                        reject(error);
-                    }
-                }, 1000);
-            });
         }
         
         function isValidEmail(email) {
@@ -1844,8 +2003,30 @@
                 }
             }
         }
+
+        // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
             loadPosts();
+            
+            // Check for admin status and add controls
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on("init", user => {
+                    if (user) {
+                        addAdminControls();
+                    }
+                });
+                
+                window.netlifyIdentity.on("login", () => {
+                    addAdminControls();
+                });
+                
+                window.netlifyIdentity.on("logout", () => {
+                    const scheduledBtn = document.getElementById('scheduled-posts-btn');
+                    if (scheduledBtn) {
+                        scheduledBtn.remove();
+                    }
+                });
+            }
             
             // Add search shortcut hint
             const searchInput = document.getElementById('searchInput');
