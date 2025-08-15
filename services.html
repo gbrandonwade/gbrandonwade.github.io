@@ -130,21 +130,21 @@
         .credentials-bar {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            align-items: center;
+            gap: 1rem;
             flex-wrap: wrap;
             margin-top: 2rem;
         }
 
         .credential-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .credential-icon {
+        .credential-separator {
             color: var(--primary-color);
+            font-weight: 300;
         }
 
         /* Services Grid */
@@ -259,7 +259,7 @@
         }
 
         .service-features li::before {
-            content: '✓';
+            content: '→';
             position: absolute;
             left: 0;
             color: var(--primary-color);
@@ -531,22 +531,13 @@
             </p>
             
             <div class="credentials-bar">
-                <div class="credential-item">
-                    <span class="credential-icon">🏢</span>
-                    <span>Fortune 500 Experience</span>
-                </div>
-                <div class="credential-item">
-                    <span class="credential-icon">⚡</span>
-                    <span>6+ Years Project Management</span>
-                </div>
-                <div class="credential-item">
-                    <span class="credential-icon">🧠</span>
-                    <span>Real-World AI Implementation</span>
-                </div>
-                <div class="credential-item">
-                    <span class="credential-icon">🛡️</span>
-                    <span>Responsible AI Advocate</span>
-                </div>
+                <span class="credential-item">Former American Electric Power Project Manager</span>
+                <span class="credential-separator">|</span>
+                <span class="credential-item">6+ Years Leading Complex Implementations</span>
+                <span class="credential-separator">|</span>
+                <span class="credential-item">Proven AI Integration Experience</span>
+                <span class="credential-separator">|</span>
+                <span class="credential-item">Committed to Ethical AI Practices</span>
             </div>
         </div>
     </section>
@@ -565,7 +556,7 @@
                 <!-- AI Readiness Assessment -->
                 <div class="service-card">
                     <div class="service-header">
-                        <div class="service-icon">🔍</div>
+                        <div class="service-icon">AI</div>
                         <div class="price-badge">$497</div>
                     </div>
                     <h3 class="service-title">AI Readiness Assessment</h3>
@@ -590,7 +581,7 @@
                 <div class="service-card featured-service">
                     <div class="featured-badge">Most Popular</div>
                     <div class="service-header">
-                        <div class="service-icon">🎯</div>
+                        <div class="service-icon">WS</div>
                         <div class="price-badge">$297/person</div>
                     </div>
                     <h3 class="service-title">Prompt Engineering Workshop</h3>
@@ -614,7 +605,7 @@
                 <!-- AI Strategy Consulting -->
                 <div class="service-card">
                     <div class="service-header">
-                        <div class="service-icon">📋</div>
+                        <div class="service-icon">SC</div>
                         <div class="price-badge">$1,497/month</div>
                     </div>
                     <h3 class="service-title">AI Strategy Consulting</h3>
@@ -638,7 +629,7 @@
                 <!-- Speaking Engagements -->
                 <div class="service-card">
                     <div class="service-header">
-                        <div class="service-icon">🎤</div>
+                        <div class="service-icon">SP</div>
                         <div class="price-badge">Starting $997</div>
                     </div>
                     <h3 class="service-title">Speaking & Keynotes</h3>
@@ -662,7 +653,7 @@
                 <!-- Custom AI Implementation -->
                 <div class="service-card">
                     <div class="service-header">
-                        <div class="service-icon">⚙️</div>
+                        <div class="service-icon">CI</div>
                         <div class="price-badge">Custom Quote</div>
                     </div>
                     <h3 class="service-title">Custom AI Implementation</h3>
@@ -686,7 +677,7 @@
                 <!-- One-Time Consultation -->
                 <div class="service-card">
                     <div class="service-header">
-                        <div class="service-icon">💡</div>
+                        <div class="service-icon">1H</div>
                         <div class="price-badge">$147/hour</div>
                     </div>
                     <h3 class="service-title">Strategic Consultation</h3>
