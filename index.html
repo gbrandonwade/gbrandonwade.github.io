@@ -34,6 +34,7 @@
             --hover-bg: rgba(100, 255, 218, 0.1);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             --gradient-bg: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+            --success-color: #22c55e;
         }
 
         * {
@@ -72,7 +73,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
-            position: relative;
         }
 
         .logo {
@@ -98,120 +98,6 @@
 
         .nav-links a:hover {
             color: var(--primary-color);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1001;
-        }
-
-        .mobile-menu-toggle:hover {
-            color: var(--primary-color);
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            width: 24px;
-            height: 18px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 2px;
-            width: 100%;
-            background: currentColor;
-            border-radius: 1px;
-            transition: all 0.3s ease;
-            position: absolute;
-        }
-
-        .hamburger span:nth-child(1) {
-            top: 0;
-        }
-
-        .hamburger span:nth-child(2) {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .hamburger span:nth-child(3) {
-            bottom: 0;
-        }
-
-        .mobile-menu-toggle.active .hamburger span:nth-child(1) {
-            transform: rotate(45deg);
-            top: 50%;
-        }
-
-        .mobile-menu-toggle.active .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-toggle.active .hamburger span:nth-child(3) {
-            transform: rotate(-45deg);
-            bottom: 50%;
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(26, 26, 46, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding-top: 80px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            padding: 2rem;
-        }
-
-        .mobile-menu a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 600;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            text-align: center;
-            min-width: 200px;
-        }
-
-        .mobile-menu a:hover {
-            color: var(--primary-color);
-            background: var(--hover-bg);
-        }
-
-        .mobile-menu .btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: var(--bg-dark);
-            margin-top: 1rem;
         }
 
         /* Hero Section */
@@ -242,8 +128,56 @@
         .hero-subtitle {
             font-size: 1.3rem;
             color: var(--text-secondary);
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             line-height: 1.5;
+        }
+
+        /* CTA Section */
+        .hero-supporting {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .secondary-cta {
+            margin-top: 2rem;
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .divider span {
+            background: var(--bg-dark);
+            padding: 0 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .newsletter-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .newsletter-link:hover {
+            color: var(--primary-dark);
         }
 
         .cta-primary {
@@ -257,6 +191,11 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(100, 255, 218, 0.3);
+            margin-bottom: 1rem;
+            display: block;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-primary:hover {
@@ -264,10 +203,65 @@
             box-shadow: 0 12px 40px rgba(100, 255, 218, 0.4);
         }
 
-        .hero-supporting {
-            margin-top: 1.5rem;
+        .cta-urgency {
             font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .risk-reversal {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .guarantee-text {
+            font-size: 0.95rem;
             color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .secondary-cta {
+            margin-top: 2rem;
+        }
+
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .divider span {
+            background: var(--bg-dark);
+            padding: 0 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .newsletter-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .newsletter-link:hover {
+            color: var(--primary-dark);
         }
 
         /* Section Styles */
@@ -676,6 +670,12 @@
             padding: 0.3rem 0;
         }
 
+        .urgency-item li::before {
+            content: '→';
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
         /* Final CTA Section */
         .final-cta {
             background: var(--gradient-bg);
@@ -770,7 +770,7 @@
             color: var(--primary-color);
         }
 
-        .risk-reversal {
+        .risk-reversal-newsletter {
             background: rgba(100, 255, 218, 0.05);
             border: 1px solid rgba(100, 255, 218, 0.2);
             border-radius: 8px;
@@ -790,7 +790,7 @@
         .success-message {
             background: rgba(34, 197, 94, 0.1);
             border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
+            color: var(--success-color);
         }
 
         .error-message {
@@ -875,14 +875,6 @@
                 display: none;
             }
 
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
             .container {
                 padding: 0 15px;
             }
@@ -924,26 +916,10 @@
                 <nav class="nav-links">
                     <a href="/blog.html">Blog</a>
                     <a href="/tools.html">Tools</a>
+                    <a href="/services.html">Services</a>
                     <a href="/contact.html">Contact</a>
                     <a href="/admin" class="btn">Admin</a>
                 </nav>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-menu-content">
-                <a href="/blog.html">Blog</a>
-                <a href="/tools.html">Tools</a>
-                <a href="/contact.html">Contact</a>
-                <a href="/admin" class="btn">Admin</a>
             </div>
         </div>
     </header>
@@ -956,10 +932,22 @@
                 <p class="hero-subtitle">
                     I'm a project manager who just moved to LA to break into AI consulting. No computer science degree. No coding bootcamp. Just curiosity, experimentation, and a commitment to doing AI responsibly. Follow my real-time journey from the outside looking in to AI professional.
                 </p>
+                
+                <!-- Primary CTA Section -->
                 <a href="#newsletter" class="cta-primary">Join My AI Journey (Free)</a>
                 <p class="hero-supporting">
                     Get weekly insights on AI tools, responsible practices, and real experiments from someone learning alongside you.
                 </p>
+                
+                <!-- Secondary Consultation CTA -->
+                <div class="secondary-cta">
+                    <div class="divider">
+                        <span>Need immediate guidance?</span>
+                    </div>
+                    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="newsletter-link">
+                        Book a free 15-minute AI strategy call →
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1197,9 +1185,9 @@
                     <div class="urgency-item">
                         <h4>Early Adopters Are:</h4>
                         <ul>
-                            <li>✓ Positioning as internal AI champions</li>
-                            <li>✓ Getting "AI-native" career positioning</li>
-                            <li>✓ Building practical, not theoretical knowledge</li>
+                            <li>Positioning as internal AI champions</li>
+                            <li>Getting "AI-native" career positioning</li>
+                            <li>Building practical, not theoretical knowledge</li>
                         </ul>
                     </div>
                     <div class="urgency-item">
@@ -1248,7 +1236,7 @@
                     <li><strong>Community</strong> of professionals making the same transition</li>
                 </ol>
                 
-                <div class="risk-reversal">
+                <div class="risk-reversal-newsletter">
                     <strong>Risk Reversal:</strong> No spam, ever. Unsubscribe anytime. I'm betting my career transition on providing value - if I don't deliver, I'll be the first to know.
                 </div>
             </div>
@@ -1320,6 +1308,8 @@
             <p>&copy; 2024 Responsible AI and Me. Exploring AI responsibly, one post at a time.</p>
             <p style="margin-top: 0.5rem;">
                 <a href="/blog.html">Read the Blog</a> | 
+                <a href="/tools.html">Tools</a> |
+                <a href="/services.html">Services</a> |
                 <a href="mailto:contact@responsibleaiandme.com">Contact</a> | 
                 <a href="/privacy">Privacy Policy</a>
             </p>
@@ -1327,6 +1317,17 @@
     </footer>
 
     <script>
+        // Calendly Widget Integration
+        const calendlyCSS = document.createElement('link');
+        calendlyCSS.href = 'https://assets.calendly.com/assets/external/widget.css';
+        calendlyCSS.rel = 'stylesheet';
+        document.head.appendChild(calendlyCSS);
+        
+        const calendlyScript = document.createElement('script');
+        calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+        calendlyScript.async = true;
+        document.head.appendChild(calendlyScript);
+
         // Newsletter signup functionality
         function handleNewsletterSignup(event) {
             event.preventDefault();
@@ -1452,61 +1453,6 @@
             });
         }
         
-        // Mobile menu functionality
-        function initMobileMenu() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuToggle && mobileMenu) {
-                mobileMenuToggle.addEventListener('click', function() {
-                    const isActive = mobileMenuToggle.classList.contains('active');
-                    
-                    if (isActive) {
-                        // Close menu
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    } else {
-                        // Open menu
-                        mobileMenuToggle.classList.add('active');
-                        mobileMenu.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
-                });
-                
-                // Close menu when clicking on links
-                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-                mobileMenuLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    });
-                });
-                
-                // Close menu when clicking outside
-                mobileMenu.addEventListener('click', function(e) {
-                    if (e.target === mobileMenu) {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-                
-                // Close menu on escape key
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                });
-            }
-        }
-        
-        // Initialize mobile menu when page loads
-        document.addEventListener('DOMContentLoaded', initMobileMenu);
-        
         // Add subtle scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -1528,6 +1474,18 @@
             section.style.transform = 'translateY(20px)';
             section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(section);
+        });
+
+        // Track CTA interactions
+        document.querySelectorAll('.cta-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'cta_click', {
+                        event_category: 'engagement',
+                        event_label: this.textContent
+                    });
+                }
+            });
         });
     </script>
 </body>
