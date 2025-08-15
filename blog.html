@@ -25,6 +25,7 @@
         :root {
             --primary-color: #64ffda;
             --primary-dark: #4fd1c7;
+            --accent-color: #00bcd4;
             --bg-dark: #1a1a2e;
             --bg-secondary: #16213e;
             --text-primary: #e0e6ed;
@@ -33,6 +34,7 @@
             --card-bg: rgba(255, 255, 255, 0.05);
             --hover-bg: rgba(100, 255, 218, 0.1);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --gradient-bg: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
         }
 
         * {
@@ -43,7 +45,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+            background: var(--gradient-bg);
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
@@ -144,9 +146,44 @@
             color: var(--text-secondary);
         }
 
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.03) 0%, rgba(0, 188, 212, 0.03) 100%);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         /* Main Content */
         main {
-            padding: 2rem 0;
+            padding: 3rem 0;
         }
 
         .controls {
@@ -204,72 +241,6 @@
 
         .btn:active {
             transform: translateY(0);
-        }
-
-        /* Scheduled post styling (visible only to admins) */
-        .post.scheduled-post {
-            position: relative;
-            opacity: 0.8;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .post.scheduled-post::before {
-            content: '📅 SCHEDULED';
-            position: absolute;
-            top: -12px;
-            right: 20px;
-            background: rgba(251, 191, 36, 0.9);
-            color: var(--bg-dark);
-            padding: 0.3rem 0.8rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            z-index: 10;
-        }
-
-        .post.scheduled-post:hover {
-            opacity: 1;
-            border-color: #fbbf24;
-        }
-
-        /* Admin controls styling */
-        #scheduled-posts-btn {
-            background: rgba(251, 191, 36, 0.1) !important;
-            color: #fbbf24 !important;
-            border: 1px solid rgba(251, 191, 36, 0.3) !important;
-        }
-
-        #scheduled-posts-btn:hover {
-            background: rgba(251, 191, 36, 0.2) !important;
-            transform: translateY(-1px);
-        }
-
-        /* Post status badges */
-        .post-status {
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-        }
-
-        .post-status.draft {
-            background: rgba(107, 114, 128, 0.2);
-            color: #6b7280;
-        }
-
-        .post-status.scheduled {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
-        }
-
-        .post-status.published {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
         }
 
         /* Posts Styles */
@@ -348,11 +319,6 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .post-date::before {
-            content: '📅';
-            font-size: 0.8rem;
         }
 
         /* Post Content Formatting */
@@ -553,6 +519,12 @@
             transform: translateY(-1px);
         }
 
+        .action-btn.save-btn.saved {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
         /* Comments Section */
         .comments-section {
             margin-top: 2rem;
@@ -638,6 +610,143 @@
             color: var(--primary-color);
         }
 
+        /* Newsletter Section - Professional Style */
+        .newsletter-section {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.05) 0%, rgba(0, 188, 212, 0.05) 100%);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .newsletter-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .newsletter-description {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .newsletter-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .newsletter-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
+        }
+
+        .newsletter-btn:active {
+            transform: translateY(0);
+        }
+
+        .newsletter-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-benefit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .newsletter-benefit::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .newsletter-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .newsletter-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -659,6 +768,14 @@
                 flex-direction: column;
                 width: 100%;
                 gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
             }
             
             .controls {
@@ -691,182 +808,7 @@
             .comment-form {
                 flex-direction: column;
             }
-
-            .post.scheduled-post::before {
-                font-size: 0.6rem;
-                padding: 0.2rem 0.6rem;
-                top: -10px;
-                right: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
             
-            .post {
-                padding: 1rem;
-            }
-            
-            .logo {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Newsletter Signup Styles */
-        .newsletter-section {
-            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(100, 255, 218, 0.05) 100%);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin: 3rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .newsletter-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
-        }
-
-        .newsletter-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            letter-spacing: -0.3px;
-        }
-
-        .newsletter-description {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .newsletter-input {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.9rem 1.2rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .newsletter-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .newsletter-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        .newsletter-btn {
-            padding: 0.9rem 2rem;
-            background: var(--primary-color);
-            color: var(--bg-dark);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
-        }
-
-        .newsletter-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
-        }
-
-        .newsletter-btn:active {
-            transform: translateY(0);
-        }
-
-        .newsletter-benefits {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .newsletter-benefit {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .newsletter-success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .newsletter-error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* Inline Newsletter Signup (for between posts) */
-        .inline-newsletter {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .inline-newsletter .newsletter-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .inline-newsletter .newsletter-description {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
             .newsletter-section {
                 padding: 2rem 1.5rem;
             }
@@ -887,6 +829,20 @@
             }
             
             .newsletter-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .post {
+                padding: 1rem;
+            }
+            
+            .logo {
                 font-size: 1.5rem;
             }
         }
@@ -928,6 +884,18 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>AI Insights & Experiments</h1>
+                <p class="hero-subtitle">
+                    Real-time documentation of a project manager's journey into AI. Practical experiments, honest reviews, and responsible implementation strategies for everyday professionals.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <main class="container">
         <div class="controls">
             <div class="filters">
@@ -947,8 +915,8 @@
             </div>
             
             <div class="filters">
-                <button class="btn" onclick="showSavedPosts()" aria-label="View saved posts">📖 Saved Posts</button>
-                <button class="btn" onclick="showAllPosts()" aria-label="View all posts">📋 All Posts</button>
+                <button class="btn" onclick="showSavedPosts()" aria-label="View saved posts">Saved Posts</button>
+                <button class="btn" onclick="showAllPosts()" aria-label="View all posts">All Posts</button>
             </div>
         </div>
 
@@ -962,7 +930,7 @@
 
         <!-- Newsletter Signup Section -->
         <section class="newsletter-section" id="newsletterSection">
-            <h2 class="newsletter-title">🚀 Join the AI Journey</h2>
+            <h2 class="newsletter-title">Join the AI Journey</h2>
             <p class="newsletter-description">
                 Get weekly insights on AI tools, responsible practices, and real-world experiments. 
                 No spam, just actionable content to help you navigate the AI revolution.
@@ -985,31 +953,22 @@
             </form>
             
             <div class="newsletter-benefits">
-                <div class="newsletter-benefit">
-                    <span>📧</span>
-                    <span>Weekly AI insights</span>
-                </div>
-                <div class="newsletter-benefit">
-                    <span>🔒</span>
-                    <span>No spam, ever</span>
-                </div>
-                <div class="newsletter-benefit">
-                    <span>📈</span>
-                    <span>Exclusive content</span>
-                </div>
+                <div class="newsletter-benefit">Weekly AI insights</div>
+                <div class="newsletter-benefit">No spam, ever</div>
+                <div class="newsletter-benefit">Exclusive content</div>
             </div>
             
             <div class="newsletter-success" id="newsletterSuccess">
-                <strong>🎉 Welcome aboard!</strong> Check your email to confirm your subscription.
+                <strong>Welcome aboard!</strong> Check your email to confirm your subscription.
             </div>
             
             <div class="newsletter-error" id="newsletterError">
-                <strong>⚠️ Oops!</strong> Something went wrong. Please try again.
+                <strong>Oops!</strong> Something went wrong. Please try again.
             </div>
         </section>
 
         <div class="saved-posts" id="savedPosts" style="display: none;">
-            <h2>📚 Your Saved Posts</h2>
+            <h2>Your Saved Posts</h2>
             <div id="savedPostsContainer"></div>
         </div>
     </main>
@@ -1193,35 +1152,7 @@
             return { frontmatter, content: bodyContent };
         }
 
-        // Function to determine if a post should be shown
-        function shouldShowPost(post, currentTime = new Date()) {
-            // Never show draft posts
-            if (post.status === 'draft') {
-                return false;
-            }
-            
-            // Don't show scheduled posts that aren't ready yet
-            if (post.status === 'scheduled') {
-                const publishDate = new Date(post.date);
-                return publishDate <= currentTime;
-            }
-            
-            // Show published posts
-            if (post.status === 'published') {
-                const publishDate = new Date(post.date);
-                return publishDate <= currentTime;
-            }
-            
-            // Default to showing the post if status is unclear
-            return true;
-        }
-
-        // Check if user is logged in (basic check)
-        function isUserLoggedIn() {
-            return window.netlifyIdentity && window.netlifyIdentity.currentUser();
-        }
-
-        // Load posts from markdown files with scheduling logic
+        // Load posts from markdown files
         async function loadPosts() {
             try {
                 const response = await fetch('/posts/index.json');
@@ -1229,7 +1160,6 @@
                 
                 const postsIndex = await response.json();
                 const posts = [];
-                const now = new Date();
                 
                 for (const filename of postsIndex.files) {
                     try {
@@ -1238,23 +1168,15 @@
                             const content = await postResponse.text();
                             const { frontmatter, content: bodyContent } = parseMarkdown(content);
                             
-                            const post = {
+                            posts.push({
                                 id: filename.replace('.md', ''),
                                 title: frontmatter.title || 'Untitled',
                                 content: bodyContent,
                                 category: frontmatter.category || 'uncategorized',
                                 date: frontmatter.date || new Date().toISOString().split('T')[0],
                                 image: frontmatter.image || '',
-                                status: frontmatter.status || 'published',
-                                description: frontmatter.description || '',
-                                tags: frontmatter.tags || [],
                                 comments: allComments[filename] || []
-                            };
-                            
-                            // Only show posts that should be visible
-                            if (shouldShowPost(post, now)) {
-                                posts.push(post);
-                            }
+                            });
                         }
                     } catch (error) {
                         console.error(`Error loading post ${filename}:`, error);
@@ -1284,7 +1206,6 @@
                     category: "general",
                     date: "2024-08-10",
                     image: "",
-                    status: "published",
                     comments: []
                 }
             ];
@@ -1307,110 +1228,88 @@
             return labels[category] || category.charAt(0).toUpperCase() + category.slice(1);
         }
 
-        // Enhanced post rendering with scheduling info for admins
         function renderPosts(posts) {
             const container = document.getElementById('postsContainer');
             
             if (posts.length === 0) {
-                container.innerHTML = '<div class="no-posts">📝 No posts found matching your criteria.<br><small>Try adjusting your search or category filter.</small></div>';
+                container.innerHTML = '<div class="no-posts">No posts found matching your criteria.<br><small>Try adjusting your search or category filter.</small></div>';
                 return;
             }
 
-            container.innerHTML = posts.map(post => {
-                const isAdmin = isUserLoggedIn();
-                const publishDate = new Date(post.date);
-                const now = new Date();
-                const isScheduled = post.status === 'scheduled' && publishDate > now;
-                
-                return `
-                    <article class="post ${isScheduled ? 'scheduled-post' : ''}" role="article" data-post-id="${post.id}">
-                        ${isAdmin && isScheduled ? `
-                            <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; padding: 0.5rem; margin-bottom: 1rem; color: #fbbf24; font-size: 0.9rem;">
-                                📅 Scheduled for: ${publishDate.toLocaleString()}
-                            </div>
-                        ` : ''}
-                        
-                        <div class="post-header post-clickable" data-post-id="${post.id}">
-                            <h2 class="post-title">${escapeHtml(post.title)}</h2>
-                            <div class="post-meta">
-                                <span class="post-category">${getCategoryLabel(post.category)}</span>
-                                <span class="post-date">${publishDate.toLocaleDateString('en-US', { 
-                                    year: 'numeric', 
-                                    month: 'long', 
-                                    day: 'numeric' 
-                                })}</span>
-                                ${isAdmin && post.status !== 'published' ? `
-                                    <span class="post-status ${post.status}">
-                                        ${post.status}
-                                    </span>
-                                ` : ''}
-                            </div>
+            container.innerHTML = posts.map(post => `
+                <article class="post" role="article" data-post-id="${post.id}">
+                    <div class="post-header post-clickable" data-post-id="${post.id}">
+                        <h2 class="post-title">${escapeHtml(post.title)}</h2>
+                        <div class="post-meta">
+                            <span class="post-category">${getCategoryLabel(post.category)}</span>
+                            <span class="post-date">${new Date(post.date).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            })}</span>
                         </div>
-                        
-                        ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image post-clickable" data-post-id="${post.id}" loading="lazy">` : ''}
-                        
-                        <div class="post-content post-clickable" id="content-${post.id}" data-post-id="${post.id}">
-                            ${formatContent(post.content)}
-                            <div class="fade-overlay"></div>
+                    </div>
+                    
+                    ${post.image ? `<img src="${escapeHtml(post.image)}" alt="Featured image for ${escapeHtml(post.title)}" class="post-image post-clickable" data-post-id="${post.id}" loading="lazy">` : ''}
+                    
+                    <div class="post-content post-clickable" id="content-${post.id}" data-post-id="${post.id}">
+                        ${formatContent(post.content)}
+                        <div class="fade-overlay"></div>
+                    </div>
+                    
+                    <div class="expand-indicator post-clickable" id="expand-${post.id}" data-post-id="${post.id}">
+                        <span>Click to read more</span>
+                        <span class="expand-arrow">▼</span>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <button class="action-btn save-btn ${savedPostIds.includes(post.id) ? 'saved' : ''}" data-post-id="${post.id}" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
+                            ${savedPostIds.includes(post.id) ? 'Saved' : 'Save'}
+                        </button>
+                        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
+                           target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
+                            Share on X
+                        </a>
+                        <button class="action-btn comment-btn" data-post-id="${post.id}" aria-label="Toggle comments section">
+                            Comments (${post.comments.length})
+                        </button>
+                    </div>
+                    
+                    <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
+                        <div class="comments-header">Comments</div>
+                        <div class="comment-form">
+                            <textarea class="comment-input" placeholder="Share your thoughts..." 
+                                    id="comment-input-${post.id}" 
+                                    aria-label="Write a comment"
+                                    rows="3"></textarea>
+                            <button class="btn comment-submit-btn" data-post-id="${post.id}" aria-label="Post comment">Post Comment</button>
                         </div>
-                        
-                        <div class="expand-indicator post-clickable" id="expand-${post.id}" data-post-id="${post.id}">
-                            <span>Click to read more</span>
-                            <span class="expand-arrow">▼</span>
-                        </div>
-                        
-                        <div class="post-actions">
-                            <button class="action-btn save-btn" data-post-id="${post.id}" aria-label="${savedPostIds.includes(post.id) ? 'Remove from saved posts' : 'Save this post'}">
-                                ${savedPostIds.includes(post.id) ? '⭐ Saved' : '☆ Save'}
-                            </button>
-                            <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + ' - Check out this post on Responsible AI!')}&url=${encodeURIComponent(window.location.href)}" 
-                               target="_blank" rel="noopener noreferrer" class="action-btn" aria-label="Share on X (Twitter)">
-                                🐦 Share on X
-                            </a>
-                            <button class="action-btn comment-btn" data-post-id="${post.id}" aria-label="Toggle comments section">
-                                💬 Comments (${post.comments.length})
-                            </button>
-                        </div>
-                        
-                        <div class="comments-section" id="comments-${post.id}" style="display: none;" role="region" aria-label="Comments for ${escapeHtml(post.title)}">
-                            <div class="comments-header">💭 Comments</div>
-                            <div class="comment-form">
-                                <textarea class="comment-input" placeholder="Share your thoughts..." 
-                                        id="comment-input-${post.id}" 
-                                        aria-label="Write a comment"
-                                        rows="3"></textarea>
-                                <button class="btn comment-submit-btn" data-post-id="${post.id}" aria-label="Post comment">Post Comment</button>
-                            </div>
-                            <div class="comments-list" id="comments-list-${post.id}">
-                                ${post.comments.map(comment => `
-                                    <div class="comment">
-                                        <div class="comment-author">👤 Anonymous Reader</div>
-                                        <div>${escapeHtml(comment.text)}</div>
-                                        <div class="comment-date">
-                                            ${new Date(comment.date).toLocaleString('en-US', {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
-                                            })}
-                                        </div>
+                        <div class="comments-list" id="comments-list-${post.id}">
+                            ${post.comments.map(comment => `
+                                <div class="comment">
+                                    <div class="comment-author">Anonymous Reader</div>
+                                    <div>${escapeHtml(comment.text)}</div>
+                                    <div class="comment-date">
+                                        ${new Date(comment.date).toLocaleString('en-US', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit'
+                                        })}
                                     </div>
-                                `).join('')}
-                            </div>
+                                </div>
+                            `).join('')}
                         </div>
-                    </article>
-                `;
-            }).join('');
+                    </div>
+                </article>
+            `).join('');
             
             // Add event listeners after HTML is created
             attachPostEventListeners();
-            
-            // Add inline newsletter signup if we have multiple posts
-            addInlineNewsletterSignup();
         }
 
-        // Post expansion functionality
+        // Post expansion functionality - MUST BE DEFINED BEFORE attachPostEventListeners
         function togglePostExpansion(postId) {
             const post = document.querySelector(`[data-post-id="${postId}"]`);
             const content = document.getElementById(`content-${postId}`);
@@ -1612,8 +1511,8 @@
             if (savedPosts.length === 0) {
                 savedContainer.innerHTML = `
                     <div class="no-posts">
-                        📚 No saved posts yet.<br>
-                        <small>Save posts by clicking the ☆ Save button on any post you'd like to read later.</small>
+                        No saved posts yet.<br>
+                        <small>Save posts by clicking the Save button on any post you'd like to read later.</small>
                     </div>
                 `;
             } else {
@@ -1633,10 +1532,10 @@
                         </div>
                         <div class="post-actions">
                             <button class="action-btn" onclick="toggleSavePost('${post.id}'); showSavedPosts();" aria-label="Remove from saved posts">
-                                🗑️ Remove from Saved
+                                Remove from Saved
                             </button>
                             <button class="action-btn" onclick="showAllPosts(); document.getElementById('searchInput').value='${escapeHtml(post.title)}'; filterPosts();" aria-label="View full post">
-                                👁️ Read Full Post
+                                Read Full Post
                             </button>
                         </div>
                     </div>
@@ -1648,132 +1547,6 @@
             document.getElementById('postsContainer').style.display = 'grid';
             document.getElementById('savedPosts').style.display = 'none';
             filterPosts();
-        }
-
-        // Admin function to preview scheduled posts
-        function showScheduledPosts() {
-            if (!isUserLoggedIn()) {
-                alert('You must be logged in to view scheduled posts.');
-                return;
-            }
-            
-            fetch('/posts/index.json')
-                .then(response => response.json())
-                .then(async (postsIndex) => {
-                    const scheduledPosts = [];
-                    const now = new Date();
-                    
-                    for (const filename of postsIndex.files) {
-                        try {
-                            const postResponse = await fetch(`/posts/${filename}`);
-                            if (postResponse.ok) {
-                                const content = await postResponse.text();
-                                const { frontmatter } = parseMarkdown(content);
-                                
-                                if (frontmatter.status === 'scheduled') {
-                                    const publishDate = new Date(frontmatter.date);
-                                    scheduledPosts.push({
-                                        title: frontmatter.title,
-                                        publishDate: publishDate,
-                                        filename: filename,
-                                        isOverdue: publishDate <= now
-                                    });
-                                }
-                            }
-                        } catch (error) {
-                            console.error(`Error checking ${filename}:`, error);
-                        }
-                    }
-                    
-                    // Display scheduled posts
-                    displayScheduledPostsAdmin(scheduledPosts);
-                })
-                .catch(error => {
-                    console.error('Error loading scheduled posts:', error);
-                });
-        }
-
-        function displayScheduledPostsAdmin(scheduledPosts) {
-            const adminPanel = document.createElement('div');
-            adminPanel.id = 'scheduled-posts-admin';
-            adminPanel.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: var(--card-bg);
-                border: 1px solid var(--border-color);
-                border-radius: 16px;
-                padding: 2rem;
-                max-width: 600px;
-                max-height: 80vh;
-                overflow-y: auto;
-                z-index: 1000;
-                backdrop-filter: blur(20px);
-            `;
-            
-            adminPanel.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                    <h3 style="color: var(--primary-color);">Scheduled Posts</h3>
-                    <button onclick="document.getElementById('scheduled-posts-admin').remove(); document.querySelector('.admin-overlay').remove()" 
-                            style="background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer;">×</button>
-                </div>
-                
-                ${scheduledPosts.length === 0 ? 
-                    '<p style="color: var(--text-secondary);">No scheduled posts found.</p>' :
-                    scheduledPosts.map(post => `
-                        <div style="background: var(--hover-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">${escapeHtml(post.title)}</h4>
-                            <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                                Scheduled for: ${post.publishDate.toLocaleString()}
-                                ${post.isOverdue ? '<span style="color: #ef4444;"> (Overdue - check GitHub Actions)</span>' : ''}
-                            </p>
-                        </div>
-                    `).join('')
-                }
-                
-                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                    <p style="color: var(--text-secondary); font-size: 0.8rem;">
-                        Scheduled posts are automatically published by GitHub Actions every hour.
-                        <br>Posts marked as overdue may indicate an issue with the automation.
-                    </p>
-                </div>
-            `;
-            
-            document.body.appendChild(adminPanel);
-            
-            // Add overlay
-            const overlay = document.createElement('div');
-            overlay.className = 'admin-overlay';
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 999;
-            `;
-            overlay.onclick = () => {
-                document.getElementById('scheduled-posts-admin').remove();
-                overlay.remove();
-            };
-            document.body.appendChild(overlay);
-        }
-
-        // Add admin controls to the page if user is logged in
-        function addAdminControls() {
-            if (isUserLoggedIn()) {
-                const controls = document.querySelector('.controls .filters');
-                if (controls && !document.getElementById('scheduled-posts-btn')) {
-                    const scheduledBtn = document.createElement('button');
-                    scheduledBtn.id = 'scheduled-posts-btn';
-                    scheduledBtn.className = 'btn';
-                    scheduledBtn.textContent = '📅 Scheduled Posts';
-                    scheduledBtn.onclick = showScheduledPosts;
-                    controls.appendChild(scheduledBtn);
-                }
-            }
         }
 
         // Event listeners
@@ -1820,22 +1593,6 @@
             });
         }
 
-        // Email service configuration
-        const EMAIL_CONFIG = {
-            service: 'netlify', // Options: 'netlify', 'convertkit', 'buttondown'
-            
-            // ConvertKit config (if using ConvertKit)
-            convertkit: {
-                formId: 'YOUR_CONVERTKIT_FORM_ID', // Replace with your form ID
-                apiKey: 'YOUR_CONVERTKIT_API_KEY'  // Replace with your API key
-            },
-            
-            // Buttondown config (if using Buttondown)
-            buttondown: {
-                username: 'YOUR_BUTTONDOWN_USERNAME' // Replace with your username
-            }
-        };
-
         // Newsletter signup functionality
         function handleNewsletterSignup(event) {
             event.preventDefault();
@@ -1859,83 +1616,55 @@
             submitBtn.textContent = 'Subscribing...';
             submitBtn.disabled = true;
             
-            // Subscribe based on configured service
-            subscribeToEmailService(email)
-                .then(() => {
-                    // Success
+            // Submit to Netlify Forms
+            const formData = new FormData();
+            formData.append('form-name', 'newsletter');
+            formData.append('email', email);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => {
+                if (response.ok) {
                     successMsg.style.display = 'block';
                     document.getElementById('newsletterForm').reset();
                     
                     // Track the signup
-                    trackNewsletterSignup(email);
-                    
-                    // Scroll to success message
-                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                })
-                .catch((error) => {
-                    // Error
-                    console.error('Newsletter signup error:', error);
-                    if (error.message.includes('already subscribed')) {
-                        showNewsletterError("You're already subscribed! Check your email for our latest updates.");
-                    } else {
-                        showNewsletterError('Unable to subscribe right now. Please try again later.');
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'newsletter_signup', {
+                            event_category: 'engagement',
+                            event_label: 'blog_page'
+                        });
                     }
-                })
-                .finally(() => {
-                    // Reset button
-                    submitBtn.textContent = 'Subscribe Free';
-                    submitBtn.disabled = false;
-                });
-        }
-        
-        async function subscribeToEmailService(email) {
-            // Default to Netlify Forms
-            return subscribeNetlifyForms(email);
-        }
-        
-        async function subscribeNetlifyForms(email) {
-            try {
-                const formData = new FormData();
-                formData.append('form-name', 'newsletter');
-                formData.append('email', email);
-                
-                const response = await fetch('/', {
-                    method: 'POST',
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: new URLSearchParams(formData).toString()
-                });
-                
-                if (response.ok) {
+                    
                     // Store locally for tracking
-                    storeSubscriberLocally(email, 'netlify');
-                    return { status: 'subscribed', service: 'netlify' };
+                    try {
+                        let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+                        subscribers.push({
+                            email: email,
+                            source: 'blog_page',
+                            subscribed_at: new Date().toISOString()
+                        });
+                        localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+                    } catch (e) {
+                        console.log('Local storage not available');
+                    }
+                    
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
-                    throw new Error('Netlify form submission failed');
+                    throw new Error('Subscription failed');
                 }
-            } catch (error) {
-                console.error('Netlify forms error:', error);
-                throw error;
-            }
-        }
-        
-        function storeSubscriberLocally(email, service) {
-            try {
-                let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-                
-                // Check if already exists
-                const existing = subscribers.find(sub => sub.email === email);
-                if (!existing) {
-                    subscribers.push({
-                        email: email,
-                        service: service,
-                        subscribed_at: new Date().toISOString(),
-                        status: 'subscribed'
-                    });
-                    localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
-                }
-            } catch (error) {
-                console.error('Local storage error:', error);
-            }
+            })
+            .catch(error => {
+                console.error('Newsletter signup error:', error);
+                showNewsletterError('Unable to subscribe right now. Please try again later.');
+            })
+            .finally(() => {
+                submitBtn.textContent = 'Subscribe Free';
+                submitBtn.disabled = false;
+            });
         }
         
         function isValidEmail(email) {
@@ -1945,88 +1674,13 @@
         
         function showNewsletterError(message) {
             const errorMsg = document.getElementById('newsletterError');
-            errorMsg.innerHTML = `<strong>⚠️ Oops!</strong> ${message}`;
+            errorMsg.innerHTML = `<strong>Oops!</strong> ${message}`;
             errorMsg.style.display = 'block';
             errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
-        function trackNewsletterSignup(email) {
-            // Add analytics tracking here
-            console.log('Newsletter signup tracked:', email);
-            
-            // Example: Google Analytics event
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'newsletter_signup', {
-                    event_category: 'engagement',
-                    event_label: 'footer_signup'
-                });
-            }
-        }
-        
-        // Add inline newsletter signup between posts (optional)
-        function addInlineNewsletterSignup() {
-            if (currentPosts.length >= 3) {
-                const container = document.getElementById('postsContainer');
-                const posts = container.children;
-                
-                // Add newsletter signup after every 3rd post
-                if (posts.length >= 3) {
-                    const inlineSignup = document.createElement('div');
-                    inlineSignup.className = 'inline-newsletter';
-                    inlineSignup.innerHTML = `
-                        <h3 class="newsletter-title">📬 Don't Miss New Posts</h3>
-                        <p class="newsletter-description">
-                            Join 500+ readers getting weekly AI insights and tool reviews.
-                        </p>
-                        <form class="newsletter-form" name="newsletter-inline" method="POST" data-netlify="true" onsubmit="handleInlineNewsletterSignup(event)" onclick="event.stopPropagation()">
-                            <input type="hidden" name="form-name" value="newsletter-inline" />
-                            <input 
-                                type="email"
-                                name="email"
-                                class="newsletter-input" 
-                                placeholder="Your email address" 
-                                required
-                                aria-label="Email address for newsletter signup"
-                            >
-                            <button type="submit" class="newsletter-btn">
-                                Get Updates
-                            </button>
-                        </form>
-                    `;
-                    
-                    // Insert after 3rd post
-                    if (posts[2] && posts[2].nextSibling) {
-                        container.insertBefore(inlineSignup, posts[2].nextSibling);
-                    } else {
-                        container.appendChild(inlineSignup);
-                    }
-                }
-            }
-        }
-
-        // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
             loadPosts();
-            
-            // Check for admin status and add controls
-            if (window.netlifyIdentity) {
-                window.netlifyIdentity.on("init", user => {
-                    if (user) {
-                        addAdminControls();
-                    }
-                });
-                
-                window.netlifyIdentity.on("login", () => {
-                    addAdminControls();
-                });
-                
-                window.netlifyIdentity.on("logout", () => {
-                    const scheduledBtn = document.getElementById('scheduled-posts-btn');
-                    if (scheduledBtn) {
-                        scheduledBtn.remove();
-                    }
-                });
-            }
             
             // Add search shortcut hint
             const searchInput = document.getElementById('searchInput');
