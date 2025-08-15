@@ -75,6 +75,7 @@
             align-items: center;
             padding: 1rem 0;
             gap: 2rem;
+            position: relative;
         }
 
         .logo {
@@ -116,6 +117,120 @@
         .nav-links a:hover {
             background: var(--hover-bg);
             color: var(--primary-color);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            width: 24px;
+            height: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+            position: absolute;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger span:nth-child(3) {
+            bottom: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 50%;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(3) {
+            transform: rotate(-45deg);
+            bottom: 50%;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding-top: 80px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .mobile-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary-color);
+            background: var(--hover-bg);
+        }
+
+        .mobile-menu .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            margin-top: 1rem;
         }
 
         .search-container {
@@ -804,14 +919,20 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 1rem;
             }
             
             .nav-section {
-                flex-direction: column;
-                width: 100%;
-                gap: 1rem;
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
             }
             
             .hero h1 {
@@ -923,6 +1044,26 @@
                     <div class="search-container">
                         <input type="text" class="search-bar" placeholder="Search posts..." id="searchInput" aria-label="Search blog posts">
                     </div>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <a href="/">Home</a>
+                <a href="/tools.html">Tools</a>
+                <a href="/contact.html">Contact</a>
+                <a href="/admin" class="btn">Admin</a>
+                <div class="search-container" style="width: 100%; max-width: 300px; margin-top: 1rem;">
+                    <input type="text" class="search-bar" placeholder="Search posts..." id="mobileSearchInput" aria-label="Search blog posts">
                 </div>
             </div>
         </div>
@@ -1598,6 +1739,15 @@
         document.getElementById('categoryFilter').addEventListener('change', filterPosts);
         document.getElementById('sortFilter').addEventListener('change', sortPosts);
 
+        // Mobile search sync
+        const mobileSearchInput = document.getElementById('mobileSearchInput');
+        if (mobileSearchInput) {
+            mobileSearchInput.addEventListener('input', debounce(function() {
+                document.getElementById('searchInput').value = mobileSearchInput.value;
+                filterPosts();
+            }, 300));
+        }
+
         // Debounce function for search
         function debounce(func, wait) {
             let timeout;
@@ -1635,6 +1785,65 @@
                     });
                 }
             });
+        }
+
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    const isActive = mobileMenuToggle.classList.contains('active');
+                    
+                    if (isActive) {
+                        // Close menu
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    } else {
+                        // Open menu
+                        mobileMenuToggle.classList.add('active');
+                        mobileMenu.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        
+                        // Sync search input values
+                        const mainSearch = document.getElementById('searchInput');
+                        const mobileSearch = document.getElementById('mobileSearchInput');
+                        if (mainSearch && mobileSearch) {
+                            mobileSearch.value = mainSearch.value;
+                        }
+                    }
+                });
+                
+                // Close menu when clicking on links
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target === mobileMenu) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+                
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
         }
 
         // Newsletter signup functionality
@@ -1725,6 +1934,7 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             loadPosts();
+            initMobileMenu();
             
             // Add search shortcut hint
             const searchInput = document.getElementById('searchInput');
@@ -1742,26 +1952,32 @@
             const searchTerm = urlParams.get('search');
             
             if (searchTerm) {
-                // Fill the search input
+                // Fill both search inputs
                 const searchInput = document.getElementById('searchInput');
+                const mobileSearchInput = document.getElementById('mobileSearchInput');
                 if (searchInput) {
                     searchInput.value = searchTerm;
+                }
+                if (mobileSearchInput) {
+                    mobileSearchInput.value = searchTerm;
+                }
+                
+                // Show a helpful message
+                showAutoSearchMessage(searchTerm);
+                
+                // Wait for posts to load, then perform search
+                setTimeout(() => {
+                    filterPosts();
                     
-                    // Show a helpful message
-                    showAutoSearchMessage(searchTerm);
-                    
-                    // Wait for posts to load, then perform search
-                    setTimeout(() => {
-                        filterPosts();
-                        
-                        // Focus on search input and scroll to it
+                    // Focus on search input and scroll to it
+                    if (searchInput) {
                         searchInput.focus();
                         searchInput.scrollIntoView({ 
                             behavior: 'smooth', 
                             block: 'center' 
                         });
-                    }, 1000);
-                }
+                    }
+                }, 1000);
                 
                 // Clean up URL without refreshing page
                 const newUrl = window.location.pathname;
