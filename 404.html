@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Responsible AI and Me</title>
+    <meta name="description" content="The page you're looking for doesn't exist. Explore our AI insights, tools, and resources instead.">
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #64ffda;
+            --primary-dark: #4fd1c7;
+            --accent-color: #00bcd4;
+            --bg-dark: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e0e6ed;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --hover-bg: rgba(100, 255, 218, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --gradient-bg: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gradient-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .search-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .search-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
+        }
+
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .nav-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .nav-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .home-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(100, 255, 218, 0.3);
+        }
+
+        .home-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(100, 255, 218, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 46, 0.8);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .search-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .navigation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 4rem;
+            }
+
+            .error-title {
+                font-size: 1.5rem;
+            }
+
+            .search-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">Responsible AI and Me</a>
+                <nav class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/blog.html">Blog</a>
+                    <a href="/tools.html">Tools</a>
+                    <a href="/contact.html">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="error-container">
+                <div class="error-code">404</div>
+                <h1 class="error-title">Page Not Found</h1>
+                <p class="error-message">
+                    The page you're looking for doesn't exist. It might have been moved, deleted, or you may have mistyped the URL. Let's get you back on track.
+                </p>
+
+                <div class="search-section">
+                    <h2 class="search-title">Search Our Content</h2>
+                    <form class="search-form" onsubmit="searchContent(event)">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            placeholder="Search posts, tools, topics..." 
+                            id="searchInput"
+                            required
+                        >
+                        <button type="submit" class="search-btn">Search</button>
+                    </form>
+                </div>
+
+                <div class="navigation-grid">
+                    <a href="/" class="nav-card">
+                        <h3>Home</h3>
+                        <p>Learn about my AI journey and get started with practical AI skills</p>
+                    </a>
+                    
+                    <a href="/blog.html" class="nav-card">
+                        <h3>Blog Posts</h3>
+                        <p>AI experiments, tool reviews, and real-world insights</p>
+                    </a>
+                    
+                    <a href="/tools.html" class="nav-card">
+                        <h3>AI Tools</h3>
+                        <p>Free tools and resources for working with AI effectively</p>
+                    </a>
+                    
+                    <a href="/contact.html" class="nav-card">
+                        <h3>Contact</h3>
+                        <p>Get in touch for consulting, speaking, or collaboration</p>
+                    </a>
+                </div>
+
+                <a href="/" class="home-cta">Take Me Home</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Responsible AI and Me. Exploring AI responsibly, one post at a time.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="/">Home</a> | 
+                <a href="/blog.html">Blog</a> | 
+                <a href="/tools.html">Tools</a> |
+                <a href="/contact.html">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function searchContent(event) {
+            event.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            
+            if (searchTerm) {
+                // Redirect to blog page with search term
+                window.location.href = `/blog.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+
+        // Auto-focus search input on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        });
+
+        // Handle enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchContent(e);
+            }
+        });
+
+        // Netlify Identity Widget
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
