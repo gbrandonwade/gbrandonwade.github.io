@@ -581,7 +581,7 @@
                         <li>1-hour strategy call included</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Book Assessment</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/new-meeting?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Book Assessment</a>
                         <a href="#process" class="btn btn-secondary">Learn More</a>
                     </div>
                 </div>
@@ -606,7 +606,7 @@
                         <li>Group discounts available (3+ people)</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Schedule Workshop</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/strategy-consultation-clone?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Schedule Workshop</a>
                         <a href="#process" class="btn btn-secondary">View Agenda</a>
                     </div>
                 </div>
@@ -630,7 +630,7 @@
                         <li>Email/Slack support between calls</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Start Consulting</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/ai-readiness-assessment-clone?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Start Consulting</a>
                         <a href="#process" class="btn btn-secondary">Learn Process</a>
                     </div>
                 </div>
@@ -654,7 +654,7 @@
                         <li>Post-event consultation available</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Book Speaking</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Book Speaking</a>
                         <a href="#process" class="btn btn-secondary">View Topics</a>
                     </div>
                 </div>
@@ -678,7 +678,7 @@
                         <li>6-month optimization support</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Discuss Project</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Discuss Project</a>
                         <a href="#process" class="btn btn-secondary">See Examples</a>
                     </div>
                 </div>
@@ -702,7 +702,7 @@
                         <li>Resource recommendations included</li>
                     </ul>
                     <div class="service-cta">
-                        <a href="/contact.html" class="btn btn-primary">Book Session</a>
+                        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/strategy-consultation-clone-1?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Book Session</a>
                         <a href="#process" class="btn btn-secondary">Check Availability</a>
                     </div>
                 </div>
@@ -790,7 +790,7 @@
                     Let's have a conversation about your AI goals and how I can help you achieve them responsibly and effectively.
                 </p>
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="/contact.html" class="btn btn-primary">Schedule Free Consultation</a>
+                    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">Schedule Free Consultation</a>
                     <a href="mailto:g.brandon.wade@gmail.com" class="btn btn-secondary">Email Me Directly</a>
                 </div>
             </div>
@@ -812,6 +812,17 @@
     </footer>
 
     <script>
+        // Calendly Widget Styles and Script
+        const calendlyCSS = document.createElement('link');
+        calendlyCSS.href = 'https://assets.calendly.com/assets/external/widget.css';
+        calendlyCSS.rel = 'stylesheet';
+        document.head.appendChild(calendlyCSS);
+        
+        const calendlyScript = document.createElement('script');
+        calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+        calendlyScript.async = true;
+        document.head.appendChild(calendlyScript);
+
         // Netlify Identity Widget
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
