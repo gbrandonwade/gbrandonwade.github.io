@@ -20,6 +20,11 @@
     
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
+    <!-- Calendly inline widget begin -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <!-- Calendly inline widget end -->
+    
     <style>
         :root {
             --primary-color: #64ffda;
@@ -781,6 +786,60 @@
             color: var(--text-secondary);
         }
 
+        /* Secondary Consultation CTA */
+        .secondary-cta {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .divider {
+            position: relative;
+            margin: 2rem 0 1.5rem 0;
+            text-align: center;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .divider span {
+            background: var(--bg-dark);
+            padding: 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .consultation-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            background: rgba(100, 255, 218, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .consultation-link:hover {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2);
+        }
+
         .success-message, .error-message {
             padding: 1rem;
             border-radius: 8px;
@@ -905,6 +964,16 @@
             .urgency-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .consultation-link {
+                font-size: 0.9rem;
+                padding: 0.7rem 1.2rem;
+            }
+            
+            .divider span {
+                padding: 0 1rem;
+                font-size: 0.8rem;
+            }
         }
 
         /* Accessibility */
@@ -925,7 +994,6 @@
                 <nav class="nav-links">
                     <a href="/blog.html">Blog</a>
                     <a href="/tools.html">Tools</a>
-                    <a href="/services.html">Services</a> 
                     <a href="/contact.html">Contact</a>
                     <a href="/admin" class="btn">Admin</a>
                 </nav>
@@ -944,7 +1012,6 @@
             <div class="mobile-menu-content">
                 <a href="/blog.html">Blog</a>
                 <a href="/tools.html">Tools</a>
-                <a href="/services.html">Services</a>
                 <a href="/contact.html">Contact</a>
                 <a href="/admin" class="btn">Admin</a>
             </div>
@@ -963,6 +1030,16 @@
                 <p class="hero-supporting">
                     Get weekly insights on AI tools, responsible practices, and real experiments from someone learning alongside you.
                 </p>
+                
+                <!-- Secondary Consultation CTA -->
+                <div class="secondary-cta">
+                    <div class="divider">
+                        <span>Need immediate guidance?</span>
+                    </div>
+                    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="consultation-link">
+                        Book a free 15-minute AI strategy call →
+                    </a>
+                </div>
             </div>
         </div>
     </section>
