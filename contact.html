@@ -67,6 +67,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 0;
+            position: relative;
         }
 
         .logo {
@@ -96,6 +97,125 @@
 
         .nav-links a.active {
             color: var(--primary-color);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            width: 24px;
+            height: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+            position: absolute;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .hamburger span:nth-child(3) {
+            bottom: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 50%;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger span:nth-child(3) {
+            transform: rotate(-45deg);
+            bottom: 50%;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding-top: 80px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .mobile-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary-color);
+            background: var(--hover-bg);
+        }
+
+        .mobile-menu .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            margin-top: 1rem;
+        }
+
+        .mobile-menu a.active {
+            color: var(--primary-color);
+            background: var(--hover-bg);
         }
 
         /* Main Content */
@@ -162,8 +282,6 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--bg-dark);
             margin-bottom: 1.5rem;
         }
 
@@ -193,72 +311,6 @@
         .contact-link:hover {
             color: var(--primary-dark);
             transform: translateX(3px);
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: var(--bg-dark);
-            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(100, 255, 218, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--card-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover {
-            background: var(--hover-bg);
-            border-color: var(--primary-color);
-        }
-
-        .booking-section {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(0, 188, 212, 0.1) 100%);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .booking-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .booking-description {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .booking-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
         .availability-section {
@@ -370,6 +422,14 @@
                 display: none;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
             .container {
                 padding: 0 15px;
             }
@@ -380,15 +440,6 @@
 
             .availability-section {
                 padding: 2rem;
-            }
-
-            .booking-section {
-                padding: 2rem;
-            }
-
-            .booking-actions {
-                flex-direction: column;
-                align-items: stretch;
             }
         }
     </style>
@@ -406,6 +457,25 @@
                     <a href="/contact.html" class="active">Contact</a>
                     <a href="/admin">Admin</a>
                 </nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <a href="/">Home</a>
+                <a href="/blog.html">Blog</a>
+                <a href="/tools.html">Tools</a>
+                <a href="/services.html">Services</a>
+                <a href="/contact.html" class="active">Contact</a>
+                <a href="/admin">Admin</a>
             </div>
         </div>
     </header>
@@ -441,21 +511,6 @@
                         <a href="https://linkedin.com/in/gregory-bwade" target="_blank" rel="noopener noreferrer" class="contact-link">
                             Connect on LinkedIn →
                         </a>
-                    </div>
-
-                    <div class="booking-section">
-                        <h3 class="booking-title">Skip the Email Back-and-Forth</h3>
-                        <p class="booking-description">
-                            Book a free 15-minute discovery call directly on my calendar. We'll discuss your AI goals and how I can help you achieve them.
-                        </p>
-                        <div class="booking-actions">
-                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="btn btn-primary">
-                                Schedule Free Discovery Call
-                            </a>
-                            <a href="/services.html" class="btn btn-secondary">
-                                View All Services
-                            </a>
-                        </div>
                     </div>
                 </div>
 
@@ -513,16 +568,57 @@
     </footer>
 
     <script>
-        // Calendly Widget Integration
-        const calendlyCSS = document.createElement('link');
-        calendlyCSS.href = 'https://assets.calendly.com/assets/external/widget.css';
-        calendlyCSS.rel = 'stylesheet';
-        document.head.appendChild(calendlyCSS);
-        
-        const calendlyScript = document.createElement('script');
-        calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
-        calendlyScript.async = true;
-        document.head.appendChild(calendlyScript);
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    const isActive = mobileMenuToggle.classList.contains('active');
+                    
+                    if (isActive) {
+                        // Close menu
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    } else {
+                        // Open menu
+                        mobileMenuToggle.classList.add('active');
+                        mobileMenu.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+                
+                // Close menu when clicking on links
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+                
+                // Close menu when clicking outside
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target === mobileMenu) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+                
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        }
 
         // Netlify Identity Widget
         if (window.netlifyIdentity) {
@@ -549,17 +645,8 @@
             });
         });
 
-        // Track booking interactions
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'contact_interaction', {
-                        event_category: 'engagement',
-                        event_label: this.textContent
-                    });
-                }
-            });
-        });
+        // Initialize mobile menu when page loads
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
     </script>
 </body>
 </html>
