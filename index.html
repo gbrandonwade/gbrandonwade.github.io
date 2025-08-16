@@ -20,11 +20,6 @@
     
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
-    <!-- Calendly inline widget begin -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <!-- Calendly inline widget end -->
-    
     <style>
         :root {
             --primary-color: #64ffda;
@@ -105,6 +100,10 @@
             color: var(--primary-color);
         }
 
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
         /* Mobile Menu */
         .mobile-menu-toggle {
             display: none;
@@ -115,7 +114,6 @@
             cursor: pointer;
             padding: 0.5rem;
             z-index: 1001;
-            position: relative;
         }
 
         .mobile-menu-toggle:hover {
@@ -220,6 +218,11 @@
             margin-top: 1rem;
         }
 
+        .mobile-menu a.active {
+            color: var(--primary-color);
+            background: var(--hover-bg);
+        }
+
         /* Hero Section */
         .hero {
             padding: 5rem 0;
@@ -274,6 +277,60 @@
             margin-top: 1.5rem;
             font-size: 0.9rem;
             color: var(--text-secondary);
+        }
+
+        /* Secondary Consultation CTA */
+        .secondary-cta {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .divider {
+            position: relative;
+            margin: 2rem 0 1.5rem 0;
+            text-align: center;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .divider span {
+            background: var(--bg-dark);
+            padding: 0 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .consultation-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            background: rgba(100, 255, 218, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .consultation-link:hover {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2);
         }
 
         /* Section Styles */
@@ -786,60 +843,6 @@
             color: var(--text-secondary);
         }
 
-        /* Secondary Consultation CTA */
-        .secondary-cta {
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .divider {
-            position: relative;
-            margin: 2rem 0 1.5rem 0;
-            text-align: center;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-        }
-
-        .divider span {
-            background: var(--bg-dark);
-            padding: 0 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-style: italic;
-            position: relative;
-            z-index: 1;
-        }
-
-        .consultation-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 0.8rem 1.5rem;
-            border: 1px solid rgba(100, 255, 218, 0.3);
-            border-radius: 8px;
-            background: rgba(100, 255, 218, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .consultation-link:hover {
-            background: rgba(100, 255, 218, 0.1);
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2);
-        }
-
         .success-message, .error-message {
             padding: 1rem;
             border-radius: 8px;
@@ -964,16 +967,6 @@
             .urgency-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .consultation-link {
-                font-size: 0.9rem;
-                padding: 0.7rem 1.2rem;
-            }
-            
-            .divider span {
-                padding: 0 1rem;
-                font-size: 0.8rem;
-            }
         }
 
         /* Accessibility */
@@ -992,9 +985,10 @@
             <div class="header-content">
                 <a href="/" class="logo">Responsible AI and Me</a>
                 <nav class="nav-links">
+                    <a href="/" class="active">Home</a>
                     <a href="/blog.html">Blog</a>
                     <a href="/tools.html">Tools</a>
-                    <a href="/services.html" class="active">Services</a>
+                    <a href="/services.html">Services</a>
                     <a href="/contact.html">Contact</a>
                     <a href="/admin" class="btn">Admin</a>
                 </nav>
@@ -1011,9 +1005,10 @@
         <!-- Mobile Menu -->
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-content">
+                <a href="/" class="active">Home</a>
                 <a href="/blog.html">Blog</a>
                 <a href="/tools.html">Tools</a>
-                <a href="/services.html" class="active">Services</a>
+                <a href="/services.html">Services</a>
                 <a href="/contact.html">Contact</a>
                 <a href="/admin" class="btn">Admin</a>
             </div>
@@ -1036,10 +1031,11 @@
                 <!-- Secondary Consultation CTA -->
                 <div class="secondary-cta">
                     <div class="divider">
-                        <span>Need immediate guidance?</span>
+                        <span>or</span>
                     </div>
-                    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="consultation-link">
-                        Book a free 15-minute AI strategy call →
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-style: italic;">Need immediate guidance?</p>
+                    <a href="/contact.html" class="consultation-link">
+                        <strong>Book a free 15-minute AI strategy call</strong> →
                     </a>
                 </div>
             </div>
@@ -1200,99 +1196,6 @@
         </div>
     </section>
 
-    <!-- Objections Section -->
-    <section class="section objections">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">But What If...</h2>
-            </div>
-            
-            <div class="objection-item">
-                <div class="objection-q">"But I'm Not Technical..."</div>
-                <p>Neither was I. The best AI users aren't programmers - they're people who understand business problems and can communicate clearly.</p>
-            </div>
-            
-            <div class="objection-item">
-                <div class="objection-q">"Isn't It Too Late to Start?"</div>
-                <p>AI is so new that most "experts" have less than two years of experience. You're not late - you're early to the practical application phase.</p>
-            </div>
-            
-            <div class="objection-item">
-                <div class="objection-q">"What If I Make Mistakes?"</div>
-                <p>I share my failures too. Learning from someone else's mistakes is way cheaper than making your own.</p>
-            </div>
-            
-            <div class="objection-item">
-                <div class="objection-q">"How Do I Know This Isn't Just Hype?"</div>
-                <p>Follow my journey for free. If AI doesn't deliver practical value within 30 days, you'll know. (Spoiler: it will.)</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Join Professionals Making the Leap</h2>
-            </div>
-            
-            <div class="testimonial">
-                <p class="testimonial-text">
-                    "I thought AI was just for tech companies. Following this approach, I automated my reporting process and saved 5 hours a week. My manager wants to know how I did it."
-                </p>
-                <p class="testimonial-author">- Sarah K., Marketing Manager</p>
-            </div>
-            
-            <div class="testimonial">
-                <p class="testimonial-text">
-                    "Finally, someone explains AI without the technical jargon. The stock analyzer tool actually helped me understand my startup equity for the first time."
-                </p>
-                <p class="testimonial-author">- Mike D., Operations Director</p>
-            </div>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">2x</span>
-                    <span class="stat-label">AI-adjacent roles hiring rate vs traditional positions</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">40%</span>
-                    <span class="stat-label">of business leaders need more practical AI guidance</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">professionals already following the journey</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Urgency Section -->
-    <section class="section">
-        <div class="container">
-            <div class="urgency">
-                <h3>The AI Skills Gap Is Growing (But So Is the Opportunity)</h3>
-                <p style="margin-bottom: 2rem; font-size: 1.1rem;">
-                    While others debate whether AI is real, you could be building practical skills and documenting your progress. The professionals who start now will be the ones leading AI initiatives next year.
-                </p>
-                <div class="urgency-grid">
-                    <div class="urgency-item">
-                        <h4>Early Adopters Are:</h4>
-                        <ul>
-                            <li>✓ Positioning as internal AI champions</li>
-                            <li>✓ Getting "AI-native" career positioning</li>
-                            <li>✓ Building practical, not theoretical knowledge</li>
-                        </ul>
-                    </div>
-                    <div class="urgency-item">
-                        <h4>Your Next 30 Days Matter:</h4>
-                        <p>The window for becoming an "AI-first" professional is open now, but closing fast. Start documenting your progress today.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Newsletter Signup Section -->
     <section class="final-cta" id="newsletter">
         <div class="container">
@@ -1337,72 +1240,15 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-            
-            <div class="faq-item" onclick="toggleFAQ(this)">
-                <div class="faq-question">
-                    Q: Do I need any technical background?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Nope. I was managing utility projects six months ago. If you can write emails and use spreadsheets, you can use AI effectively.
-                </div>
-            </div>
-            
-            <div class="faq-item" onclick="toggleFAQ(this)">
-                <div class="faq-question">
-                    Q: How much time does this require?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    I share experiments you can try in 15-30 minutes. The goal is practical progress, not homework.
-                </div>
-            </div>
-            
-            <div class="faq-item" onclick="toggleFAQ(this)">
-                <div class="faq-question">
-                    Q: Will you share failures too?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Absolutely. Half the value is learning what doesn't work so you don't waste time on it.
-                </div>
-            </div>
-            
-            <div class="faq-item" onclick="toggleFAQ(this)">
-                <div class="faq-question">
-                    Q: Is this just about ChatGPT?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    I test everything - Claude, Gemini, specialized tools, free alternatives. You'll get the real comparison.
-                </div>
-            </div>
-            
-            <div class="faq-item" onclick="toggleFAQ(this)">
-                <div class="faq-question">
-                    Q: What if my company doesn't allow AI tools?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    I cover this extensively. There are ways to learn and prepare that don't require workplace implementation.
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2024 Responsible AI and Me. Exploring AI responsibly, one post at a time.</p>
             <p style="margin-top: 0.5rem;">
                 <a href="/blog.html">Read the Blog</a> | 
-                <a href="mailto:g.brandon.wade@gmail.com">Contact</a> | 
+                <a href="/tools.html">Tools</a> |
+                <a href="/services.html">Services</a> |
+                <a href="mailto:contact@responsibleaiandme.com">Contact</a> | 
                 <a href="/privacy">Privacy Policy</a>
             </p>
         </div>
@@ -1494,46 +1340,7 @@
             errorMsg.style.display = 'block';
             errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        
-        // FAQ toggle functionality
-        function toggleFAQ(element) {
-            const answer = element.querySelector('.faq-answer');
-            const toggle = element.querySelector('.faq-toggle');
-            
-            if (answer.style.display === 'block') {
-                answer.style.display = 'none';
-                toggle.textContent = '+';
-            } else {
-                answer.style.display = 'block';
-                toggle.textContent = '-';
-            }
-        }
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Netlify Identity Widget
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-        
+
         // Mobile menu functionality
         function initMobileMenu() {
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -1585,32 +1392,34 @@
                 });
             }
         }
-        
-        // Initialize mobile menu when page loads
-        document.addEventListener('DOMContentLoaded', initMobileMenu);
-        
-        // Add subtle scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
-        }, observerOptions);
-        
-        // Observe all sections for scroll animations
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
         });
+        
+        // Netlify Identity Widget
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+
+        // Initialize mobile menu when page loads
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
     </script>
 </body>
 </html>
