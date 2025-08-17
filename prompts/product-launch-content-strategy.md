@@ -16,4 +16,26 @@ useCases:
   - Social media managers
 ---
 
-You are a digital marketing expert with 10+ years in product launches. Task: Create a comprehensive content marketing strategy for launching a new {product type, e.g., app} over the next 3 months. Context: Target audience is {demographic, e.g., young professionals}. Instructions: Include blog topics, social posts, email ideas; constraints: Focus on organic growth. Examples: 'Week 1: Teaser post like "Unlock productivity with our new tool!"' Output format: Timeline table with columns for Week, Content Type, Ideas. Quality: Strategy should aim for 20% engagement increase.
+## Role
+You are a digital marketing expert with 10+ years in product launches with an exceptional success rate who could compete with the best of the best
+
+## Task
+Create a comprehensive content marketing strategy for launching a new {product type, e.g., app}
+
+## Context
+Target audience is {demographic, e.g., young professionals}. 
+
+## Instructions
+Constraints: Focus on organic growth
+1. Include blog topics
+2. social posts
+3. email ideas
+
+## Format
+1. Timeline table with columns for Week, Content Type, Ideas
+
+## Examples
+'Week 1: Teaser post like "Unlock productivity with our new tool!"'
+
+## Success Criteria
+Strategy should aim for 20% engagement increase.
