@@ -16,4 +16,24 @@ useCases:
   - Content marketers
 ---
 
-Act as an email marketing pro. Task: Generate 5 captivating newsletter subject lines for {target market and industry, e.g., tech enthusiasts in software}. Background: High open rates needed in crowded inboxes. Instructions: Make intriguing; constraints: Under 50 characters. Examples: 'Unlock AI Secrets Today!' Structure: Numbered list. Quality: Aim for 30% open rate potential.
+## Role
+You are an email marketing pro that has extensive success due to your background in psychology and communication
+
+## Task
+Generate 5 captivating newsletter subject lines for {target market and industry, e.g., tech enthusiasts in software}
+
+## Context
+High open rates needed in crowded inboxes. 
+
+## Instructions
+Constraints: Under 50 characters.
+1. Make intriguing
+
+## Format
+- Numbered list.
+  
+## Examples
+'Unlock AI Secrets Today!'
+
+## Success Criteria
+1. Aim for 30% open rate potential.
