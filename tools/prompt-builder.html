@@ -952,7 +952,7 @@ function prefillFromPromptLibrary(data) {
 }
 
 function showImportNotification(promptTitle) {
-    // Create a temporary notification
+    // Create a more polished notification
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -960,21 +960,37 @@ function showImportNotification(promptTitle) {
         right: 20px;
         background: linear-gradient(135deg, #e67e22, #d35400);
         color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
+        padding: 1.2rem 1.8rem;
+        border-radius: 12px;
         font-weight: 600;
         z-index: 1000;
-        box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
-        max-width: 300px;
+        box-shadow: 0 8px 32px rgba(230, 126, 34, 0.4);
+        max-width: 350px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        animation: slideInRight 0.4s ease;
     `;
-    notification.innerHTML = `🎯 Imported "${promptTitle}" for customization`;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div style="font-size: 1.5rem;">🎯</div>
+            <div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">Imported for customization:</div>
+                <div style="font-size: 1rem; margin-top: 0.2rem;">"${promptTitle}"</div>
+            </div>
+        </div>
+    `;
     
     document.body.appendChild(notification);
     
-    // Remove after 4 seconds
+    // Remove after 5 seconds with animation
     setTimeout(() => {
-        notification.remove();
-    }, 4000);
+        notification.style.animation = 'slideOutRight 0.4s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 400);
+    }, 5000);
 }
         // Update your existing DOMContentLoaded to look like this:
 document.addEventListener('DOMContentLoaded', function() {
