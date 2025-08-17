@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Library - Responsible AI and Me</title>
+    <style>
+        :root {
+            --primary-color: #64ffda;
+            --primary-dark: #4fd1c7;
+            --accent-color: #00bcd4;
+            --bg-dark: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e0e6ed;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --hover-bg: rgba(100, 255, 218, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
+        }
+
+        .filter-select {
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            min-width: 150px;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: var(--bg-dark);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stats-info {
+            color: var(--text-secondary);
+        }
+
+        .export-btn {
+            padding: 8px 16px;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .prompts-list {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .prompt-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .prompt-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .prompt-category {
+            background: rgba(100, 255, 218, 0.15);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .prompt-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .prompt-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            max-height: 120px;
+            overflow: hidden;
+        }
+
+        .prompt-content.expanded {
+            max-height: none;
+        }
+
+        .expand-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px 0 8px 0;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .prompt-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .action-btn:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .prompt-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .difficulty-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .difficulty-beginner {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .difficulty-intermediate {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .difficulty-advanced {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .floating-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .floating-fab:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .view-toggle {
+                order: -1;
+            }
+
+            .prompts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-fab {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">AI Prompt Library</h1>
+            <p class="tagline">Curated prompts for better AI conversations • Copy, customize, create</p>
+        </header>
+
+        <div class="controls">
+            <input type="text" class="search-bar" placeholder="Search prompts by title, description, or use case..." id="searchInput">
+            
+            <select class="filter-select" id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="business">Business & Productivity</option>
+                <option value="marketing">Marketing</option>
+                <option value="sales">Sales</option>
+                <option value="writing">Writing & Content</option>
+                <option value="analysis">Analysis & Research</option>
+                <option value="creative">Creative & Brainstorming</option>
+            </select>
+
+            <div class="view-toggle">
+                <button class="view-btn active" onclick="setView('grid')">⊞ Grid</button>
+                <button class="view-btn" onclick="setView('list')">☰ List</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stats-info">
+                <span id="promptCount">22</span> prompts available • <span id="filteredCount">22</span> showing
+            </div>
+            <button class="export-btn" onclick="exportPrompts()">📥 Export Collection</button>
+        </div>
+
+        <div class="prompts-grid" id="promptsGrid">
+            <!-- Prompts will be loaded dynamically from JSON -->
+        </div>
+
+        <div class="prompts-list" id="promptsList">
+            <!-- List view content would go here -->
+        </div>
+    </div>
+
+    <button class="floating-fab" onclick="openSubmitModal()" title="Submit a Prompt">+</button>
+
+    <!-- Submit Prompt Modal -->
+    <div class="modal" id="submitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Submit a Prompt</h2>
+                <button class="modal-close" onclick="closeSubmitModal()">×</button>
+            </div>
+            
+            <form id="submitForm">
+                <div class="form-group">
+                    <label for="promptTitle">Prompt Title</label>
+                    <input type="text" id="promptTitle" required placeholder="Brief, descriptive title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="promptCategory">Category</label>
+                    <select id="promptCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="business">Business & Productivity</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="sales">Sales</option>
+                        <option value="writing">Writing & Content</option>
+                        <option value="analysis">Analysis & Research</option>
+                        <option value="creative">Creative & Brainstorming</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="promptDescription">Description</label>
+                    <input type="text" id="promptDescription" required placeholder="What does this prompt do? Who is it for?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="promptContent">Prompt Content</label>
+                    <textarea id="promptContent" required placeholder="Enter your complete prompt here..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="promptDifficulty">Difficulty Level</label>
+                    <select id="promptDifficulty" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Prompt for Review</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let allPrompts = [];
+        let filteredPrompts = [];
+
+        // Load prompts from JSON file
+        async function loadPrompts() {
+            try {
+                // In production, this would load from /data/prompts.json
+                // For demo purposes, we'll use the embedded data
+                const promptData = {
+                    "metadata": {
+                        "version": "1.0",
+                        "lastUpdated": "2024-08-17",
+                        "totalPrompts": 22,
+                        "categories": ["business", "marketing", "sales"]
+                    },
+                    "prompts": [
+                        {
+                            "id": "team-collaboration-enhancement",
+                            "title": "Team Collaboration Enhancement",
+                            "category": "business",
+                            "difficulty": "intermediate",
+                            "description": "Get actionable advice for improving team collaboration using specific management styles like agile, with practical implementation steps and measurable success metrics.",
+                            "content": "You are a seasoned management consultant with over 15 years of experience in organizational development. Your task is to provide actionable advice for improving team collaboration using {specific management style, e.g., agile}. Begin by summarizing the key principles of the chosen style as context. Include specific instructions: focus on 3-5 practical steps for implementation, avoid jargon by explaining terms simply, and incorporate at least two real-world examples for illustration. Structure your output as: 1) Introduction to the style, 2) Step-by-step implementation guide, 3) Examples, 4) Potential challenges and solutions. Ensure the advice is measurable by suggesting success metrics like improved meeting efficiency by 20%. End with a final summary of expected benefits.",
+                            "tags": ["management", "agile", "teamwork", "collaboration", "organizational development"],
+                            "useCases": ["Team leaders", "Project managers", "HR professionals", "Department heads"],
+                            "usageCount": 127
+                        },
+                        {
+                            "id": "crisis-management-response",
+                            "title": "Crisis Management Response",
+                            "category": "business", 
+                            "difficulty": "advanced",
+                            "description": "Professional crisis management framework for handling corporate emergencies like data breaches with structured response plans and stakeholder communication.",
+                            "content": "Assume the role of an experienced crisis manager specializing in corporate emergencies. Your clear task is to respond to this scenario: {brief scenario description, e.g., data breach}. Provide context by outlining the immediate risks involved. Follow specific instructions: detail 4-6 key actions to stabilize the situation, develop a communication strategy for stakeholders, and propose preventive measures. Use a thinking process: first assess impacts, then prioritize actions. Output in a structured format: - Stabilization Steps, - Communication Plan, - Prevention Strategy, - Summary of Expected Outcomes. Include success metrics such as resolution time under 48 hours.",
+                            "tags": ["crisis management", "emergency response", "communication", "risk management"],
+                            "useCases": ["Executives", "Risk managers", "PR professionals", "Operations managers"],
+                            "usageCount": 89
+                        },
+                        {
+                            "id": "product-launch-content-strategy",
+                            "title": "Product Launch Content Strategy",
+                            "category": "marketing",
+                            "difficulty": "intermediate",
+                            "description": "Complete 3-month content marketing strategy for product launches targeting specific demographics with organic growth focus and engagement goals.",
+                            "content": "You are a digital marketing expert with 10+ years in product launches. Task: Create a comprehensive content marketing strategy for launching a new {product type, e.g., app} over the next 3 months. Context: Target audience is {demographic, e.g., young professionals}. Instructions: Include blog topics, social posts, email ideas; constraints: Focus on organic growth. Examples: 'Week 1: Teaser post like \"Unlock productivity with our new tool!\"' Output format: Timeline table with columns for Week, Content Type, Ideas. Quality: Strategy should aim for 20% engagement increase.",
+                            "tags": ["content marketing", "product launch", "social media", "organic growth", "engagement"],
+                            "useCases": ["Marketing managers", "Content strategists", "Product marketers", "Social media managers"],
+                            "usageCount": 167
+                        },
+                        {
+                            "id": "sales-closing-techniques",
+                            "title": "Ethical Sales Closing Techniques",
+                            "category": "sales",
+                            "difficulty": "intermediate",
+                            "description": "Professional closing techniques for specific industries that increase close rates by 25% while maintaining ethical standards and customer trust.",
+                            "content": "Role: Veteran sales trainer. Task: Provide persuasive closing techniques to seal deals in {industry, e.g., real estate}. Context: Buyers often hesitate on price. Instructions: List 4 techniques; constraints: Ethical only. Examples: 'Assumptive close: \"When would you like delivery?\"' Structure: Technique + Explanation + Example. Success: Techniques should increase close rate by 25%.",
+                            "tags": ["sales closing", "ethical selling", "sales training", "deal closing", "sales techniques"],
+                            "useCases": ["Sales representatives", "Sales managers", "Sales trainers", "Account executives"],
+                            "usageCount": 198
+                        }
+                        // Additional prompts would be loaded from the full JSON file
+                    ]
+                };
+
+                allPrompts = promptData.prompts;
+                filteredPrompts = [...allPrompts];
+                
+                // Update stats
+                document.getElementById('promptCount').textContent = allPrompts.length;
+                document.getElementById('filteredCount').textContent = filteredPrompts.length;
+                
+                renderPrompts();
+            } catch (error) {
+                console.error('Error loading prompts:', error);
+                // Fallback to show error message
+                document.getElementById('promptsGrid').innerHTML = '<div class="no-posts">Error loading prompts. Please refresh and try again.</div>';
+            }
+        }
+
+        // Render prompts to the grid
+        function renderPrompts() {
+            const grid = document.getElementById('promptsGrid');
+            
+            if (filteredPrompts.length === 0) {
+                grid.innerHTML = '<div class="no-posts">📝 No prompts found matching your criteria.<br><small>Try adjusting your search or category filter.</small></div>';
+                return;
+            }
+
+            grid.innerHTML = filteredPrompts.map(prompt => {
+                const categoryLabel = getCategoryLabel(prompt.category);
+                const difficultyClass = `difficulty-${prompt.difficulty}`;
+                
+                return `
+                    <div class="prompt-card" data-category="${prompt.category}" data-difficulty="${prompt.difficulty}">
+                        <div class="prompt-header">
+                            <div>
+                                <h3 class="prompt-title">${prompt.title}</h3>
+                                <span class="prompt-category">${categoryLabel}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="prompt-description">
+                            ${prompt.description}
+                        </p>
+                        
+                        <div class="prompt-content" id="content-${prompt.id}">
+${prompt.content}
+                        </div>
+                        <button class="expand-btn" onclick="toggleExpand('content-${prompt.id}')">↓</button>
+                        
+                        <div class="prompt-actions">
+                            <button class="action-btn" onclick="copyPrompt('content-${prompt.id}')">📋 Copy</button>
+                            <button class="action-btn" onclick="customizePrompt('${prompt.id}')">⚙️ Customize</button>
+                            <button class="action-btn" onclick="sharePrompt('${prompt.id}')">🔗 Share</button>
+                        </div>
+                        
+                        <div class="prompt-meta">
+                            <span class="difficulty-badge ${difficultyClass}">${capitalizeFirst(prompt.difficulty)}</span>
+                            <span>Used ${prompt.usageCount} times</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Helper functions
+        function getCategoryLabel(category) {
+            const labels = {
+                'business': 'Business & Productivity',
+                'marketing': 'Marketing',
+                'sales': 'Sales',
+                'writing': 'Writing & Content',
+                'analysis': 'Analysis & Research',
+                'creative': 'Creative & Brainstorming'
+            };
+            return labels[category] || capitalizeFirst(category);
+        }
+
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function setView(viewType) {
+            const gridView = document.getElementById('promptsGrid');
+            const listView = document.getElementById('promptsList');
+            const buttons = document.querySelectorAll('.view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (viewType === 'grid') {
+                gridView.style.display = 'grid';
+                listView.style.display = 'none';
+                document.querySelector('.view-btn[onclick="setView(\'grid\')"]').classList.add('active');
+            } else {
+                gridView.style.display = 'none';
+                listView.style.display = 'flex';
+                document.querySelector('.view-btn[onclick="setView(\'list\')"]').classList.add('active');
+            }
+        }
+
+        function toggleExpand(contentId) {
+            const content = document.getElementById(contentId);
+            const btn = content.nextElementSibling;
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                btn.textContent = '↓';
+            } else {
+                content.classList.add('expanded');
+                btn.textContent = '↑';
+            }
+        }
+
+        function copyPrompt(contentId) {
+            const content = document.getElementById(contentId).textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                // Show feedback
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.style.background = 'var(--primary-color)';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        function customizePrompt(promptId) {
+            // Would open customization interface or redirect to prompt builder
+            alert('Customization feature coming soon! For now, copy the prompt and modify it manually.');
+        }
+
+        function sharePrompt(promptId) {
+            // Would generate shareable link
+            const url = `${window.location.origin}/prompts/${promptId}`;
+            navigator.clipboard.writeText(url);
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Link Copied!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        function exportPrompts() {
+            // Export current filtered prompts to markdown
+            let exportContent = '# AI Prompt Library Export\n\n';
+            exportContent += `Generated on ${new Date().toLocaleDateString()}\n\n`;
+            
+            filteredPrompts.forEach((prompt, index) => {
+                exportContent += `## ${index + 1}. ${prompt.title}\n\n`;
+                exportContent += `**Category:** ${getCategoryLabel(prompt.category)}\n`;
+                exportContent += `**Difficulty:** ${capitalizeFirst(prompt.difficulty)}\n`;
+                exportContent += `**Description:** ${prompt.description}\n\n`;
+                exportContent += `**Prompt:**\n\`\`\`\n${prompt.content}\n\`\`\`\n\n`;
+                exportContent += `**Use Cases:** ${prompt.useCases.join(', ')}\n\n`;
+                exportContent += '---\n\n';
+            });
+            
+            // Download as markdown file
+            const blob = new Blob([exportContent], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ai-prompts-${new Date().toISOString().split('T')[0]}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function openSubmitModal() {
+            document.getElementById('submitModal').style.display = 'flex';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').style.display = 'none';
+        }
+
+        // Search and filter functionality
+        document.getElementById('searchInput').addEventListener('input', filterPrompts);
+        document.getElementById('categoryFilter').addEventListener('change', filterPrompts);
+
+        function filterPrompts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            filteredPrompts = allPrompts.filter(prompt => {
+                const matchesSearch = !searchTerm || 
+                    prompt.title.toLowerCase().includes(searchTerm) || 
+                    prompt.description.toLowerCase().includes(searchTerm) ||
+                    prompt.content.toLowerCase().includes(searchTerm) ||
+                    prompt.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                    
+                const matchesCategory = !category || prompt.category === category;
+                return matchesSearch && matchesCategory;
+            });
+            
+            document.getElementById('filteredCount').textContent = filteredPrompts.length;
+            renderPrompts();
+        }
+
+        // Submit form handling
+        document.getElementById('submitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Would submit to your backend/CMS for review
+            alert('Thank you for submitting! Your prompt will be reviewed and added soon.');
+            closeSubmitModal();
+            document.getElementById('submitForm').reset();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPrompts();
+        });
+    </script>
+</body>
+</html>
