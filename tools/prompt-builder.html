@@ -348,6 +348,33 @@
             background: var(--border-light);
             color: var(--text-primary);
         }
+        @keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Add a subtle glow effect for imported prompts */
+.imported-prompt .builder-form {
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(230, 126, 34, 0.1);
+}
     </style>
 </head>
 <body>
@@ -853,7 +880,8 @@ function checkForPresetData() {
             fromTemplate = false;
             currentComplexity = 'standard';
             initializeBuilder();
-            
+            // Add this line after initializeBuilder() in checkForPresetData:
+            document.querySelector('.builder-container')?.classList.add('imported-prompt');
             // Pre-fill the form after it's created
             setTimeout(() => {
                 prefillFromPromptLibrary(presetData);
