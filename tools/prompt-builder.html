@@ -863,28 +863,92 @@ function checkForPresetData() {
 }
 
 function prefillFromPromptLibrary(data) {
-    // Simple approach: put the entire content in the first available field
-    const taskField = document.getElementById('field-task');
+    // Smart content parsing for better field distribution
+    const content = data.content;
+    
+    // Extract role
     const roleField = document.getElementById('field-role');
-    const contextField = document.getElementById('field-context');
-    
-    if (taskField) {
-        taskField.value = `Customize this prompt: ${data.title}`;
-    }
-    
     if (roleField) {
-        // Try to extract role from content
-        const roleMatch = data.content.match(/You are (?:a |an )?([^.]+)/i);
-        roleField.value = roleMatch ? roleMatch[1] : 'AI assistant';
+        const rolePatterns = [
+            /You are (?:a |an )?([^.]+)/i,
+            /Role: ([^.]+)/i,
+            /Act as (?:a |an )?([^.]+)/i,
+            /Assume the role of ([^.]+)/i
+        ];
+        
+        let roleText = 'professional AI assistant';
+        for (const pattern of rolePatterns) {
+            const match = content.match(pattern);
+            if (match) {
+                roleText = match[1].trim();
+                break;
+            }
+        }
+        roleField.value = roleText;
     }
     
+    // Extract task
+    const taskField = document.getElementById('field-task');
+    if (taskField) {
+        const taskPatterns = [
+            /Task: ([^.]+(?:\.[^.]*)?)/i,
+            /Your task is to ([^.]+)/i,
+            /Your clear task is to ([^.]+)/i
+        ];
+        
+        let taskText = `Customize and improve this ${data.category} prompt: ${data.title}`;
+        for (const pattern of taskPatterns) {
+            const match = content.match(pattern);
+            if (match) {
+                taskText = match[1].trim();
+                break;
+            }
+        }
+        taskField.value = taskText;
+    }
+    
+    // Extract context/background
+    const contextField = document.getElementById('field-context');
     if (contextField) {
-        // Put the original prompt content here for editing
-        contextField.value = data.content;
+        const contextPatterns = [
+            /Context: ([^.]+(?:\.[^.]*)*)/i,
+            /Background: ([^.]+(?:\.[^.]*)*)/i
+        ];
+        
+        let contextText = `Original prompt: ${data.title}\nCategory: ${data.category}\nDifficulty: ${data.difficulty}\n\nDescription: ${data.description}`;
+        for (const pattern of contextPatterns) {
+            const match = content.match(pattern);
+            if (match) {
+                contextText = match[1].trim();
+                break;
+            }
+        }
+        contextField.value = contextText;
+    }
+    
+    // Put remaining content in instructions
+    const instructionsField = document.getElementById('field-instructions');
+    if (instructionsField) {
+        // Clean up the content by removing the parts we've already extracted
+        let instructions = content
+            .replace(/You are (?:a |an )?[^.]+\./i, '')
+            .replace(/Task: [^.]+(?:\.[^.]*)?/i, '')
+            .replace(/Context: [^.]+(?:\.[^.]*)*/i, '')
+            .replace(/Background: [^.]+(?:\.[^.]*)*/i, '')
+            .trim();
+        
+        instructionsField.value = instructions || content;
+    }
+    
+    // Add tags as format guidance
+    const formatField = document.getElementById('field-format');
+    if (formatField && data.tags.length > 0) {
+        formatField.value = `Focus areas: ${data.tags.join(', ')}\n\nTarget users: ${data.useCases.join(', ')}`;
     }
     
     // Update the preview
     updatePreview();
+
 }
 
 function showImportNotification(promptTitle) {
