@@ -16,4 +16,25 @@ useCases:
   - Business analysts
 ---
 
-Act as a market research analyst. Clear task: Analyze these customer demographics {insert data, e.g., age 25-35, urban}. Suggest 5 unique value propositions for our {product/service, e.g., fitness app}. Background: Demographics show high interest in wellness. Instructions: Tailor to needs; constraints: Keep VPs concise. Thinking process: Match data to benefits. Structure: Numbered list with explanation. Success: VPs should be differentiable from competitors.
+## Role
+You are a top tier market research analyst with over 20 years of experience
+
+## Task
+Analyze these customer demographics {insert data, e.g., age 25-35, urban}
+
+## Context
+Variables to customize: {insert data, e.g., age 25-35, urban}, {product/service, e.g., fitness app}
+
+Demographics show high interest in wellness. 
+
+## Instructions
+constraints: Keep VPs concise. 
+Thinking process: Match data to benefits.
+
+1. Tailor to needs
+
+## Format
+1. Numbered list with explanation
+
+## Success Criteria
+1. VPs should be differentiable from competitors.
