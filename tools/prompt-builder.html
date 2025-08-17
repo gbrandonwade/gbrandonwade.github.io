@@ -828,11 +828,97 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
+// Add these new functions to your prompt builder JavaScript:
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            showWelcome();
-        });
+function checkForPresetData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('preset') === 'true') {
+        // We have preset data from the prompt library
+        const presetData = {
+            title: urlParams.get('title') || '',
+            category: urlParams.get('category') || '',
+            difficulty: urlParams.get('difficulty') || 'standard',
+            description: urlParams.get('description') || '',
+            content: urlParams.get('content') || '',
+            tags: urlParams.get('tags') ? urlParams.get('tags').split(',') : [],
+            useCases: urlParams.get('useCases') ? urlParams.get('useCases').split(',') : []
+        };
+        
+        // Show notification about the import
+        showImportNotification(presetData.title);
+        
+        // Auto-start with standard complexity
+        setTimeout(() => {
+            fromTemplate = false;
+            currentComplexity = 'standard';
+            initializeBuilder();
+            
+            // Pre-fill the form after it's created
+            setTimeout(() => {
+                prefillFromPromptLibrary(presetData);
+            }, 300);
+        }, 100);
+    }
+}
+
+function prefillFromPromptLibrary(data) {
+    // Simple approach: put the entire content in the first available field
+    const taskField = document.getElementById('field-task');
+    const roleField = document.getElementById('field-role');
+    const contextField = document.getElementById('field-context');
+    
+    if (taskField) {
+        taskField.value = `Customize this prompt: ${data.title}`;
+    }
+    
+    if (roleField) {
+        // Try to extract role from content
+        const roleMatch = data.content.match(/You are (?:a |an )?([^.]+)/i);
+        roleField.value = roleMatch ? roleMatch[1] : 'AI assistant';
+    }
+    
+    if (contextField) {
+        // Put the original prompt content here for editing
+        contextField.value = data.content;
+    }
+    
+    // Update the preview
+    updatePreview();
+}
+
+function showImportNotification(promptTitle) {
+    // Create a temporary notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #e67e22, #d35400);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+        max-width: 300px;
+    `;
+    notification.innerHTML = `🎯 Imported "${promptTitle}" for customization`;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 4000);
+}
+        // Update your existing DOMContentLoaded to look like this:
+document.addEventListener('DOMContentLoaded', function() {
+    showWelcome();
+    
+    // Check for preset data from prompt library
+    checkForPresetData();
+});
     </script>
 </body>
 </html>
