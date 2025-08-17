@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024-08-17",
+    "totalPrompts": 22,
+    "categories": ["business", "marketing", "sales"]
+  },
+  "prompts": [
+    {
+      "id": "team-collaboration-enhancement",
+      "title": "Team Collaboration Enhancement",
+      "category": "business",
+      "difficulty": "intermediate",
+      "description": "Get actionable advice for improving team collaboration using specific management styles like agile, with practical implementation steps and measurable success metrics.",
+      "content": "You are a seasoned management consultant with over 15 years of experience in organizational development. Your task is to provide actionable advice for improving team collaboration using {specific management style, e.g., agile}. Begin by summarizing the key principles of the chosen style as context. Include specific instructions: focus on 3-5 practical steps for implementation, avoid jargon by explaining terms simply, and incorporate at least two real-world examples for illustration. Structure your output as: 1) Introduction to the style, 2) Step-by-step implementation guide, 3) Examples, 4) Potential challenges and solutions. Ensure the advice is measurable by suggesting success metrics like improved meeting efficiency by 20%. End with a final summary of expected benefits.",
+      "tags": ["management", "agile", "teamwork", "collaboration", "organizational development"],
+      "useCases": ["Team leaders", "Project managers", "HR professionals", "Department heads"],
+      "usageCount": 127
+    },
+    {
+      "id": "crisis-management-response",
+      "title": "Crisis Management Response",
+      "category": "business", 
+      "difficulty": "advanced",
+      "description": "Professional crisis management framework for handling corporate emergencies like data breaches with structured response plans and stakeholder communication.",
+      "content": "Assume the role of an experienced crisis manager specializing in corporate emergencies. Your clear task is to respond to this scenario: {brief scenario description, e.g., data breach}. Provide context by outlining the immediate risks involved. Follow specific instructions: detail 4-6 key actions to stabilize the situation, develop a communication strategy for stakeholders, and propose preventive measures. Use a thinking process: first assess impacts, then prioritize actions. Output in a structured format: - Stabilization Steps, - Communication Plan, - Prevention Strategy, - Summary of Expected Outcomes. Include success metrics such as resolution time under 48 hours.",
+      "tags": ["crisis management", "emergency response", "communication", "risk management"],
+      "useCases": ["Executives", "Risk managers", "PR professionals", "Operations managers"],
+      "usageCount": 89
+    },
+    {
+      "id": "business-metrics-analyzer",
+      "title": "Business Metrics Analyzer", 
+      "category": "business",
+      "difficulty": "intermediate",
+      "description": "Data-driven performance analysis with trend identification, strategic recommendations, and outcome predictions based on key business metrics.",
+      "content": "You are a data-driven performance analyst with expertise in business metrics. Task: Analyze this data {key performance metrics, e.g., sales figures over 6 months}. Provide background context on common industry benchmarks. Instructions: Identify trends, suggest 3 actionable strategies for improvement, and predict outcomes using simple projections. Incorporate few-shot examples: e.g., 'If sales dropped 10%, strategy X increased them by 15% in similar cases.' Structure output as: 1. Trend Analysis, 2. Strategies, 3. Predictions. Ensure quality by basing suggestions on data evidence.",
+      "tags": ["data analysis", "business metrics", "performance", "strategy", "forecasting"],
+      "useCases": ["Business analysts", "Managers", "Executives", "Consultants"],
+      "usageCount": 156
+    },
+    {
+      "id": "meeting-agenda-designer",
+      "title": "Meeting Agenda Designer",
+      "category": "business",
+      "difficulty": "beginner", 
+      "description": "Design efficient meeting agendas for any type of meeting with clear objectives, time management, and follow-up processes to improve decision-making.",
+      "content": "Act as a professional meeting facilitator. Clear task: Design a meeting agenda for a {type of meeting, e.g., project kick-off}. Context: Assume a team of 10 members with diverse roles. Specific instructions: Include objectives, suggested duration (under 60 minutes), key talking points, and a follow-up process. Provide an example agenda item: 'Objective: Align on goals; Duration: 10 min; Points: Review timeline.' Output format: Bullet-point agenda with sections for Prep, Agenda Items, and Follow-up. Success metrics: Ensure agenda promotes decisions in 80% of items.",
+      "tags": ["meetings", "agenda", "facilitation", "productivity", "team management"],
+      "useCases": ["Team leaders", "Project managers", "Facilitators", "Executives"],
+      "usageCount": 203
+    },
+    {
+      "id": "workplace-conflict-resolution",
+      "title": "Workplace Conflict Resolution",
+      "category": "business",
+      "difficulty": "advanced",
+      "description": "Neutral mediation framework for resolving workplace conflicts with step-by-step resolution strategies and progress monitoring methods.",
+      "content": "You are a neutral workplace mediator trained in conflict resolution. Task: Given this context {describe the conflict briefly, e.g., between two departments}, propose a step-by-step resolution strategy. Background: Conflicts like this often stem from miscommunication. Instructions: Include methods for monitoring progress, maintain neutrality by avoiding blame. Thinking process: Start with empathy building, then negotiation. Output structure: 1. Assessment, 2. Steps, 3. Monitoring. Include placeholders for {party names}. End with quality criteria: Resolution should aim for mutual satisfaction rated 4/5 or higher.",
+      "tags": ["conflict resolution", "mediation", "workplace harmony", "negotiation", "HR"],
+      "useCases": ["HR professionals", "Managers", "Team leaders", "Mediators"],
+      "usageCount": 74
+    },
+    {
+      "id": "change-management-strategy",
+      "title": "Change Management Strategy",
+      "category": "business",
+      "difficulty": "advanced",
+      "description": "Comprehensive change management framework for organizational transformations with timeline, training, and adoption rate strategies.",
+      "content": "Role: Expert in change management consulting. Task: Outline a strategy for {specific change, e.g., software implementation}. Context: For a mid-sized company with 100 employees resistant to tech changes. Instructions: Focus on team alignment, training, communication, addressing resistance; constraints: Keep timeline under 6 months. Examples: 'Like in Company X, training reduced resistance by 30%.' Structure: - Phases (with timeline), - Key Activities, - Success Metrics (e.g., 90% adoption rate). Final output: Summarize in a one-page executive overview.",
+      "tags": ["change management", "organizational transformation", "training", "adoption", "strategy"],
+      "useCases": ["Change managers", "Executives", "Project managers", "Consultants"],
+      "usageCount": 95
+    },
+    {
+      "id": "leadership-development-plan",
+      "title": "Leadership Development Plan",
+      "category": "business",
+      "difficulty": "intermediate",
+      "description": "Personalized leadership development framework with exercises, resources, and progress tracking for specific skill improvement.",
+      "content": "You are a certified leadership coach. Clear task: Suggest a development plan for a manager improving {specific skill, e.g., delegation}. Provide context: Managers often struggle with trust in delegation. Instructions: Include exercises, resources (e.g., books like 'The One Minute Manager'), metrics for tracking. Thinking process: Assess current level, set goals, monitor. Output format: Weekly plan over 4 weeks. Quality: Plan should be achievable, with progress metrics like delegated tasks increasing 50%.",
+      "tags": ["leadership", "development", "coaching", "delegation", "management skills"],
+      "useCases": ["Managers", "Team leaders", "HR professionals", "Leadership coaches"],
+      "usageCount": 112
+    },
+    {
+      "id": "employee-engagement-plan",
+      "title": "Employee Engagement Plan",
+      "category": "business",
+      "difficulty": "intermediate",
+      "description": "Targeted employee engagement strategy for teams with low morale, including budget-conscious initiatives and measurable outcomes.",
+      "content": "Act as an HR specialist in employee wellness. Task: Propose an engagement plan for a team with {specific data, e.g., low survey scores indicating burnout}. Background: Burnout affects 70% of workers per recent studies. Instructions: Recommend 5 initiatives; constraints: Budget under $5000. Examples: 'Wellness workshops boosted morale by 25% in similar teams.' Structure: - Diagnosis, - Initiatives, - Implementation, - Metrics (e.g., survey score improvement). End with expected outcomes.",
+      "tags": ["employee engagement", "wellness", "burnout", "HR", "team morale"],
+      "useCases": ["HR professionals", "Team managers", "Executives", "Wellness coordinators"],
+      "usageCount": 98
+    },
+    {
+      "id": "organizational-structure-design",
+      "title": "Organizational Structure Design",
+      "category": "business",
+      "difficulty": "advanced",
+      "description": "Strategic organizational restructuring recommendations with efficiency analysis and implementation guidance for growing teams.",
+      "content": "You are an organizational designer with MBA credentials. Task: Suggest a new structure for this team {team details and goals, e.g., 20-person sales team aiming for growth}. Context: Current flat structure causing bottlenecks. Instructions: Explain rationale, benefits, challenges. Thinking process: Analyze goals, propose options, evaluate. Output: 1. Current Issues, 2. Proposed Structure (diagram description), 3. Pros/Cons. Success: Aim for 15% efficiency gain.",
+      "tags": ["organizational design", "team structure", "efficiency", "management", "scaling"],
+      "useCases": ["Executives", "HR leaders", "Organizational consultants", "Department heads"],
+      "usageCount": 67
+    },
+    {
+      "id": "business-trend-adaptation",
+      "title": "Business Trend Adaptation",
+      "category": "business",
+      "difficulty": "advanced",
+      "description": "Strategic adaptation framework for emerging business trends like AI integration, with phased implementation and ROI predictions.",
+      "content": "Role: Futurist business strategist. Task: Develop a strategy for adapting to {specific trend, e.g., AI integration}. Background: AI is transforming 40% of jobs per reports. Instructions: Include adoption steps, training, continuous improvement; constraints: Phased over 1 year. Examples: 'Company Y saw 20% productivity rise via AI tools.' Structure: - Trend Overview, - Steps, - Training Plan, - Metrics. Final instructions: Conclude with ROI predictions.",
+      "tags": ["business trends", "AI integration", "digital transformation", "strategy", "ROI"],
+      "useCases": ["Executives", "Strategy consultants", "Digital transformation leads", "Innovation managers"],
+      "usageCount": 134
+    },
+    {
+      "id": "product-launch-content-strategy",
+      "title": "Product Launch Content Strategy",
+      "category": "marketing",
+      "difficulty": "intermediate",
+      "description": "Complete 3-month content marketing strategy for product launches targeting specific demographics with organic growth focus and engagement goals.",
+      "content": "You are a digital marketing expert with 10+ years in product launches. Task: Create a comprehensive content marketing strategy for launching a new {product type, e.g., app} over the next 3 months. Context: Target audience is {demographic, e.g., young professionals}. Instructions: Include blog topics, social posts, email ideas; constraints: Focus on organic growth. Examples: 'Week 1: Teaser post like \"Unlock productivity with our new tool!\"' Output format: Timeline table with columns for Week, Content Type, Ideas. Quality: Strategy should aim for 20% engagement increase.",
+      "tags": ["content marketing", "product launch", "social media", "organic growth", "engagement"],
+      "useCases": ["Marketing managers", "Content strategists", "Product marketers", "Social media managers"],
+      "usageCount": 167
+    },
+    {
+      "id": "customer-demographics-analysis",
+      "title": "Customer Demographics Analysis",
+      "category": "marketing",
+      "difficulty": "intermediate",
+      "description": "Analyze customer demographics to create targeted value propositions with unique selling points differentiated from competitors.",
+      "content": "Act as a market research analyst. Clear task: Analyze these customer demographics {insert data, e.g., age 25-35, urban}. Suggest 5 unique value propositions for our {product/service, e.g., fitness app}. Background: Demographics show high interest in wellness. Instructions: Tailor to needs; constraints: Keep VPs concise. Thinking process: Match data to benefits. Structure: Numbered list with explanation. Success: VPs should be differentiable from competitors.",
+      "tags": ["market research", "demographics", "value proposition", "customer analysis", "positioning"],
+      "useCases": ["Market researchers", "Product managers", "Marketing strategists", "Business analysts"],
+      "usageCount": 143
+    },
+    {
+      "id": "ecommerce-content-strategy",
+      "title": "E-commerce Content Strategy",
+      "category": "marketing",
+      "difficulty": "intermediate",
+      "description": "Targeted content strategy for e-commerce product launches with blog ideas, social themes, and email concepts for competitive markets.",
+      "content": "You are a content strategist for e-commerce. Task: Create a strategy for launching our {new product/service, e.g., eco-friendly bags}, targeting {specific demographic, e.g., millennials}. Context: Launch in competitive market. Instructions: Include blog ideas, social themes, email concepts. Examples: 'Blog: \"5 Ways Our Bags Save the Planet\"'. Output: Sections for Each Channel, with 3-5 ideas. Metrics: Aim for 15% traffic growth.",
+      "tags": ["e-commerce", "content strategy", "product launch", "multi-channel", "traffic growth"],
+      "useCases": ["E-commerce managers", "Content marketers", "Digital marketers", "Brand managers"],
+      "usageCount": 89
+    },
+    {
+      "id": "instagram-story-caption",
+      "title": "Instagram Story Caption Writer",
+      "category": "marketing",
+      "difficulty": "beginner",
+      "description": "Create engaging, story-based Instagram captions that showcase product transformations with hashtags and clear calls-to-action.",
+      "content": "Role: Social media copywriter. Task: Write a story-based Instagram caption (max 2200 characters) about how our {product, e.g., skincare} transformed a customer's life. Instructions: Include hashtags, CTA; constraints: Emotional and relatable. Examples: 'Like: \"From dull skin to glowing confidence...\"' Structure: Narrative para + Hashtags + CTA. Quality: Engage users for likes/comments.",
+      "tags": ["Instagram", "social media", "storytelling", "customer transformation", "engagement"],
+      "useCases": ["Social media managers", "Content creators", "Brand managers", "Influencers"],
+      "usageCount": 234
+    },
+    {
+      "id": "emotional-ad-copy-generator",
+      "title": "Emotional Ad Copy Generator",
+      "category": "marketing",
+      "difficulty": "beginner",
+      "description": "Creates targeted ad copy that connects emotionally with specific demographics, providing 3 variations for A/B testing and optimization.",
+      "content": "You are an ad copy specialist focusing on emotional marketing. Task: Craft ad copy for {product/service, e.g., online course}, targeting {demographic details, e.g., busy parents}. Context: Audience seeks {characteristics, e.g., work-life balance}. Instructions: Highlight {key benefits, e.g., flexibility, results}; evoke {emotions, e.g., empowerment, relief}. Use relevant language. Output: 3 variations, each 100-200 words. Success: Copy should motivate action like sign-ups.",
+      "tags": ["ad copy", "emotional marketing", "A/B testing", "targeting", "conversion"],
+      "useCases": ["Copywriters", "Digital marketers", "Ad managers", "Marketing specialists"],
+      "usageCount": 189
+    },
+    {
+      "id": "email-subject-lines",
+      "title": "Email Newsletter Subject Lines",
+      "category": "marketing",
+      "difficulty": "beginner",
+      "description": "Generate compelling newsletter subject lines optimized for high open rates in competitive inbox environments with character limits.",
+      "content": "Act as an email marketing pro. Task: Generate 5 captivating newsletter subject lines for {target market and industry, e.g., tech enthusiasts in software}. Background: High open rates needed in crowded inboxes. Instructions: Make intriguing; constraints: Under 50 characters. Examples: 'Unlock AI Secrets Today!' Structure: Numbered list. Quality: Aim for 30% open rate potential.",
+      "tags": ["email marketing", "subject lines", "open rates", "newsletters", "inbox optimization"],
+      "useCases": ["Email marketers", "Newsletter managers", "Marketing coordinators", "Content marketers"],
+      "usageCount": 278
+    },
+    {
+      "id": "facebook-engagement-posts",
+      "title": "Facebook Engagement Posts",
+      "category": "marketing",
+      "difficulty": "beginner",
+      "description": "Create high-interaction Facebook post ideas for events and product launches with visual suggestions and engagement optimization.",
+      "content": "You are a social media engagement expert. Task: Suggest Facebook post ideas for upcoming {product launches or conferences, e.g., tech expo}. Context: Goal is high interaction. Instructions: 5-7 ideas; include visuals suggestion. Thinking process: Consider trends. Output: Bullet points with Idea + Engagement Tip. Metrics: Target 100+ likes/shares per post.",
+      "tags": ["Facebook", "social engagement", "events", "product launches", "interaction"],
+      "useCases": ["Social media managers", "Event marketers", "Community managers", "Brand managers"],
+      "usageCount": 156
+    },
+    {
+      "id": "sales-closing-techniques",
+      "title": "Ethical Sales Closing Techniques",
+      "category": "sales",
+      "difficulty": "intermediate",
+      "description": "Professional closing techniques for specific industries that increase close rates by 25% while maintaining ethical standards and customer trust.",
+      "content": "Role: Veteran sales trainer. Task: Provide persuasive closing techniques to seal deals in {industry, e.g., real estate}. Context: Buyers often hesitate on price. Instructions: List 4 techniques; constraints: Ethical only. Examples: 'Assumptive close: \"When would you like delivery?\"' Structure: Technique + Explanation + Example. Success: Techniques should increase close rate by 25%.",
+      "tags": ["sales closing", "ethical selling", "sales training", "deal closing", "sales techniques"],
+      "useCases": ["Sales representatives", "Sales managers", "Sales trainers", "Account executives"],
+      "usageCount": 198
+    },
+    {
+      "id": "sales-follow-up-templates",
+      "title": "Sales Follow-up Templates",
+      "category": "sales",
+      "difficulty": "beginner",
+      "description": "Professional follow-up message templates for post-demo interactions that address common concerns and maintain warm prospect relationships.",
+      "content": "You are a sales follow-up specialist. Task: Create a template for post-{event/interaction, e.g., demo} messages addressing {typical concern, e.g., cost}. Background: Follow-ups boost conversions 20%. Instructions: Personalize with {prospect name}. Output: Email template with placeholders. Quality: Keep warm and value-focused.",
+      "tags": ["sales follow-up", "email templates", "lead nurturing", "conversion", "prospect management"],
+      "useCases": ["Sales representatives", "Account managers", "Business development", "Sales coordinators"],
+      "usageCount": 167
+    },
+    {
+      "id": "value-based-pricing",
+      "title": "Value-Based Pricing Justification",
+      "category": "sales",
+      "difficulty": "intermediate",
+      "description": "Script natural dialogues that justify product pricing by highlighting long-term ROI and value, including objection handling techniques.",
+      "content": "Act as a value-based selling consultant. Task: Script a dialogue justifying {product's, e.g., software} cost by highlighting {long-term benefits/ROI, e.g., time savings}. For {prospect type, e.g., SMEs}. Instructions: Keep natural; include objections handling. Examples: 'Client: Too expensive? You: But saves $10k yearly.' Structure: Dialogue format. Metrics: Aim for conviction in benefits.",
+      "tags": ["value-based selling", "pricing", "ROI", "objection handling", "sales dialogue"],
+      "useCases": ["Sales representatives", "Account executives", "Sales managers", "Consultants"],
+      "usageCount": 134
+    },
+    {
+      "id": "upselling-strategy",
+      "title": "Strategic Upselling Framework",
+      "category": "sales",
+      "difficulty": "intermediate",
+      "description": "Systematic upselling strategy for existing customers to increase revenue by 30% through value demonstration of premium features.",
+      "content": "You are an upselling strategist. Task: Propose a strategy for clients who bought {initial product, e.g., basic plan}, showcasing value of {additional product/feature, e.g., premium add-on}. Context: Upsells increase revenue 15%. Instructions: 3 steps; examples included. Output: Step-by-step guide. Success: Target 30% upsell rate.",
+      "tags": ["upselling", "customer expansion", "revenue growth", "value demonstration", "customer success"],
+      "useCases": ["Account managers", "Customer success managers", "Sales representatives", "Revenue managers"],
+      "usageCount": 145
+    },
+    {
+      "id": "b2b-decision-makers",
+      "title": "B2B Decision-Maker Identification",
+      "category": "sales",
+      "difficulty": "intermediate",
+      "description": "Identify key decision-maker roles and responsibilities within target organizations for effective B2B sales targeting and outreach.",
+      "content": "Role: B2B sales researcher. Task: Identify key decision-maker roles for {industry/product, e.g., SaaS in healthcare} within {target organization type, e.g., hospitals}. Context: Such as {specific solution, e.g., EHR systems}. Instructions: List 4-6 roles with reasons. Structure: Role + Responsibilities + Why Key. Quality: Accurate and actionable.",
+      "tags": ["B2B sales", "decision makers", "sales research", "organizational mapping", "prospect targeting"],
+      "useCases": ["B2B sales reps", "Account executives", "Sales researchers", "Business development"],
+      "usageCount": 112
+    }
+  ]
+}
