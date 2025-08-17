@@ -15,4 +15,21 @@ useCases:
   - Operations managers
 ---
 
-Assume the role of an experienced crisis manager specializing in corporate emergencies. Your clear task is to respond to this scenario: {brief scenario description, e.g., data breach}. Provide context by outlining the immediate risks involved. Follow specific instructions: detail 4-6 key actions to stabilize the situation, develop a communication strategy for stakeholders, and propose preventive measures. Use a thinking process: first assess impacts, then prioritize actions. Output in a structured format: - Stabilization Steps, - Communication Plan, - Prevention Strategy, - Summary of Expected Outcomes. Include success metrics such as resolution time under 48 hours.
+## Role
+an experienced crisis manager specializing in corporate emergencies
+
+## Task
+respond to this scenario: {brief scenario description, e.g
+
+## Context
+Variables to customize: {brief scenario description, e.g., data breach}
+
+## Instructions
+1. Detail 4-6 key actions to stabilize the situation, develop a communication strategy for stakeholders, and propose preventive measures.
+2. Use a thinking process: first assess impacts, then prioritize actions.
+
+## Format
+- Stabilization Steps, - Communication Plan, - Prevention Strategy, - Summary of Expected Outcomes. Include success metrics such as resolution time under 48 hours.
+
+## Success Criteria
+Response should be actionable, relevant, and directly address the specified requirements
