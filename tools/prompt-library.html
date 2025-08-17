@@ -518,284 +518,322 @@
     </div>
 
     <script>
-        // Global variables
-        let allPrompts = [];
-        let filteredPrompts = [];
+// Global variables
+let allPrompts = [];
+let filteredPrompts = [];
 
-        // Load prompts from JSON file
-        async function loadPrompts() {
-            try {
-                // In production, this would load from /data/prompts.json
-                // For demo purposes, we'll use the embedded data
-                const promptData = {
-                    "metadata": {
-                        "version": "1.0",
-                        "lastUpdated": "2024-08-17",
-                        "totalPrompts": 22,
-                        "categories": ["business", "marketing", "sales"]
-                    },
-                    "prompts": [
-                        {
-                            "id": "team-collaboration-enhancement",
-                            "title": "Team Collaboration Enhancement",
-                            "category": "business",
-                            "difficulty": "intermediate",
-                            "description": "Get actionable advice for improving team collaboration using specific management styles like agile, with practical implementation steps and measurable success metrics.",
-                            "content": "You are a seasoned management consultant with over 15 years of experience in organizational development. Your task is to provide actionable advice for improving team collaboration using {specific management style, e.g., agile}. Begin by summarizing the key principles of the chosen style as context. Include specific instructions: focus on 3-5 practical steps for implementation, avoid jargon by explaining terms simply, and incorporate at least two real-world examples for illustration. Structure your output as: 1) Introduction to the style, 2) Step-by-step implementation guide, 3) Examples, 4) Potential challenges and solutions. Ensure the advice is measurable by suggesting success metrics like improved meeting efficiency by 20%. End with a final summary of expected benefits.",
-                            "tags": ["management", "agile", "teamwork", "collaboration", "organizational development"],
-                            "useCases": ["Team leaders", "Project managers", "HR professionals", "Department heads"],
-                            "usageCount": 127
-                        },
-                        {
-                            "id": "crisis-management-response",
-                            "title": "Crisis Management Response",
-                            "category": "business", 
-                            "difficulty": "advanced",
-                            "description": "Professional crisis management framework for handling corporate emergencies like data breaches with structured response plans and stakeholder communication.",
-                            "content": "Assume the role of an experienced crisis manager specializing in corporate emergencies. Your clear task is to respond to this scenario: {brief scenario description, e.g., data breach}. Provide context by outlining the immediate risks involved. Follow specific instructions: detail 4-6 key actions to stabilize the situation, develop a communication strategy for stakeholders, and propose preventive measures. Use a thinking process: first assess impacts, then prioritize actions. Output in a structured format: - Stabilization Steps, - Communication Plan, - Prevention Strategy, - Summary of Expected Outcomes. Include success metrics such as resolution time under 48 hours.",
-                            "tags": ["crisis management", "emergency response", "communication", "risk management"],
-                            "useCases": ["Executives", "Risk managers", "PR professionals", "Operations managers"],
-                            "usageCount": 89
-                        },
-                        {
-                            "id": "product-launch-content-strategy",
-                            "title": "Product Launch Content Strategy",
-                            "category": "marketing",
-                            "difficulty": "intermediate",
-                            "description": "Complete 3-month content marketing strategy for product launches targeting specific demographics with organic growth focus and engagement goals.",
-                            "content": "You are a digital marketing expert with 10+ years in product launches. Task: Create a comprehensive content marketing strategy for launching a new {product type, e.g., app} over the next 3 months. Context: Target audience is {demographic, e.g., young professionals}. Instructions: Include blog topics, social posts, email ideas; constraints: Focus on organic growth. Examples: 'Week 1: Teaser post like \"Unlock productivity with our new tool!\"' Output format: Timeline table with columns for Week, Content Type, Ideas. Quality: Strategy should aim for 20% engagement increase.",
-                            "tags": ["content marketing", "product launch", "social media", "organic growth", "engagement"],
-                            "useCases": ["Marketing managers", "Content strategists", "Product marketers", "Social media managers"],
-                            "usageCount": 167
-                        },
-                        {
-                            "id": "sales-closing-techniques",
-                            "title": "Ethical Sales Closing Techniques",
-                            "category": "sales",
-                            "difficulty": "intermediate",
-                            "description": "Professional closing techniques for specific industries that increase close rates by 25% while maintaining ethical standards and customer trust.",
-                            "content": "Role: Veteran sales trainer. Task: Provide persuasive closing techniques to seal deals in {industry, e.g., real estate}. Context: Buyers often hesitate on price. Instructions: List 4 techniques; constraints: Ethical only. Examples: 'Assumptive close: \"When would you like delivery?\"' Structure: Technique + Explanation + Example. Success: Techniques should increase close rate by 25%.",
-                            "tags": ["sales closing", "ethical selling", "sales training", "deal closing", "sales techniques"],
-                            "useCases": ["Sales representatives", "Sales managers", "Sales trainers", "Account executives"],
-                            "usageCount": 198
-                        }
-                        // Additional prompts would be loaded from the full JSON file
-                    ]
-                };
-
-                allPrompts = promptData.prompts;
-                filteredPrompts = [...allPrompts];
-                
-                // Update stats
-                document.getElementById('promptCount').textContent = allPrompts.length;
-                document.getElementById('filteredCount').textContent = filteredPrompts.length;
-                
-                renderPrompts();
-            } catch (error) {
-                console.error('Error loading prompts:', error);
-                // Fallback to show error message
-                document.getElementById('promptsGrid').innerHTML = '<div class="no-posts">Error loading prompts. Please refresh and try again.</div>';
-            }
-        }
-
-        // Render prompts to the grid
-        function renderPrompts() {
-            const grid = document.getElementById('promptsGrid');
-            
-            if (filteredPrompts.length === 0) {
-                grid.innerHTML = '<div class="no-posts">📝 No prompts found matching your criteria.<br><small>Try adjusting your search or category filter.</small></div>';
-                return;
-            }
-
-            grid.innerHTML = filteredPrompts.map(prompt => {
-                const categoryLabel = getCategoryLabel(prompt.category);
-                const difficultyClass = `difficulty-${prompt.difficulty}`;
-                
-                return `
-                    <div class="prompt-card" data-category="${prompt.category}" data-difficulty="${prompt.difficulty}">
-                        <div class="prompt-header">
-                            <div>
-                                <h3 class="prompt-title">${prompt.title}</h3>
-                                <span class="prompt-category">${categoryLabel}</span>
-                            </div>
-                        </div>
-                        
-                        <p class="prompt-description">
-                            ${prompt.description}
-                        </p>
-                        
-                        <div class="prompt-content" id="content-${prompt.id}">
-${prompt.content}
-                        </div>
-                        <button class="expand-btn" onclick="toggleExpand('content-${prompt.id}')">↓</button>
-                        
-                        <div class="prompt-actions">
-                            <button class="action-btn" onclick="copyPrompt('content-${prompt.id}')">📋 Copy</button>
-                            <button class="action-btn" onclick="customizePrompt('${prompt.id}')">⚙️ Customize</button>
-                            <button class="action-btn" onclick="sharePrompt('${prompt.id}')">🔗 Share</button>
-                        </div>
-                        
-                        <div class="prompt-meta">
-                            <span class="difficulty-badge ${difficultyClass}">${capitalizeFirst(prompt.difficulty)}</span>
-                            <span>Used ${prompt.usageCount} times</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Helper functions
-        function getCategoryLabel(category) {
-            const labels = {
-                'business': 'Business & Productivity',
-                'marketing': 'Marketing',
-                'sales': 'Sales',
-                'writing': 'Writing & Content',
-                'analysis': 'Analysis & Research',
-                'creative': 'Creative & Brainstorming'
-            };
-            return labels[category] || capitalizeFirst(category);
-        }
-
-        function capitalizeFirst(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-
-        function setView(viewType) {
-            const gridView = document.getElementById('promptsGrid');
-            const listView = document.getElementById('promptsList');
-            const buttons = document.querySelectorAll('.view-btn');
-            
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            if (viewType === 'grid') {
-                gridView.style.display = 'grid';
-                listView.style.display = 'none';
-                document.querySelector('.view-btn[onclick="setView(\'grid\')"]').classList.add('active');
-            } else {
-                gridView.style.display = 'none';
-                listView.style.display = 'flex';
-                document.querySelector('.view-btn[onclick="setView(\'list\')"]').classList.add('active');
-            }
-        }
-
-        function toggleExpand(contentId) {
-            const content = document.getElementById(contentId);
-            const btn = content.nextElementSibling;
-            
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                btn.textContent = '↓';
-            } else {
-                content.classList.add('expanded');
-                btn.textContent = '↑';
-            }
-        }
-
-        function copyPrompt(contentId) {
-            const content = document.getElementById(contentId).textContent;
-            navigator.clipboard.writeText(content).then(() => {
-                // Show feedback
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = '✅ Copied!';
-                btn.style.background = 'var(--primary-color)';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '';
-                }, 2000);
-            });
-        }
-
-        function customizePrompt(promptId) {
-            // Would open customization interface or redirect to prompt builder
-            alert('Customization feature coming soon! For now, copy the prompt and modify it manually.');
-        }
-
-        function sharePrompt(promptId) {
-            // Would generate shareable link
-            const url = `${window.location.origin}/prompts/${promptId}`;
-            navigator.clipboard.writeText(url);
-            
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = '✅ Link Copied!';
-            setTimeout(() => {
-                btn.textContent = originalText;
-            }, 2000);
-        }
-
-        function exportPrompts() {
-            // Export current filtered prompts to markdown
-            let exportContent = '# AI Prompt Library Export\n\n';
-            exportContent += `Generated on ${new Date().toLocaleDateString()}\n\n`;
-            
-            filteredPrompts.forEach((prompt, index) => {
-                exportContent += `## ${index + 1}. ${prompt.title}\n\n`;
-                exportContent += `**Category:** ${getCategoryLabel(prompt.category)}\n`;
-                exportContent += `**Difficulty:** ${capitalizeFirst(prompt.difficulty)}\n`;
-                exportContent += `**Description:** ${prompt.description}\n\n`;
-                exportContent += `**Prompt:**\n\`\`\`\n${prompt.content}\n\`\`\`\n\n`;
-                exportContent += `**Use Cases:** ${prompt.useCases.join(', ')}\n\n`;
-                exportContent += '---\n\n';
-            });
-            
-            // Download as markdown file
-            const blob = new Blob([exportContent], { type: 'text/markdown' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `ai-prompts-${new Date().toISOString().split('T')[0]}.md`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function openSubmitModal() {
-            document.getElementById('submitModal').style.display = 'flex';
-        }
-
-        function closeSubmitModal() {
-            document.getElementById('submitModal').style.display = 'none';
-        }
-
-        // Search and filter functionality
-        document.getElementById('searchInput').addEventListener('input', filterPrompts);
-        document.getElementById('categoryFilter').addEventListener('change', filterPrompts);
-
-        function filterPrompts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-            
-            filteredPrompts = allPrompts.filter(prompt => {
-                const matchesSearch = !searchTerm || 
-                    prompt.title.toLowerCase().includes(searchTerm) || 
-                    prompt.description.toLowerCase().includes(searchTerm) ||
-                    prompt.content.toLowerCase().includes(searchTerm) ||
-                    prompt.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+// Parse markdown frontmatter
+function parseMarkdown(content) {
+    const lines = content.split('\n');
+    const frontmatter = {};
+    let contentStart = 0;
+    
+    if (lines[0] === '---') {
+        let i = 1;
+        while (i < lines.length && lines[i] !== '---') {
+            const line = lines[i].trim();
+            if (line) {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex > -1) {
+                    const key = line.substring(0, colonIndex).trim();
+                    let value = line.substring(colonIndex + 1).trim();
                     
-                const matchesCategory = !category || prompt.category === category;
-                return matchesSearch && matchesCategory;
-            });
-            
-            document.getElementById('filteredCount').textContent = filteredPrompts.length;
-            renderPrompts();
+                    // Handle YAML arrays and quoted strings
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(item => item.trim().replace(/^["']|["']$/g, ''));
+                    } else if (value.startsWith('-')) {
+                        // Handle YAML list format
+                        const listItems = [];
+                        while (i + 1 < lines.length && lines[i + 1].trim().startsWith('-')) {
+                            i++;
+                            listItems.push(lines[i].trim().substring(1).trim());
+                        }
+                        value = listItems;
+                    } else {
+                        value = value.replace(/^["']|["']$/g, '');
+                    }
+                    
+                    frontmatter[key] = value;
+                }
+            }
+            i++;
         }
+        contentStart = i + 1;
+    }
+    
+    const bodyContent = lines.slice(contentStart).join('\n').trim();
+    return { frontmatter, content: bodyContent };
+}
 
-        // Submit form handling
-        document.getElementById('submitForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Would submit to your backend/CMS for review
-            alert('Thank you for submitting! Your prompt will be reviewed and added soon.');
-            closeSubmitModal();
-            document.getElementById('submitForm').reset();
-        });
+// Load prompts from markdown files
+async function loadPrompts() {
+    try {
+        const response = await fetch('/prompts/index.json');
+        
+        if (!response.ok) {
+            console.log('No prompts index found, using embedded sample data');
+            loadEmbeddedPrompts();
+            return;
+        }
+        
+        const promptsIndex = await response.json();
+        const prompts = [];
+        
+        for (const filename of promptsIndex.files) {
+            try {
+                const promptResponse = await fetch(`/prompts/${filename}`);
+                if (promptResponse.ok) {
+                    const content = await promptResponse.text();
+                    const { frontmatter, content: promptContent } = parseMarkdown(content);
+                    
+                    prompts.push({
+                        id: filename.replace('.md', ''),
+                        title: frontmatter.title || 'Untitled',
+                        category: frontmatter.category || 'business',
+                        difficulty: frontmatter.difficulty || 'intermediate',
+                        description: frontmatter.description || '',
+                        content: promptContent,
+                        tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
+                        useCases: Array.isArray(frontmatter.useCases) ? frontmatter.useCases : []
+                    });
+                }
+            } catch (error) {
+                console.error(`Error loading prompt ${filename}:`, error);
+            }
+        }
+        
+        allPrompts = prompts;
+        filteredPrompts = [...allPrompts];
+        
+        document.getElementById('promptCount').textContent = allPrompts.length;
+        document.getElementById('filteredCount').textContent = filteredPrompts.length;
+        
+        renderPrompts();
+        
+    } catch (error) {
+        console.error('Error loading prompts:', error);
+        loadEmbeddedPrompts();
+    }
+}
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPrompts();
-        });
-    </script>
+// Fallback embedded prompts
+function loadEmbeddedPrompts() {
+    allPrompts = [
+        {
+            id: "team-collaboration-enhancement",
+            title: "Team Collaboration Enhancement",
+            category: "business",
+            difficulty: "intermediate",
+            description: "Get actionable advice for improving team collaboration using specific management styles like agile.",
+            content: "You are a seasoned management consultant...",
+            tags: ["management", "agile", "teamwork"],
+            useCases: ["Team leaders", "Project managers"]
+        }
+    ];
+    
+    filteredPrompts = [...allPrompts];
+    document.getElementById('promptCount').textContent = allPrompts.length;
+    document.getElementById('filteredCount').textContent = filteredPrompts.length;
+    renderPrompts();
+}
+
+// Render prompts to the grid
+function renderPrompts() {
+    const grid = document.getElementById('promptsGrid');
+    
+    if (filteredPrompts.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 4rem;"><p>📝 No prompts found matching your criteria.</p><small>Try adjusting your search or category filter.</small></div>';
+        return;
+    }
+
+    grid.innerHTML = filteredPrompts.map(prompt => {
+        const categoryLabel = getCategoryLabel(prompt.category);
+        const difficultyClass = `difficulty-${prompt.difficulty}`;
+        
+        return `
+            <div class="prompt-card" data-category="${prompt.category}" data-difficulty="${prompt.difficulty}">
+                <div class="prompt-header">
+                    <div>
+                        <h3 class="prompt-title">${escapeHtml(prompt.title)}</h3>
+                        <span class="prompt-category">${categoryLabel}</span>
+                    </div>
+                </div>
+                
+                <p class="prompt-description">
+                    ${escapeHtml(prompt.description)}
+                </p>
+                
+                <div class="prompt-content" id="content-${prompt.id}">
+${escapeHtml(prompt.content)}
+                </div>
+                <button class="expand-btn" onclick="toggleExpand('content-${prompt.id}')">↓</button>
+                
+                <div class="prompt-actions">
+                    <button class="action-btn" onclick="copyPrompt('content-${prompt.id}')">📋 Copy</button>
+                    <button class="action-btn" onclick="customizePrompt('${prompt.id}')">⚙️ Customize</button>
+                    <button class="action-btn" onclick="sharePrompt('${prompt.id}')">🔗 Share</button>
+                </div>
+                
+                <div class="prompt-meta">
+                    <span class="difficulty-badge ${difficultyClass}">${capitalizeFirst(prompt.difficulty)}</span>
+                    <span>${prompt.tags.slice(0, 3).join(' • ')}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Helper functions
+function getCategoryLabel(category) {
+    const labels = {
+        'business': 'Business & Productivity',
+        'marketing': 'Marketing',
+        'sales': 'Sales'
+    };
+    return labels[category] || capitalizeFirst(category);
+}
+
+function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function setView(viewType) {
+    const gridView = document.getElementById('promptsGrid');
+    const listView = document.getElementById('promptsList');
+    const buttons = document.querySelectorAll('.view-btn');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if (viewType === 'grid') {
+        gridView.style.display = 'grid';
+        listView.style.display = 'none';
+        document.querySelector('.view-btn[onclick="setView(\'grid\')"]').classList.add('active');
+    } else {
+        gridView.style.display = 'none';
+        listView.style.display = 'flex';
+        document.querySelector('.view-btn[onclick="setView(\'list\')"]').classList.add('active');
+    }
+}
+
+function toggleExpand(contentId) {
+    const content = document.getElementById(contentId);
+    const btn = content.nextElementSibling;
+    
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        btn.textContent = '↓';
+    } else {
+        content.classList.add('expanded');
+        btn.textContent = '↑';
+    }
+}
+
+function copyPrompt(contentId) {
+    const content = document.getElementById(contentId).textContent;
+    navigator.clipboard.writeText(content).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        btn.style.background = 'var(--primary-color)';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    });
+}
+
+function customizePrompt(promptId) {
+    alert('Customization feature coming soon! For now, copy the prompt and modify it manually.');
+}
+
+function sharePrompt(promptId) {
+    const url = `${window.location.origin}/prompts/${promptId}`;
+    navigator.clipboard.writeText(url);
+    
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = '✅ Link Copied!';
+    setTimeout(() => {
+        btn.textContent = originalText;
+    }, 2000);
+}
+
+function exportPrompts() {
+    let exportContent = '# AI Prompt Library Export\n\n';
+    exportContent += `Generated on ${new Date().toLocaleDateString()}\n\n`;
+    
+    filteredPrompts.forEach((prompt, index) => {
+        exportContent += `## ${index + 1}. ${prompt.title}\n\n`;
+        exportContent += `**Category:** ${getCategoryLabel(prompt.category)}\n`;
+        exportContent += `**Difficulty:** ${capitalizeFirst(prompt.difficulty)}\n`;
+        exportContent += `**Description:** ${prompt.description}\n\n`;
+        exportContent += `**Prompt:**\n\`\`\`\n${prompt.content}\n\`\`\`\n\n`;
+        if (prompt.useCases && prompt.useCases.length > 0) {
+            exportContent += `**Use Cases:** ${prompt.useCases.join(', ')}\n\n`;
+        }
+        exportContent += '---\n\n';
+    });
+    
+    const blob = new Blob([exportContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ai-prompts-${new Date().toISOString().split('T')[0]}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function openSubmitModal() {
+    document.getElementById('submitModal').style.display = 'flex';
+}
+
+function closeSubmitModal() {
+    document.getElementById('submitModal').style.display = 'none';
+}
+
+// Search and filter functionality
+document.getElementById('searchInput').addEventListener('input', filterPrompts);
+document.getElementById('categoryFilter').addEventListener('change', filterPrompts);
+
+function filterPrompts() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const category = document.getElementById('categoryFilter').value;
+    
+    filteredPrompts = allPrompts.filter(prompt => {
+        const matchesSearch = !searchTerm || 
+            prompt.title.toLowerCase().includes(searchTerm) || 
+            prompt.description.toLowerCase().includes(searchTerm) ||
+            prompt.content.toLowerCase().includes(searchTerm) ||
+            (prompt.tags && prompt.tags.some(tag => tag.toLowerCase().includes(searchTerm)));
+            
+        const matchesCategory = !category || prompt.category === category;
+        return matchesSearch && matchesCategory;
+    });
+    
+    document.getElementById('filteredCount').textContent = filteredPrompts.length;
+    renderPrompts();
+}
+
+// Submit form handling
+document.getElementById('submitForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you for submitting! Use the admin panel to add prompts directly to your library.');
+    closeSubmitModal();
+    document.getElementById('submitForm').reset();
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    loadPrompts();
+});
+</script>
 </body>
 </html>
