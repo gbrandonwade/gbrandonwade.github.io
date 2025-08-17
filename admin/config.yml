@@ -2,9 +2,6 @@ backend:
   name: git-gateway
   branch: main
 
-# Enable editorial workflow for draft/review/ready states
-publish_mode: editorial_workflow
-
 media_folder: "images"
 public_folder: "/images"
 
@@ -14,13 +11,24 @@ collections:
     folder: "posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "blog.html#{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: "HH:mm", format: "YYYY-MM-DDTHH:mm:ss.sssZ"}
+      - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Category", name: "category", widget: "select", options: ["tool-reviews", "prompt-engineering", "ai-experiments", "tutorials", "ethics"]}
       - {label: "Featured Image", name: "image", widget: "image", required: false}
-      - {label: "Status", name: "status", widget: "select", options: ["draft", "scheduled", "published"], default: "draft"}
       - {label: "Body", name: "body", widget: "markdown"}
-      - {label: "SEO Description", name: "description", widget: "text", required: false, hint: "Brief description for search engines (max 160 characters)"}
-      - {label: "Tags", name: "tags", widget: "list", required: false, hint: "Comma-separated tags for better organization"}
+
+  - name: "prompts"
+    label: "AI Prompts"
+    folder: "prompts"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} ({{category}} - {{difficulty}})"
+    fields:
+      - {label: "Title", name: "title", widget: "string", hint: "Clear, action-oriented title for the prompt"}
+      - {label: "Category", name: "category", widget: "select", options: ["business", "marketing", "sales"], hint: "Primary use case category"}
+      - {label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"], hint: "Complexity level for users"}
+      - {label: "Description", name: "description", widget: "text", hint: "1-2 sentence description of what this prompt does and who should use it"}
+      - {label: "Tags", name: "tags", widget: "list", allow_add: true, hint: "Keywords for search and filtering (add 3-5 relevant tags)"}
+      - {label: "Use Cases", name: "useCases", widget: "list", allow_add: true, hint: "Target user types (e.g., 'Marketing managers', 'Sales reps')"}
+      - {label: "Prompt Content", name: "body", widget: "markdown", hint: "The complete prompt text. Use {variables} for customizable elements."}
