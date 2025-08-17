@@ -890,93 +890,267 @@ function checkForPresetData() {
     }
 }
 
+// UPDATED PARSING FUNCTIONS FOR PROMPT BUILDER
+// Replace your existing parsing functions with these:
+
 function prefillFromPromptLibrary(data) {
-    // Smart content parsing for better field distribution
+    // Parse structured markdown content with ## sections
     const content = data.content;
     
-    // Extract role
+    // Extract sections using markdown headers
+    const sections = parseStructuredContent(content);
+    
+    // Map sections to form fields
     const roleField = document.getElementById('field-role');
-    if (roleField) {
-        const rolePatterns = [
-            /You are (?:a |an )?([^.]+)/i,
-            /Role: ([^.]+)/i,
-            /Act as (?:a |an )?([^.]+)/i,
-            /Assume the role of ([^.]+)/i
-        ];
-        
-        let roleText = 'professional AI assistant';
-        for (const pattern of rolePatterns) {
-            const match = content.match(pattern);
-            if (match) {
-                roleText = match[1].trim();
-                break;
-            }
-        }
-        roleField.value = roleText;
+    if (roleField && sections.role) {
+        roleField.value = sections.role;
     }
     
-    // Extract task
     const taskField = document.getElementById('field-task');
-    if (taskField) {
-        const taskPatterns = [
-            /Task: ([^.]+(?:\.[^.]*)?)/i,
-            /Your task is to ([^.]+)/i,
-            /Your clear task is to ([^.]+)/i
-        ];
-        
-        let taskText = `Customize and improve this ${data.category} prompt: ${data.title}`;
-        for (const pattern of taskPatterns) {
-            const match = content.match(pattern);
-            if (match) {
-                taskText = match[1].trim();
-                break;
-            }
-        }
-        taskField.value = taskText;
+    if (taskField && sections.task) {
+        taskField.value = sections.task;
     }
     
-    // Extract context/background
     const contextField = document.getElementById('field-context');
-    if (contextField) {
-        const contextPatterns = [
-            /Context: ([^.]+(?:\.[^.]*)*)/i,
-            /Background: ([^.]+(?:\.[^.]*)*)/i
-        ];
-        
-        let contextText = `Original prompt: ${data.title}\nCategory: ${data.category}\nDifficulty: ${data.difficulty}\n\nDescription: ${data.description}`;
-        for (const pattern of contextPatterns) {
-            const match = content.match(pattern);
-            if (match) {
-                contextText = match[1].trim();
-                break;
-            }
-        }
-        contextField.value = contextText;
+    if (contextField && sections.context) {
+        contextField.value = sections.context;
     }
     
-    // Put remaining content in instructions
     const instructionsField = document.getElementById('field-instructions');
-    if (instructionsField) {
-        // Clean up the content by removing the parts we've already extracted
-        let instructions = content
-            .replace(/You are (?:a |an )?[^.]+\./i, '')
-            .replace(/Task: [^.]+(?:\.[^.]*)?/i, '')
-            .replace(/Context: [^.]+(?:\.[^.]*)*/i, '')
-            .replace(/Background: [^.]+(?:\.[^.]*)*/i, '')
-            .trim();
-        
-        instructionsField.value = instructions || content;
+    if (instructionsField && sections.instructions) {
+        instructionsField.value = sections.instructions;
     }
     
-    // Add tags as format guidance
     const formatField = document.getElementById('field-format');
-    if (formatField && data.tags.length > 0) {
-        formatField.value = `Focus areas: ${data.tags.join(', ')}\n\nTarget users: ${data.useCases.join(', ')}`;
+    if (formatField && sections.format) {
+        formatField.value = sections.format;
+    }
+    
+    const examplesField = document.getElementById('field-examples');
+    if (examplesField && sections.examples) {
+        examplesField.value = sections.examples;
+    }
+    
+    const successField = document.getElementById('field-success_criteria');
+    if (successField && sections.successCriteria) {
+        successField.value = sections.successCriteria;
     }
     
     // Update the preview
     updatePreview();
+}
 
+function parseStructuredContent(content) {
+    const sections = {
+        role: '',
+        task: '',
+        context: '',
+        instructions: '',
+        format: '',
+        examples: '',
+        successCriteria: ''
+    };
+    
+    // Check if content has structured format (## headers)
+    if (content.includes('## Role') || content.includes('## Task')) {
+        // Parse structured markdown format
+        return parseMarkdownSections(content);
+    } else {
+        // Fallback to old parsing for unstructured content
+        return parseUnstructuredContent(content);
+    }
+}
+
+function parseMarkdownSections(content) {
+    const sections = {
+        role: '',
+        task: '',
+        context: '',
+        instructions: '',
+        format: '',
+        examples: '',
+        successCriteria: ''
+    };
+    
+    // Split content by markdown headers
+    const lines = content.split('\n');
+    let currentSection = '';
+    let currentContent = [];
+    
+    for (const line of lines) {
+        if (line.startsWith('## ')) {
+            // Save previous section
+            if (currentSection && currentContent.length > 0) {
+                const sectionContent = currentContent.join('\n').trim();
+                sections[currentSection] = sectionContent;
+            }
+            
+            // Start new section
+            const header = line.replace('## ', '').toLowerCase().trim();
+            currentContent = [];
+            
+            // Map header to section key
+            switch (header) {
+                case 'role':
+                    currentSection = 'role';
+                    break;
+                case 'task':
+                    currentSection = 'task';
+                    break;
+                case 'context':
+                    currentSection = 'context';
+                    break;
+                case 'instructions':
+                    currentSection = 'instructions';
+                    break;
+                case 'format':
+                    currentSection = 'format';
+                    break;
+                case 'examples':
+                    currentSection = 'examples';
+                    break;
+                case 'success criteria':
+                    currentSection = 'successCriteria';
+                    break;
+                default:
+                    currentSection = '';
+            }
+        } else if (currentSection && line.trim()) {
+            // Add content to current section
+            currentContent.push(line);
+        }
+    }
+    
+    // Save the last section
+    if (currentSection && currentContent.length > 0) {
+        const sectionContent = currentContent.join('\n').trim();
+        sections[currentSection] = sectionContent;
+    }
+    
+    return sections;
+}
+
+function parseUnstructuredContent(content) {
+    // Fallback parsing for old format prompts
+    return {
+        role: extractRoleFromText(content),
+        task: extractTaskFromText(content),
+        context: extractContextFromText(content),
+        instructions: extractInstructionsFromText(content),
+        format: extractFormatFromText(content),
+        examples: extractExamplesFromText(content),
+        successCriteria: extractSuccessCriteriaFromText(content)
+    };
+}
+
+// Fallback functions for unstructured content
+function extractRoleFromText(content) {
+    const patterns = [
+        /You are (?:a |an )?([^.]+)/i,
+        /Role: ([^.]+)/i,
+        /Act as (?:a |an )?([^.]+)/i,
+        /Assume the role of ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'professional AI assistant';
+}
+
+function extractTaskFromText(content) {
+    const patterns = [
+        /(?:Your )?(?:clear )?task is to ([^.]+)/i,
+        /Task: ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'assist with the specified requirements';
+}
+
+function extractContextFromText(content) {
+    const patterns = [
+        /Context: ([^.]+(?:\.[^.]*)*)/i,
+        /Background: ([^.]+(?:\.[^.]*)*)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'Professional context requiring expert guidance';
+}
+
+function extractInstructionsFromText(content) {
+    const patterns = [
+        /Instructions?: ([^.]+(?:\.[^.]*)*)/i,
+        /Follow (?:these )?instructions?: ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'Follow professional standards and best practices';
+}
+
+function extractFormatFromText(content) {
+    const patterns = [
+        /Structure (?:your )?output as: ([^.]+)/i,
+        /Output format: ([^.]+)/i,
+        /Format: ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'Clear, professional format with logical structure';
+}
+
+function extractExamplesFromText(content) {
+    const patterns = [
+        /Examples?: ([^.]+)/i,
+        /For example: ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return '';
+}
+
+function extractSuccessCriteriaFromText(content) {
+    const patterns = [
+        /Success: ([^.]+)/i,
+        /Quality: ([^.]+)/i,
+        /success metrics ([^.]+)/i
+    ];
+    
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) {
+            return match[1].trim();
+        }
+    }
+    return 'Response should be actionable and relevant';
 }
 
 function showImportNotification(promptTitle) {
