@@ -749,7 +749,37 @@ function copyPrompt(contentId) {
 }
 
 function customizePrompt(promptId) {
-    alert('Customization feature coming soon! For now, copy the prompt and modify it manually.');
+    const prompt = allPrompts.find(p => p.id === promptId);
+    if (!prompt) {
+        alert('Prompt not found');
+        return;
+    }
+    
+    // Encode the prompt data for URL parameters
+    const params = new URLSearchParams({
+        preset: 'true',
+        title: prompt.title,
+        category: prompt.category,
+        difficulty: prompt.difficulty,
+        description: prompt.description,
+        content: prompt.content,
+        tags: prompt.tags.join(','),
+        useCases: prompt.useCases.join(',')
+    });
+    
+    const builderUrl = `/tools/prompt-builder.html?${params.toString()}`;
+    
+    // Open in new tab for better UX
+    window.open(builderUrl, '_blank');
+    
+    // Show feedback to user
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = '🚀 Opened!';
+    setTimeout(() => {
+        btn.textContent = originalText;
+    }, 2000);
+}
 }
 
 function sharePrompt(promptId) {
