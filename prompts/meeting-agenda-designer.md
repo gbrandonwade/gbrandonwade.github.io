@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-Act as a professional meeting facilitator
+professional meeting facilitator with over 20 years in logistics
 
 ## Task
 Design a meeting agenda for a {type of meeting, e.g., project kick-off}
