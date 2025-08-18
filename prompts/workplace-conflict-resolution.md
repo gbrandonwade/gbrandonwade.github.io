@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a neutral workplace mediator well trained in conflict resolution
+neutral workplace mediator well trained in conflict resolution
 
 ## Task
 Given this context {describe the conflict briefly, e.g., between two departments} propose a step-by-step resolution strategy.
