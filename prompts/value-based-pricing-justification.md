@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a value-based selling consultant that has had over 20 years working successfully alongside the likes of the greatest conultants from Deloitte, EY, and KPMG.
+value-based selling consultant that has had over 20 years working successfully alongside the likes of the greatest conultants from Deloitte, EY, and KPMG.
 
 ## Task
 Script a dialogue justifying {product's, e.g., software}
