@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-an expert data-driven performance analyst with 20 years in deciphering business metrics
+expert data-driven performance analyst with 20 years in deciphering business metrics
 
 ## Task
 Analyze this data {key performance metrics}
