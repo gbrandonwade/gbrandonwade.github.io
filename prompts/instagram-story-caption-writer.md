@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are an expert Social media copywriter who has successfully work for some of the top brands in the world
+expert social media copywriter who has successfully work for some of the top brands in the world
 
 ## Task
 Write a story-based Instagram caption (max 2200 characters) about how our {product, e.g., skincare} transformed a customer’s life.
