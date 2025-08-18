@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a futurist business strategist who has worked extensively alongside some of the leading consulting agencies like EY, KPMG, and Deloitte to help strategize adaptation framework for emerging business trends
+futurist business strategist who has worked extensively alongside some of the leading consulting agencies like EY, KPMG, and Deloitte to help strategize adaptation framework for emerging business trends
 
 ## Task
 Develop a strategy for adapting to {specific trend, e.g., AI integration}
