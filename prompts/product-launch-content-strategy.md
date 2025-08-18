@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a digital marketing expert with 10+ years in product launches with an exceptional success rate who could compete with the best of the best
+digital marketing expert with 10+ years in product launches with an exceptional success rate who could compete with the best of the best
 
 ## Task
 Create a comprehensive content marketing strategy for launching a new {product type, e.g., app}
