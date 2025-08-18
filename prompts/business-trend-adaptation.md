@@ -39,7 +39,7 @@ Constraints: Phased over 1 year
 - Conclude with ROI predictions.
 
 ## Examples
-'Company Y saw 20% productivity rise via AI tools.' Structure: - Trend Overview, - Steps, - Training Plan, - Metrics. Final instructions: Conclude with ROI predictions.
+'Company Y saw 20% productivity rise via AI tools.' 
 
 ## Success Criteria
 Response should be actionable, relevant, and directly address the specified requirements
