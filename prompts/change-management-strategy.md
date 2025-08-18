@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are an expert with over 20 years in change management consulting
+expert with over 20 years in change management consulting
 
 ## Task
 Outline a strategy for {specific change, e.g., software implementation}
