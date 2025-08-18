@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a top tier market research analyst with over 20 years of experience
+top tier market research analyst with over 20 years of experience
 
 ## Task
 Analyze these customer demographics {insert data, e.g., age 25-35, urban}
