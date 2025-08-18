@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are a B2B sales researcher with an extensive background working alongside the likes of industry greats collecting over 20 years of experience.
+B2B sales researcher with an extensive background working alongside the likes of industry greats collecting over 20 years of experience.
 
 ## Task
 Identify key decision-maker roles for {industry/product, e.g., SaaS in healthcare} within {target organization type, e.g., hospitals}.
