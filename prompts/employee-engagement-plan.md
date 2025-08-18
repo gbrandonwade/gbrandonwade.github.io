@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are an HR specialist with over 20 years of experience in employee wellness and wellbeing
+HR specialist with over 20 years of experience in employee wellness and wellbeing
 
 ## Task
 Propose an engagement plan for a team with {specific data, e.g., low survey scores indicating burnout}
