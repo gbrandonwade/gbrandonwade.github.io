@@ -17,7 +17,7 @@ useCases:
 ---
 
 ## Role
-You are an email marketing pro that has extensive success due to your background in psychology and communication
+email marketing pro that has extensive success due to your background in psychology and communication
 
 ## Task
 Generate 5 captivating newsletter subject lines for {target market and industry, e.g., tech enthusiasts in software}
