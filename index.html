@@ -1257,76 +1257,66 @@
     <script>
         // Newsletter signup functionality
         function handleNewsletterSignup(event) {
-            event.preventDefault();
+    event.preventDefault();
+    
+    const email = document.getElementById('landingEmail').value.trim();
+    const submitBtn = document.getElementById('landingSubmitBtn');
+    const successMsg = document.getElementById('landingSuccess');
+    const errorMsg = document.getElementById('landingError');
+    
+    // Reset messages
+    successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    
+    // Validate email
+    if (!isValidEmail(email)) {
+        showError('Please enter a valid email address.');
+        return;
+    }
+    
+    // Show loading state
+    submitBtn.textContent = 'Subscribing...';
+    submitBtn.disabled = true;
+    
+    // Submit to ConvertKit
+    fetch(`https://api.convertkit.com/v3/forms/01c6943f5f/subscribe`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            api_key: '-cL8thXGGkibG4-uSH345w',
+            email: email
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.subscription) {
+            successMsg.style.display = 'block';
+            document.querySelector('form[name="newsletter-landing"]').reset();
             
-            const email = document.getElementById('landingEmail').value.trim();
-            const submitBtn = document.getElementById('landingSubmitBtn');
-            const successMsg = document.getElementById('landingSuccess');
-            const errorMsg = document.getElementById('landingError');
-            
-            // Reset messages
-            successMsg.style.display = 'none';
-            errorMsg.style.display = 'none';
-            
-            // Validate email
-            if (!isValidEmail(email)) {
-                showError('Please enter a valid email address.');
-                return;
+            // Track the signup
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'newsletter_signup', {
+                    event_category: 'engagement',
+                    event_label: 'landing_page'
+                });
             }
             
-            // Show loading state
-            submitBtn.textContent = 'Subscribing...';
-            submitBtn.disabled = true;
-            
-            // Submit to Netlify Forms
-            const formData = new FormData();
-            formData.append('form-name', 'newsletter-landing');
-            formData.append('email', email);
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(response => {
-                if (response.ok) {
-                    successMsg.style.display = 'block';
-                    document.querySelector('form[name="newsletter-landing"]').reset();
-                    
-                    // Track the signup
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'newsletter_signup', {
-                            event_category: 'engagement',
-                            event_label: 'landing_page'
-                        });
-                    }
-                    
-                    // Store locally for tracking
-                    try {
-                        let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-                        subscribers.push({
-                            email: email,
-                            source: 'landing_page',
-                            subscribed_at: new Date().toISOString()
-                        });
-                        localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
-                    } catch (e) {
-                        console.log('Local storage not available');
-                    }
-                    
-                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    throw new Error('Subscription failed');
-                }
-            })
-            .catch(error => {
-                console.error('Newsletter signup error:', error);
-                showError('Unable to subscribe right now. Please try again later.');
-            })
-            .finally(() => {
-                submitBtn.textContent = 'Start My AI Journey Today';
-                submitBtn.disabled = false;
-            });
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            throw new Error('Subscription failed');
+        }
+    })
+    .catch(error => {
+        console.error('ConvertKit signup error:', error);
+        showError('Unable to subscribe right now. Please try again later.');
+    })
+    .finally(() => {
+        submitBtn.textContent = 'Start My AI Journey Today';
+        submitBtn.disabled = false;
+    });
+}
         }
         
         function isValidEmail(email) {
