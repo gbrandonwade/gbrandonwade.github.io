@@ -104,6 +104,25 @@
             color: var(--primary-color);
         }
 
+        .btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
         /* Mobile Menu */
         .mobile-menu-toggle {
             display: none;
@@ -414,6 +433,16 @@
             color: var(--text-secondary);
         }
 
+        .problem-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .problem-item a:hover {
+            text-decoration: underline;
+        }
+
         .discovery-box {
             background: rgba(100, 255, 218, 0.1);
             padding: 2rem;
@@ -612,133 +641,6 @@
             margin: 1rem 0;
         }
 
-        /* Objections Section */
-        .objections {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .objection-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .objection-item:hover {
-            border-color: var(--primary-color);
-        }
-
-        .objection-q {
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Social Proof Section */
-        .testimonial {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .testimonial::before {
-            content: '"';
-            font-size: 4rem;
-            color: var(--primary-color);
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            opacity: 0.3;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            padding-left: 2rem;
-        }
-
-        .testimonial-author {
-            color: var(--primary-color);
-            font-weight: 600;
-            text-align: right;
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            display: block;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Urgency Section */
-        .urgency {
-            background: linear-gradient(135deg, rgba(100, 255, 218, 0.05) 0%, rgba(0, 188, 212, 0.05) 100%);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 16px;
-            padding: 3rem;
-            margin: 3rem 0;
-            text-align: center;
-        }
-
-        .urgency h3 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .urgency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .urgency-item {
-            text-align: left;
-        }
-
-        .urgency-item h4 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .urgency-item ul {
-            list-style: none;
-        }
-
-        .urgency-item li {
-            padding: 0.3rem 0;
-        }
-
         /* Final CTA Section */
         .final-cta {
             background: var(--gradient-bg);
@@ -862,41 +764,6 @@
             color: #ef4444;
         }
 
-        /* FAQ Section */
-        .faq-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: var(--primary-color);
-        }
-
-        .faq-question {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-answer {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            display: none;
-        }
-
-        .faq-toggle {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-        }
-
         /* Footer */
         footer {
             background: rgba(26, 26, 46, 0.8);
@@ -962,10 +829,6 @@
 
             .newsletter-input {
                 min-width: unset;
-            }
-
-            .urgency-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -1058,26 +921,26 @@
                 
                 <div class="problem-list">
                     <div class="problem-item">
-                        <h3>67% Feel Overwhelmed</h3>
-                        <p>Most professionals feel lost when it comes to AI tools</p>
+                        <h3>75% Expect AI to Transform Work</h3>
+                        <p>Business leaders anticipate significant industry change (<a href="https://www.weforum.org/publications/the-future-of-jobs-report-2023/" target="_blank">WEF 2023</a>)</p>
                     </div>
                     <div class="problem-item">
-                        <h3>Think It's Too Technical</h3>
-                        <p>Believe you need coding skills to get started</p>
+                        <h3>Only 31% Feel Skills-Ready</h3>
+                        <p>Workers confident their skills will be relevant in 5 years (<a href="https://www.weforum.org/publications/the-future-of-jobs-report-2023/" target="_blank">WEF 2023</a>)</p>
                     </div>
                     <div class="problem-item">
-                        <h3>Fear Being Too Late</h3>
-                        <p>Worried the AI train has already left the station</p>
+                        <h3>94% Want to Learn AI Skills</h3>
+                        <p>But only 5% of organizations provide training at scale (<a href="https://learning.linkedin.com/resources/workplace-learning-report" target="_blank">LinkedIn 2024</a>)</p>
                     </div>
                     <div class="problem-item">
-                        <h3>Missing the Real Opportunity</h3>
-                        <p>The biggest need isn't for programmers - it's for practical thinkers</p>
+                        <h3>Skills Change 65% by 2030</h3>
+                        <p>Up from 25% since 2015 - adaptation is critical (<a href="https://learning.linkedin.com/resources/workplace-learning-report" target="_blank">LinkedIn 2024</a>)</p>
                     </div>
                 </div>
                 
                 <div class="discovery-box">
                     <h3>Here's what I discovered:</h3>
-                    <p>You don't need to be a rocket scientist. You just need to start asking questions.</p>
+                    <p>The gap isn't technical - it's about getting started. Most people want to learn AI but don't know where to begin.</p>
                 </div>
             </div>
         </div>
@@ -1092,7 +955,7 @@
             <div class="solution-grid">
                 <div class="solution-content">
                     <h3>From Columbus to LA: My AI Journey</h3>
-                    <p>Six months ago, I was a project manager at American Electric Power in Columbus, wondering if AI was just hype. Today, I'm in Los Angeles, transitioning into AI responsibility consulting and building tools that actually work.</p>
+                    <p>Six months ago, I was a project manager at American Electric Power in Columbus, wondering if AI was just hype. Today, I'm in Los Angeles, transitioning into AI consulting and building tools that actually work.</p>
                     <p><strong>The difference?</strong> I stopped waiting for permission and started experimenting.</p>
                     
                     <ul class="solution-list">
@@ -1107,16 +970,16 @@
                     <h3>What I've Built (Zero Coding Background):</h3>
                     <ul>
                         <li>
-                            <strong>BAC Tracker:</strong> Calculates safe driving times after drinking
+                            <strong>AI Prompt Builder:</strong> Guided interface for creating professional prompts with templates
                         </li>
                         <li>
-                            <strong>Stock Options Grader:</strong> Helps beginners understand their equity
+                            <strong>AI Prompt Library:</strong> 22+ battle-tested prompts for business, marketing, and sales
                         </li>
                         <li>
-                            <strong>This Blog Platform:</strong> Yes, AI helped me build this entire site
+                            <strong>This Blog Platform:</strong> Yes, AI helped me build this entire site and content system
                         </li>
                         <li>
-                            <strong>AI Meal Tracker:</strong> Currently in development
+                            <strong>Investment Analysis Tools:</strong> Used AI to analyze and avoid ETF scams (saved me $2,000!)
                         </li>
                     </ul>
                     <p class="tools-quote">
@@ -1135,20 +998,20 @@
             </div>
             <div class="credibility-grid">
                 <div class="credibility-card">
-                    <h3>Recognized Role Model</h3>
-                    <p>At American Electric Power (Fortune 500 utility company)</p>
+                    <h3>Fortune 500 Experience</h3>
+                    <p>6 years managing complex projects at American Electric Power (Fortune 500 utility company)</p>
                 </div>
                 <div class="credibility-card">
-                    <h3>Streamlined Processes</h3>
-                    <p>Used AI for email optimization, workflow troubleshooting, and Excel formula fixes</p>
+                    <h3>Real-time Learning</h3>
+                    <p>Documenting my transition from traditional PM to AI consultant with full transparency</p>
                 </div>
                 <div class="credibility-card">
-                    <h3>Built Functional Tools</h3>
-                    <p>Created working applications in weeks, not months</p>
+                    <h3>Practical Focus</h3>
+                    <p>Testing AI tools and sharing what actually works - no hype, just honest results</p>
                 </div>
                 <div class="credibility-card">
-                    <h3>Real-Time Documentation</h3>
-                    <p>Currently tracking my transition to AI consulting</p>
+                    <h3>Proven Results</h3>
+                    <p>Built functional tools, avoided financial scams, and helped others start their AI journey</p>
                 </div>
             </div>
             
@@ -1257,66 +1120,65 @@
     <script>
         // Newsletter signup functionality
         function handleNewsletterSignup(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('landingEmail').value.trim();
-    const submitBtn = document.getElementById('landingSubmitBtn');
-    const successMsg = document.getElementById('landingSuccess');
-    const errorMsg = document.getElementById('landingError');
-    
-    // Reset messages
-    successMsg.style.display = 'none';
-    errorMsg.style.display = 'none';
-    
-    // Validate email
-    if (!isValidEmail(email)) {
-        showError('Please enter a valid email address.');
-        return;
-    }
-    
-    // Show loading state
-    submitBtn.textContent = 'Subscribing...';
-    submitBtn.disabled = true;
-    
-    // Submit to ConvertKit
-    fetch(`https://api.convertkit.com/v3/forms/8455965/subscribe`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            api_key: '-cL8thXGGkibG4-uSH345w',
-            email: email
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.subscription) {
-            successMsg.style.display = 'block';
-            document.querySelector('form[name="newsletter-landing"]').reset();
+            event.preventDefault();
             
-            // Track the signup
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'newsletter_signup', {
-                    event_category: 'engagement',
-                    event_label: 'landing_page'
-                });
+            const email = document.getElementById('landingEmail').value.trim();
+            const submitBtn = document.getElementById('landingSubmitBtn');
+            const successMsg = document.getElementById('landingSuccess');
+            const errorMsg = document.getElementById('landingError');
+            
+            // Reset messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address.');
+                return;
             }
             
-            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-            throw new Error('Subscription failed');
-        }
-    })
-    .catch(error => {
-        console.error('ConvertKit signup error:', error);
-        showError('Unable to subscribe right now. Please try again later.');
-    })
-    .finally(() => {
-        submitBtn.textContent = 'Start My AI Journey Today';
-        submitBtn.disabled = false;
-    });
-
+            // Show loading state
+            submitBtn.textContent = 'Subscribing...';
+            submitBtn.disabled = true;
+            
+            // Submit to ConvertKit
+            fetch(`https://api.convertkit.com/v3/forms/8455965/subscribe`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    api_key: '-cL8thXGGkibG4-uSH345w',
+                    email: email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.subscription) {
+                    successMsg.style.display = 'block';
+                    document.querySelector('form[name="newsletter-landing"]').reset();
+                    
+                    // Track the signup
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'newsletter_signup', {
+                            event_category: 'engagement',
+                            event_label: 'landing_page'
+                        });
+                    }
+                    
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error('Subscription failed');
+                }
+            })
+            .catch(error => {
+                console.error('ConvertKit signup error:', error);
+                showError('Unable to subscribe right now. Please try again later.');
+            })
+            .finally(() => {
+                submitBtn.textContent = 'Start My AI Journey Today';
+                submitBtn.disabled = false;
+            });
         }
         
         function isValidEmail(email) {
