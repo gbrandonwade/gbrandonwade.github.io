@@ -20,6 +20,10 @@
     
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
+    <!-- Calendly Widget Styles -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    
     <style>
         :root {
             --primary-color: #64ffda;
@@ -897,7 +901,7 @@
                         <span>or</span>
                     </div>
                     <p style="color: var(--text-secondary); margin-bottom: 1rem; font-style: italic;">Need immediate guidance?</p>
-                    <a href="/contact.html" class="consultation-link">
+                    <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/g-brandon-wade/30min?background_color=1a1a2e&text_color=e0e6ed&primary_color=64ffda'});return false;" class="consultation-link">
                         <strong>Book a free 15-minute AI strategy call</strong> →
                     </a>
                 </div>
