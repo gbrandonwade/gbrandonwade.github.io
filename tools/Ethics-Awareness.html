@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ethics Awareness Tool - Responsible AI and Me</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #64ffda;
+            --primary-dark: #4fd1c7;
+            --accent-color: #00bcd4;
+            --bg-dark: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #e0e6ed;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --hover-bg: rgba(100, 255, 218, 0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .disclaimer {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem auto;
+            max-width: 800px;
+            font-size: 0.9rem;
+            color: var(--warning-color);
+        }
+
+        .progress-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            background: var(--border-color);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .tab.active {
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            border-color: var(--primary-color);
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .overview-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .overview-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .use-case-selector {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .use-case-option {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .use-case-option:hover {
+            border-color: var(--primary-color);
+        }
+
+        .use-case-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .lifecycle-stage {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .stage-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            padding: 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-progress {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .checklist-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .item-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .custom-checkbox.checked {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .custom-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-dark);
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .risk-level {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .risk-critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .risk-high {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .risk-medium {
+            background: rgba(100, 255, 218, 0.2);
+            color: var(--primary-color);
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .item-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .item-guidance {
+            background: rgba(100, 255, 218, 0.05);
+            border-left: 3px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .item-examples {
+            margin-top: 1rem;
+        }
+
+        .example {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .example-good {
+            border-left: 3px solid var(--success-color);
+        }
+
+        .example-bad {
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .example-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-good .example-label {
+            color: var(--success-color);
+        }
+
+        .example-bad .example-label {
+            color: var(--danger-color);
+        }
+
+        .results-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-color) 0deg, var(--border-color) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background: var(--bg-dark);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .quiz-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .question h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .option {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            border-color: var(--primary-color);
+            background: var(--hover-bg);
+        }
+
+        .option.selected {
+            border-color: var(--primary-color);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success-color);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .explanation {
+            background: rgba(100, 255, 218, 0.05);
+            border-left: 3px solid var(--primary-color);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 8px 8px 0;
+            display: none;
+        }
+
+        .quiz-results {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            display: none;
+        }
+
+        .glossary-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .glossary-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .glossary-term {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+        }
+
+        .resource-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .resource-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                text-align: center;
+            }
+
+            .use-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .checkbox-container {
+                margin-top: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .stage-complete {
+            color: var(--success-color);
+        }
+
+        .recommendations {
+            margin-top: 2rem;
+        }
+
+        .recommendation-item {
+            background: var(--card-bg);
+            border-left: 3px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .next-steps {
+            background: rgba(100, 255, 218, 0.05);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .next-steps h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+        }
+
+        .next-steps li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .next-steps li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">AI Ethics Awareness Tool</h1>
+            <p class="tagline">Educational resource for understanding responsible AI implementation</p>
+            
+            <div class="disclaimer">
+                <strong>Important:</strong> This tool provides awareness and starting points for AI ethics discussions. 
+                It is not a substitute for expert consultation, legal advice, or comprehensive ethical review. 
+                Real ethical AI implementation requires domain expertise and organizational commitment.
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0% Complete</div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('overview')">Overview</div>
+            <div class="tab" onclick="showTab('awareness')">Awareness Checklist</div>
+            <div class="tab" onclick="showTab('quiz')">Knowledge Quiz</div>
+            <div class="tab" onclick="showTab('glossary')">Glossary</div>
+            <div class="tab" onclick="showTab('resources')">Resources</div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="overview-card">
+                <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">AI Ethics Awareness & Education</h2>
+                <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-secondary);">
+                    This educational tool helps teams and individuals understand AI ethics concepts and identify areas where expert guidance is needed. 
+                    It's designed for learning and discussion, not as a comprehensive implementation guide.
+                </p>
+            </div>
+
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <h3>Learning Focus</h3>
+                    <p>Understand key ethical considerations across AI project lifecycles. Identify blind spots and areas needing deeper expertise.</p>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>Discussion Starter</h3>
+                    <p>Generate meaningful conversations about ethics within your team or organization. Surface important questions early.</p>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>Gap Identification</h3>
+                    <p>Discover what you don't know and where you need expert consultation, specialized tools, or additional training.</p>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>Knowledge Testing</h3>
+                    <p>Assess your understanding of AI ethics concepts through interactive scenarios and questions.</p>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>Resource Discovery</h3>
+                    <p>Find authoritative sources for deeper learning and professional guidance on ethical AI implementation.</p>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>Awareness Report</h3>
+                    <p>Generate a summary of your current understanding and recommended next steps for learning.</p>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h4>What This Tool Does NOT Do</h4>
+                <ul>
+                    <li><strong>Replace Expert Consultation:</strong> Complex ethical decisions require domain experts and ethicists</li>
+                    <li><strong>Ensure Compliance:</strong> Legal and regulatory compliance needs professional legal review</li>
+                    <li><strong>Provide Implementation Details:</strong> Specific technical implementation requires specialized knowledge</li>
+                    <li><strong>Guarantee Ethical Outcomes:</strong> Ethics is an ongoing practice, not a one-time checklist</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Awareness Checklist Tab -->
+        <div id="awareness" class="tab-content">
+            <div class="use-case-selector">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Select Your AI Context</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                    Choose the category that best describes your AI system for contextual learning:
+                </p>
+                <div class="use-case-grid">
+                    <div class="use-case-option" onclick="selectUseCase('chatbot')">
+                        <strong>Conversational AI</strong>
+                        <p>Chatbots, virtual assistants</p>
+                    </div>
+                    <div class="use-case-option" onclick="selectUseCase('recommendation')">
+                        <strong>Recommendation Systems</strong>
+                        <p>Content, product suggestions</p>
+                    </div>
+                    <div class="use-case-option" onclick="selectUseCase('vision')">
+                        <strong>Computer Vision</strong>
+                        <p>Image recognition, analysis</p>
+                    </div>
+                    <div class="use-case-option" onclick="selectUseCase('prediction')">
+                        <strong>Predictive Analytics</strong>
+                        <p>Risk assessment, forecasting</p>
+                    </div>
+                    <div class="use-case-option" onclick="selectUseCase('automation')">
+                        <strong>Process Automation</strong>
+                        <p>Workflow optimization, decisions</p>
+                    </div>
+                    <div class="use-case-option" onclick="selectUseCase('general')">
+                        <strong>General AI System</strong>
+                        <p>Mixed or custom application</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="checklistContent">
+                <p style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                    Please select an AI context above to begin exploring ethical considerations.
+                </p>
+            </div>
+
+            <div id="resultsSection" class="results-section hidden">
+                <h3 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">Awareness Assessment</h3>
+                
+                <div class="score-display">
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-text" id="scoreText">0%</span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Awareness Coverage</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn" onclick="generateReport()">Download Learning Report</button>
+                        <button class="btn btn-secondary" onclick="resetAssessment()">Start Over</button>
+                    </div>
+                </div>
+
+                <div class="recommendations" id="recommendations"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div id="quiz" class="tab-content">
+            <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">AI Ethics Knowledge Quiz</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Test your understanding of AI ethics concepts through real-world scenarios.
+            </p>
+            
+            <div id="quizContainer">
+                <!-- Quiz questions will be populated here -->
+            </div>
+
+            <div class="quiz-results" id="quizResults">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Quiz Results</h3>
+                <div id="quizScore"></div>
+                <button class="btn" onclick="restartQuiz()">Retake Quiz</button>
+            </div>
+        </div>
+
+        <!-- Glossary Tab -->
+        <div id="glossary" class="tab-content">
+            <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">AI Ethics Glossary</h2>
+            <div class="glossary-grid" id="glossaryContent">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resources" class="tab-content">
+            <h2 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">Learning Resources</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Authoritative sources for deepening your understanding of AI ethics and finding expert guidance.
+            </p>
+            <div class="resources-grid" id="resourcesContent">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let selectedUseCase = '';
+        let checklistData = {};
+        let quizData = {};
+        let currentQuizQuestion = 0;
+
+        // Awareness checklist data structure (simplified for educational purposes)
+        const awarenessChecklist = {
+            planning: {
+                title: "Planning & Design Awareness",
+                items: [
+                    {
+                        id: "stakeholder_awareness",
+                        title: "Stakeholder Identification",
+                        description: "Have you identified who will be affected by this AI system?",
+                        risk: "critical",
+                        guidance: "Consider direct users, indirect impacts, communities, and decision-makers. Map potential positive and negative effects on different groups.",
+                        examples: {
+                            good: "Healthcare AI team includes medical staff, patients, administrators, and patient advocacy groups in planning discussions.",
+                            bad: "AI system designed without consulting affected communities or considering indirect impacts."
+                        }
+                    },
+                    {
+                        id: "purpose_clarity",
+                        title: "Clear Purpose Definition",
+                        description: "Is the specific problem this AI solves clearly defined with measurable objectives?",
+                        risk: "high",
+                        guidance: "Document the business need, success metrics, and intended benefits. Question whether AI is the right solution.",
+                        examples: {
+                            good: "AI chatbot designed specifically to reduce customer wait times by 50% for billing questions.",
+                            bad: "Implementing AI 'to be innovative' without specific goals or success criteria."
+                        }
+                    },
+                    {
+                        id: "impact_consideration",
+                        title: "Human Impact Assessment",
+                        description: "Have you considered potential positive and negative impacts on individuals and society?",
+                        risk: "critical",
+                        guidance: "Think beyond immediate functionality. Consider long-term effects, unintended consequences, and societal implications.",
+                        examples: {
+                            good: "Hiring AI assessment includes analysis of potential bias and community impact studies.",
+                            bad: "Deployment without considering broader societal implications or potential for misuse."
+                        }
+                    }
+                ]
+            },
+            development: {
+                title: "Development Awareness",
+                items: [
+                    {
+                        id: "data_quality_awareness",
+                        title: "Data Quality Considerations",
+                        description: "Are you aware of the quality, representativeness, and source of your training data?",
+                        risk: "critical",
+                        guidance: "Understand data limitations, gaps, and biases. Know where data comes from and whether it represents your intended use cases.",
+                        examples: {
+                            good: "Image recognition model uses diverse dataset with documented sources and known limitations.",
+                            bad: "Using data without understanding its sources, quality, or representativeness limitations."
+                        }
+                    },
+                    {
+                        id: "bias_awareness",
+                        title: "Bias Recognition",
+                        description: "Do you understand how bias can be introduced and perpetuated in AI systems?",
+                        risk: "critical",
+                        guidance: "Learn about different types of bias (historical, representation, measurement, etc.) and how they manifest in AI systems.",
+                        examples: {
+                            good: "Team understands historical bias in hiring data and plans mitigation strategies.",
+                            bad: "Assuming that 'objective' algorithms can't be biased or discriminatory."
+                        }
+                    },
+                    {
+                        id: "explainability_need",
+                        title: "Explainability Requirements",
+                        description: "Do you understand when and why AI decisions need to be explainable?",
+                        risk: "high",
+                        guidance: "Consider the stakes of decisions, user needs for understanding, and regulatory requirements for explanation.",
+                        examples: {
+                            good: "High-stakes medical AI provides clear reasoning for diagnostic suggestions.",
+                            bad: "Black-box system making important decisions without explanation capability."
+                        }
+                    }
+                ]
+            },
+            deployment: {
+                title: "Deployment Awareness",
+                items: [
+                    {
+                        id: "transparency_understanding",
+                        title: "Transparency Requirements",
+                        description: "Do users understand they're interacting with AI and its capabilities/limitations?",
+                        risk: "critical",
+                        guidance: "Clear disclosure builds trust and helps users interact appropriately with AI systems.",
+                        examples: {
+                            good: "Chatbot clearly identifies itself and explains what it can and cannot do.",
+                            bad: "AI system designed to appear human without disclosure of its artificial nature."
+                        }
+                    },
+                    {
+                        id: "human_oversight_awareness",
+                        title: "Human Oversight Understanding",
+                        description: "Is there meaningful human oversight and ability to intervene in AI decisions?",
+                        risk: "critical",
+                        guidance: "Humans should maintain control over important decisions and be able to override AI when necessary.",
+                        examples: {
+                            good: "Medical AI provides recommendations that must be reviewed by licensed physicians.",
+                            bad: "Fully automated systems making critical decisions without human review options."
+                        }
+                    }
+                ]
+            },
+            monitoring: {
+                title: "Monitoring Awareness",
+                items: [
+                    {
+                        id: "performance_monitoring_awareness",
+                        title: "Ongoing Monitoring Needs",
+                        description: "Do you understand the need for continuous monitoring of AI system performance and fairness?",
+                        risk: "high",
+                        guidance: "AI systems can degrade over time due to data drift, changing conditions, or emerging edge cases.",
+                        examples: {
+                            good: "Regular review of AI system performance across different user groups and conditions.",
+                            bad: "Deploy-and-forget mentality without ongoing monitoring or evaluation."
+                        }
+                    },
+                    {
+                        id: "feedback_awareness",
+                        title: "Feedback Mechanism Understanding",
+                        description: "Are there ways for users to report issues or concerns about the AI system?",
+                        risk: "medium",
+                        guidance: "User feedback is crucial for identifying problems and improving AI systems over time.",
+                        examples: {
+                            good: "Clear reporting mechanisms for users to flag problems with AI responses.",
+                            bad: "No way for users to report issues or provide feedback about AI performance."
+                        }
+                    }
+                ]
+            }
+        };
+
+        // Quiz questions
+        const quizQuestions = [
+            {
+                question: "A company wants to use AI for resume screening. What is the most important ethical consideration?",
+                options: [
+                    "Processing speed and efficiency",
+                    "Potential bias against protected groups",
+                    "Cost savings compared to human reviewers",
+                    "Integration with existing HR systems"
+                ],
+                correct: 1,
+                explanation: "Bias against protected groups (race, gender, age, etc.) is the most critical ethical concern. Historical hiring patterns in training data can perpetuate discrimination."
+            },
+            {
+                question: "When should an AI system's decision-making process be explainable?",
+                options: [
+                    "Only when required by law",
+                    "Never - it's too complex for humans to understand",
+                    "When decisions significantly impact individuals or involve high stakes",
+                    "Only for external audits"
+                ],
+                correct: 2,
+                explanation: "High-stakes decisions affecting people's lives, opportunities, or rights should be explainable so individuals can understand and potentially challenge decisions."
+            },
+            {
+                question: "What is 'data drift' in AI systems?",
+                options: [
+                    "When data is accidentally deleted",
+                    "When the statistical properties of input data change over time",
+                    "When data is stored in multiple locations",
+                    "When data takes too long to process"
+                ],
+                correct: 1,
+                explanation: "Data drift occurs when the real-world data the AI encounters changes from what it was trained on, potentially degrading performance and fairness."
+            },
+            {
+                question: "A healthcare AI provides treatment recommendations. What level of human oversight is appropriate?",
+                options: [
+                    "No oversight needed - AI is more accurate than humans",
+                    "Minimal oversight - just check for obvious errors",
+                    "Licensed medical professionals must review and approve all recommendations",
+                    "Oversight only when the AI is uncertain"
+                ],
+                correct: 2,
+                explanation: "Medical decisions require licensed professionals to review AI recommendations due to the high stakes and complexity of healthcare decisions."
+            },
+            {
+                question: "What does 'algorithmic fairness' primarily concern?",
+                options: [
+                    "Ensuring AI systems run efficiently",
+                    "Making sure AI treats different groups equitably",
+                    "Guaranteeing AI systems are profitable",
+                    "Ensuring AI code is bug-free"
+                ],
+                correct: 1,
+                explanation: "Algorithmic fairness focuses on ensuring AI systems don't discriminate against or disadvantage particular groups of people."
+            },
+            {
+                question: "When deploying a customer service chatbot, what should users know?",
+                options: [
+                    "Nothing - it should seem like a human agent",
+                    "Only that responses might be delayed",
+                    "That they're interacting with AI and its capabilities/limitations",
+                    "Only the company's contact information"
+                ],
+                correct: 2,
+                explanation: "Users should understand they're interacting with AI and what it can/cannot do to set appropriate expectations and build trust."
+            },
+            {
+                question: "What is the most important consideration when using AI for predictive policing?",
+                options: [
+                    "Processing speed of crime data",
+                    "Historical bias in crime data and potential community impact",
+                    "Cost savings for police departments",
+                    "Integration with existing police systems"
+                ],
+                correct: 1,
+                explanation: "Historical bias in crime data can perpetuate discriminatory policing practices and unfairly target certain communities."
+            },
+            {
+                question: "How should AI training data be selected?",
+                options: [
+                    "Use whatever data is easiest to collect",
+                    "Use only the most recent data available",
+                    "Ensure data is representative, high-quality, and ethically obtained",
+                    "Use the largest dataset possible regardless of quality"
+                ],
+                correct: 2,
+                explanation: "Training data should represent the diversity of real-world scenarios the AI will encounter and be obtained through ethical means."
+            }
+        ];
+
+        // Glossary data
+        const glossaryTerms = [
+            {
+                term: "Algorithmic Bias",
+                definition: "Systematic and unfair discrimination embedded in AI algorithms, often reflecting historical biases in training data or design choices."
+            },
+            {
+                term: "Data Drift",
+                definition: "Changes in the statistical properties of input data over time that can degrade model performance and fairness."
+            },
+            {
+                term: "Explainable AI (XAI)",
+                definition: "AI systems designed to provide human-understandable explanations for their decisions and predictions."
+            },
+            {
+                term: "Fairness",
+                definition: "The principle that AI systems should treat all individuals and groups equitably without discrimination."
+            },
+            {
+                term: "Human-in-the-Loop",
+                definition: "AI systems that maintain meaningful human oversight and the ability for humans to intervene in decisions."
+            },
+            {
+                term: "Model Card",
+                definition: "Documentation that provides essential information about a machine learning model's development, performance, and limitations."
+            },
+            {
+                term: "Responsible AI",
+                definition: "The practice of developing and deploying AI systems with consideration for ethical implications, fairness, transparency, and societal impact."
+            },
+            {
+                term: "Transparency",
+                definition: "The principle that AI systems should be open and understandable to appropriate stakeholders."
+            }
+        ];
+
+        // Resources data
+        const resourcesData = [
+            {
+                title: "IEEE Standards for Ethical AI Design",
+                description: "Comprehensive technical standards and guidelines for ethical AI development from the Institute of Electrical and Electronics Engineers.",
+                url: "https://ethicsinaction.ieee.org/",
+                category: "Standards"
+            },
+            {
+                title: "Partnership on AI",
+                description: "Collaborative research and best practices from leading AI organizations focused on beneficial AI.",
+                url: "https://partnershiponai.org/",
+                category: "Best Practices"
+            },
+            {
+                title: "MIT AI Ethics Course Materials",
+                description: "Educational resources and research from MIT's Computer Science and Artificial Intelligence Laboratory.",
+                url: "https://www.csail.mit.edu/",
+                category: "Education"
+            },
+            {
+                title: "Stanford HAI Human-Centered AI",
+                description: "Research and principles from Stanford's Human-Centered AI Institute on responsible AI development.",
+                url: "https://hai.stanford.edu/",
+                category: "Research"
+            },
+            {
+                title: "AI Ethics Guidelines (European Commission)",
+                description: "European Union guidelines for trustworthy artificial intelligence development and deployment.",
+                url: "https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai",
+                category: "Policy"
+            },
+            {
+                title: "Responsible AI Practices (Google)",
+                description: "Industry practices and tools for responsible AI development from Google's AI principles.",
+                url: "https://ai.google/responsibility/responsible-ai-practices/",
+                category: "Industry"
+            },
+            {
+                title: "AI Fairness 360 Toolkit (IBM)",
+                description: "Open-source library for detecting and mitigating bias in machine learning models.",
+                url: "https://aif360.mybluemix.net/",
+                category: "Tools"
+            },
+            {
+                title: "Montreal Declaration for Responsible AI",
+                description: "Ethical principles and recommendations for responsible AI development from academia and civil society.",
+                url: "https://www.montrealdeclaration-responsibleai.com/",
+                category: "Ethics"
+            }
+        ];
+
+        // Initialize application
+        function init() {
+            populateGlossary();
+            populateResources();
+            initializeQuiz();
+            updateProgress();
+        }
+
+        // Tab management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'awareness') {
+                updateProgress();
+            }
+        }
+
+        // Use case selection
+        function selectUseCase(useCase) {
+            selectedUseCase = useCase;
+            
+            document.querySelectorAll('.use-case-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            generateChecklist();
+        }
+
+        // Generate awareness checklist
+        function generateChecklist() {
+            if (!selectedUseCase) return;
+
+            const container = document.getElementById('checklistContent');
+            container.innerHTML = '';
+
+            Object.entries(awarenessChecklist).forEach(([stageKey, stage]) => {
+                const stageDiv = document.createElement('div');
+                stageDiv.className = 'lifecycle-stage';
+                
+                const completedItems = stage.items.filter(item => 
+                    checklistData[item.id] === true
+                ).length;
+                
+                stageDiv.innerHTML = `
+                    <div class="stage-header">
+                        <span>${stage.title}</span>
+                        <span class="stage-progress" id="stage-${stageKey}-progress">
+                            ${completedItems}/${stage.items.length} Considered
+                        </span>
+                    </div>
+                `;
+
+                stage.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'checklist-item';
+                    itemDiv.innerHTML = generateChecklistItemHTML(item);
+                    stageDiv.appendChild(itemDiv);
+                });
+
+                container.appendChild(stageDiv);
+            });
+
+            updateProgress();
+        }
+
+        // Generate HTML for checklist item
+        function generateChecklistItemHTML(item) {
+            const isChecked = checklistData[item.id] === true;
+            
+            return `
+                <div class="item-header">
+                    <div class="checkbox-container">
+                        <div class="custom-checkbox ${isChecked ? 'checked' : ''}" 
+                             onclick="toggleCheckbox('${item.id}')"></div>
+                    </div>
+                    <div class="item-content">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <h4 class="item-title">${item.title}</h4>
+                            <span class="risk-level risk-${item.risk}">${item.risk.toUpperCase()}</span>
+                        </div>
+                        <p class="item-description">${item.description}</p>
+                        
+                        <div class="item-guidance">
+                            <strong>Learning Focus:</strong> ${item.guidance}
+                        </div>
+                        
+                        <div class="item-examples">
+                            <div class="example example-good">
+                                <div class="example-label">Good Practice Example</div>
+                                <p>${item.examples.good}</p>
+                            </div>
+                            <div class="example example-bad">
+                                <div class="example-label">Poor Practice Example</div>
+                                <p>${item.examples.bad}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle checkbox
+        function toggleCheckbox(itemId) {
+            checklistData[itemId] = !checklistData[itemId];
+            
+            const checkbox = document.querySelector(`[onclick="toggleCheckbox('${itemId}')"]`);
+            if (checklistData[itemId]) {
+                checkbox.classList.add('checked');
+            } else {
+                checkbox.classList.remove('checked');
+            }
+
+            updateProgress();
+            checkCompletion();
+        }
+
+        // Update progress
+        function updateProgress() {
+            const totalItems = Object.values(awarenessChecklist).reduce((sum, stage) => sum + stage.items.length, 0);
+            const completedItems = Object.values(checklistData).filter(Boolean).length;
+            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${percentage}% Complete • ${completedItems}/${totalItems} considerations reviewed`;
+
+            Object.entries(awarenessChecklist).forEach(([stageKey, stage]) => {
+                const stageProgress = document.getElementById(`stage-${stageKey}-progress`);
+                if (stageProgress) {
+                    const stageCompleted = stage.items.filter(item => checklistData[item.id] === true).length;
+                    stageProgress.textContent = `${stageCompleted}/${stage.items.length} Considered`;
+                    
+                    if (stageCompleted === stage.items.length) {
+                        stageProgress.classList.add('stage-complete');
+                    } else {
+                        stageProgress.classList.remove('stage-complete');
+                    }
+                }
+            });
+        }
+
+        // Check if assessment should show results
+        function checkCompletion() {
+            const totalItems = Object.values(awarenessChecklist).reduce((sum, stage) => sum + stage.items.length, 0);
+            const completedItems = Object.values(checklistData).filter(Boolean).length;
+
+            if (completedItems >= totalItems * 0.7) {
+                showResults();
+            }
+        }
+
+        // Show results
+        function showResults() {
+            calculateScore();
+            document.getElementById('resultsSection').classList.remove('hidden');
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Calculate score and show results
+        function calculateScore() {
+            const totalItems = Object.values(awarenessChecklist).reduce((sum, stage) => sum + stage.items.length, 0);
+            const completedItems = Object.values(checklistData).filter(Boolean).length;
+            const score = Math.round((completedItems / totalItems) * 100);
+
+            document.getElementById('scoreText').textContent = `${score}%`;
+            
+            const circle = document.getElementById('scoreCircle');
+            const degrees = (score / 100) * 360;
+            circle.style.background = `conic-gradient(var(--primary-color) ${degrees}deg, var(--border-color) ${degrees}deg)`;
+
+            generateRecommendations(score);
+        }
+
+        // Generate learning recommendations
+        function generateRecommendations(score) {
+            const recommendations = document.getElementById('recommendations');
+            let content = '<h4 style="color: var(--primary-color); margin-bottom: 1rem;">Learning Recommendations</h4>';
+
+            if (score >= 90) {
+                content += `
+                    <div class="recommendation-item" style="border-left-color: var(--success-color);">
+                        <strong>Excellent Awareness!</strong> You've considered most key ethical aspects. Next step: Consult with AI ethics experts for implementation guidance.
+                    </div>
+                `;
+            } else if (score >= 70) {
+                content += `
+                    <div class="recommendation-item">
+                        <strong>Good Understanding.</strong> You're aware of major ethical considerations. Focus on the remaining areas and seek expert guidance for implementation.
+                    </div>
+                `;
+            } else if (score >= 50) {
+                content += `
+                    <div class="recommendation-item">
+                        <strong>Developing Awareness.</strong> Continue learning about AI ethics. Consider training or consultation before proceeding with AI implementation.
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="recommendation-item" style="border-left-color: var(--danger-color);">
+                        <strong>More Learning Needed.</strong> Significant knowledge gaps identified. Strongly recommend AI ethics training before proceeding with any AI project.
+                    </div>
+                `;
+            }
+
+            // Next steps
+            content += `
+                <div class="next-steps">
+                    <h4>Recommended Next Steps</h4>
+                    <ul>
+                        <li><strong>Seek Expert Consultation:</strong> Engage with AI ethics professionals for your specific use case</li>
+                        <li><strong>Legal Review:</strong> Consult with legal experts familiar with AI regulations in your jurisdiction</li>
+                        <li><strong>Technical Implementation:</strong> Work with technical experts who understand bias detection and mitigation</li>
+                        <li><strong>Ongoing Education:</strong> Establish regular training and updates on AI ethics best practices</li>
+                        <li><strong>Stakeholder Engagement:</strong> Involve affected communities in your AI development process</li>
+                    </ul>
+                </div>
+            `;
+
+            recommendations.innerHTML = content;
+        }
+
+        // Initialize quiz
+        function initializeQuiz() {
+            displayQuizQuestion();
+        }
+
+        // Display current quiz question
+        function displayQuizQuestion() {
+            const container = document.getElementById('quizContainer');
+            
+            if (currentQuizQuestion >= quizQuestions.length) {
+                showQuizResults();
+                return;
+            }
+
+            const question = quizQuestions[currentQuizQuestion];
+            
+            container.innerHTML = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h4>Question ${currentQuizQuestion + 1} of ${quizQuestions.length}</h4>
+                        <p style="margin: 1rem 0; font-size: 1.1rem;">${question.question}</p>
+                        <div class="options">
+                            ${question.options.map((option, index) => `
+                                <div class="option" onclick="selectQuizOption(${index})" data-option="${index}">
+                                    ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="explanation" id="explanation-${currentQuizQuestion}">
+                            <strong>Explanation:</strong> ${question.explanation}
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button class="btn" onclick="nextQuizQuestion()" id="nextBtn" style="display: none;">Next Question</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Select quiz option
+        function selectQuizOption(selectedIndex) {
+            const question = quizQuestions[currentQuizQuestion];
+            const options = document.querySelectorAll('.option');
+            
+            // Record answer
+            quizData[currentQuizQuestion] = {
+                selected: selectedIndex,
+                correct: question.correct,
+                isCorrect: selectedIndex === question.correct
+            };
+
+            // Show results for this question
+            options.forEach((option, index) => {
+                option.style.pointerEvents = 'none';
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            // Show explanation and next button
+            document.getElementById(`explanation-${currentQuizQuestion}`).style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'inline-flex';
+        }
+
+        // Move to next quiz question
+        function nextQuizQuestion() {
+            currentQuizQuestion++;
+            displayQuizQuestion();
+        }
+
+        // Show quiz results
+        function showQuizResults() {
+            const totalQuestions = quizQuestions.length;
+            const correctAnswers = Object.values(quizData).filter(answer => answer.isCorrect).length;
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('quizResults').style.display = 'block';
+
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a strong understanding of AI ethics concepts.';
+            } else if (percentage >= 60) {
+                message = 'Good work! You understand most AI ethics concepts but may benefit from additional learning.';
+            } else {
+                message = 'Consider additional training in AI ethics before working on AI projects.';
+            }
+
+            document.getElementById('quizScore').innerHTML = `
+                <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color); margin-bottom: 1rem;">
+                    ${correctAnswers}/${totalQuestions} (${percentage}%)
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">${message}</p>
+            `;
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuizQuestion = 0;
+            quizData = {};
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('quizResults').style.display = 'none';
+            displayQuizQuestion();
+        }
+
+        // Generate learning report
+        function generateReport() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Header
+            doc.setFontSize(20);
+            doc.text('AI Ethics Learning Report', 20, 30);
+            
+            doc.setFontSize(12);
+            doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 45);
+            doc.text(`Context: ${selectedUseCase}`, 20, 55);
+            
+            // Awareness score
+            const totalItems = Object.values(awarenessChecklist).reduce((sum, stage) => sum + stage.items.length, 0);
+            const completedItems = Object.values(checklistData).filter(Boolean).length;
+            const score = Math.round((completedItems / totalItems) * 100);
+            
+            doc.setFontSize(16);
+            doc.text(`Awareness Coverage: ${score}%`, 20, 75);
+            doc.text(`Considerations Reviewed: ${completedItems}/${totalItems}`, 20, 90);
+            
+            // Recommendations
+            let yPos = 110;
+            doc.setFontSize(14);
+            doc.text('Learning Recommendations:', 20, yPos);
+            yPos += 15;
+            
+            doc.setFontSize(10);
+            const recommendations = [
+                'Seek expert consultation for implementation guidance',
+                'Consult legal experts familiar with AI regulations',
+                'Work with technical experts for bias detection',
+                'Establish ongoing AI ethics training',
+                'Engage stakeholders in development process'
+            ];
+            
+            recommendations.forEach(rec => {
+                doc.text(`• ${rec}`, 25, yPos);
+                yPos += 12;
+            });
+            
+            // Next steps
+            yPos += 10;
+            doc.setFontSize(12);
+            doc.text('This report identifies learning areas, not implementation readiness.', 20, yPos);
+            yPos += 10;
+            doc.text('Consult with experts before implementing AI systems.', 20, yPos);
+            
+            doc.save(`AI_Ethics_Learning_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+        }
+
+        // Reset assessment
+        function resetAssessment() {
+            checklistData = {};
+            selectedUseCase = '';
+            document.querySelectorAll('.use-case-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('checklistContent').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Please select an AI context above to begin exploring ethical considerations.</p>';
+            document.getElementById('resultsSection').classList.add('hidden');
+            updateProgress();
+        }
+
+        // Populate glossary
+        function populateGlossary() {
+            const container = document.getElementById('glossaryContent');
+            container.innerHTML = glossaryTerms.map(item => `
+                <div class="glossary-item">
+                    <div class="glossary-term">${item.term}</div>
+                    <p>${item.definition}</p>
+                </div>
+            `).join('');
+        }
+
+        // Populate resources
+        function populateResources() {
+            const container = document.getElementById('resourcesContent');
+            container.innerHTML = resourcesData.map(resource => `
+                <div class="resource-card">
+                    <div class="resource-title">${resource.title}</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">${resource.description}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="background: var(--hover-bg); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: var(--primary-color);">
+                            ${resource.category}
+                        </span>
+                        <a href="${resource.url}" target="_blank" class="resource-link">Learn More →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
