@@ -642,7 +642,7 @@
                 
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <span class="stat-number">2</span>
+                        <span class="stat-number">3</span>
                         <span class="stat-label">Tools Available</span>
                     </div>
                     <div class="stat-item">
@@ -726,6 +726,70 @@
         </a>
     </div>
 </div>
+<!-- Add this card to your tools-grid in tools.html, after the AI Prompt Library card -->
+<div class="tool-card">
+    <div class="tool-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11H3v10h6V11z"/>
+            <path d="M21 3h-6v18h6V3z"/>
+            <path d="M15 7h-6v14h6V7z"/>
+        </svg>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+        <h3 class="tool-title">PromptHub</h3>
+        <span class="status-badge" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none;">NEW</span>
+    </div>
+    <p class="tool-description">
+        The complete prompt engineering platform. Build, test, version, and optimize your prompts across multiple AI models. Graduate from templates to mastery with professional-grade tools.
+    </p>
+    
+    <ul class="tool-features">
+        <li>Test prompts across GPT-4, Claude, and Grok</li>
+        <li>Version control and prompt history</li>
+        <li>Drag-and-drop builder with modular blocks</li>
+        <li>Searchable vault with tags and organization</li>
+        <li>Context manager to reduce token usage</li>
+        <li>Seamless integration with existing tools</li>
+    </ul>
+    
+    <div class="tool-actions">
+        <a href="/tools/prompthub.html" class="btn btn-primary">
+            Launch PromptHub →
+        </a>
+        <a href="/blog.html" class="btn btn-secondary">
+            Learn More
+        </a>
+    </div>
+</div>
+
+<!-- Optional: Add this progression banner BEFORE the tools-grid section -->
+<div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-primary);">
+        Your Prompt Engineering Progression
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto;">
+        <div style="text-align: center;">
+            <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;">DISCOVER</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Browse our curated Prompt Library for battle-tested templates</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;">BUILD</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Create with guided templates using the Prompt Builder</div>
+        </div>
+        <div style="text-align: center;">
+            <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;">MASTER</div>
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Test, version, and optimize with PromptHub</div>
+        </div>
+    </div>
+    <p style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+        Our tools work together to accelerate your AI journey from beginner to expert.
+    </p>
+</div>
+
+<!-- Alternative: If you prefer to keep the emoji-based icon to match existing tools -->
+<!-- Just replace the SVG tool-icon div with: -->
+<!-- <div class="tool-icon">⚡</div> -->
+<!-- Other professional alternatives: ⚡ (lightning), ▲ (triangle up), ◆ (diamond) -->
     </section>
 
     <!-- Coming Soon Tools -->
