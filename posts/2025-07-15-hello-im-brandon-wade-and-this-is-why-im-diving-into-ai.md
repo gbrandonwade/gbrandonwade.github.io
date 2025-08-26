@@ -6,64 +6,76 @@ image: /images/wellness-pic.jpg
 ---
 Welcome to "Responsible AI and Me" - a blog documenting one project manager's journey from AI curious to AI capable. If you're reading this, chances are you're on a similar path: intrigued by AI's possibilities but maybe not sure where to start, especially if you don't have a coding background.
 
-## Who Am I?
+# Hello, I'm Brandon Wade - And Here's Why I Finally Stopped Waiting for Permission to Learn AI
 
-I'm a project manager at American Electric Power here in Columbus, Ohio. I spent 2 years in financial reporting and analytics before transitioning into project management 4 years ago, where I've been managing complex projects, coordinating teams, and solving problems - skills that, as I'm learning, translate beautifully to the world of AI. But until recently, artificial intelligence felt like something happening "over there" in Silicon Valley, not something for everyday professionals like me.
+*Six months ago, AI felt like something happening "over there" in Silicon Valley. Today? I'm building games, analyzing data, and completely rethinking my career path. If you're reading this feeling overwhelmed by all the AI hype, I felt exactly the same way.*
 
-That changed completely when I asked Claude to create a simple game.
+## You Don't Need a Computer Science Degree to Start
 
-## The Moment Everything Clicked
+Here's what I discovered: I'm just a project manager at American Electric Power here in Columbus, Ohio. I spent 2 years in financial reporting before moving into project management 4 years ago. No coding background. No tech bootcamp. Just the usual professional toolkit - managing complex projects, coordinating teams, solving problems.
 
-I was experimenting with AI tools, testing their limits, when I decided to ask Claude to build me a game - something mixing Snake and Flappy Bird. I was expecting maybe some basic code that I'd struggle to understand, perhaps something that wouldn't even work.
+Sound familiar? 
 
-Instead, Claude delivered hundreds of lines of clean, functional code. I copied it, opened it in a browser, and there it was: a fully playable game. It worked seamlessly. No debugging needed. No programming knowledge required on my part.
+I used to scroll past AI articles thinking, "This is too technical for me." Every headline promised revolutionary changes, but none of them felt accessible to someone like me. That changed completely when I decided to stop overthinking and just ask Claude to create a simple game.
 
-My jaw dropped. My brain started churning immediately - what if I added this feature? What if I modified that mechanic? The possibilities felt endless.
+## The Moment Everything Clicked (And Why Your Background Matters More Than You Think)
 
-That's when it hit me: this technology isn't just impressive - it's transformational. And it's not reserved for computer scientists and tech giants. It's accessible to anyone willing to learn how to communicate with it effectively.
+I was testing AI tools, pushing their limits, when I asked Claude to build me something mixing Snake and Flappy Bird. I expected maybe some basic code I'd struggle to understand. Something that probably wouldn't work.
 
-## Why "Responsible AI"?
+Instead? Claude delivered hundreds of lines of clean, functional code. I copied it, opened it in a browser, and there it was: a fully playable game. No debugging needed. No programming knowledge required.
 
-Here's the thing though - with great power comes great responsibility. As I dove deeper into AI, I started having those "oh no" moments. The ease and accessibility of these tools is incredible, but that same accessibility means AI could cause real harm in the wrong hands. Privacy, security, misinformation - these aren't abstract concerns anymore.
+My jaw dropped. But here's the real secret - my brain immediately started churning with project manager questions: What if I added this feature? What if I modified that mechanic? How could I make this more user-friendly?
 
-I believe it's on all of us - not just the developers - to ensure that AI development and deployment happens ethically. Everyone deserves access to trustworthy, safe, and fair AI tools. Security measures and responsible practices aren't just nice-to-haves; they're essential for protecting people's information and maintaining trust in these powerful systems.
+Those aren't programmer questions. Those are the exact skills I use every day at work. Problem-solving. User experience thinking. Project scoping.
 
-That's what "responsible AI" means to me: leveraging these incredible capabilities while actively working to minimize harm and maximize benefit for everyone.
+**The breakthrough**: You don't need to learn how to code to work with AI. You need to learn how to think through problems and communicate clearly - skills you already have.
 
-## What This Blog Is About
+## Here's the Thing Though - Power Requires Responsibility
 
-This blog is my real-time documentation of cracking into the AI world as a complete outsider. No computer science degree. No coding bootcamp. Just curiosity, determination, and a willingness to experiment.
+That jaw-dropping moment came with an immediate "oh no" realization. If I could build a functional game in minutes without any coding knowledge, what could someone with bad intentions accomplish just as easily?
 
-I'm writing this for the other beginners out there - the project managers, marketers, teachers, accountants, and everyone else who sees AI's potential but doesn't know where to start. I want to show you that it's not only possible to learn about AI and put it to practical use, but that your non-technical background might actually be an advantage.
+Privacy violations. Misinformation campaigns. Deep fakes. These aren't abstract future concerns - they're happening right now, and the barrier to entry just keeps getting lower.
 
-Here's the biggest misconception I've encountered so far: people think you need to know how to code to work with AI. You don't. What you need is ideas and drive. And honestly? AI can even help you with the ideas - you really just need to bring the drive.
+I believe everyone deserves access to trustworthy, safe AI tools. But that means all of us - not just developers - need to understand how to use these capabilities responsibly. We can't outsource ethics to Silicon Valley.
 
-## What's Coming Next
+That's what this blog is really about: learning to leverage incredible AI capabilities while actively working to minimize harm and maximize benefit for everyone.
 
-I'm planning to document everything as I go:
+## What I'm Really Documenting Here
 
-* **Tool reviews** - honest takes on AI platforms from a beginner's perspective
-* **Prompt engineering experiments** - learning to communicate effectively with AI
-* **Real projects** - I'm excited to build a stock analysis tool and maybe an interactive chess game for beginners
-* **Lessons learned** - including the failures and frustrations along the way
-* **Career insights** - exploring how AI skills can open new professional doors
+This isn't another "AI will change everything" blog. You've read enough of those. This is real-time documentation of someone figuring out AI from the outside, with zero technical background, while keeping ethics front and center.
 
-## The Bigger Picture
+I'm writing this for everyone who feels like they're already behind. The project managers scrolling past technical articles. The marketers wondering if they need to learn Python. The teachers, accountants, and consultants seeing AI everywhere but not knowing where to start.
 
-I'm convinced that we're witnessing the beginning of a fundamental shift in how we work, create, and solve problems. The people who learn to work effectively with AI won't just have a competitive advantage - they'll be the ones shaping how this technology gets integrated into society.
+**Here's what I've learned so far**: Your non-technical background isn't a disadvantage. It's actually an advantage. While technical people focus on how AI works, you focus on how it can solve real problems for real people.
 
-I'm actually betting my career on this belief. I'm moving to Los Angeles soon and hoping to transition into the AI space as I get settled there. This blog isn't just about learning for fun - it's about documenting a real career pivot in real time.
+## What's Coming Next (And Why I'm Betting My Career On This)
 
-But here's what I'm learning: you don't need to be a programmer to be part of this transformation. You need to be curious, ethical, and willing to experiment. Those are skills any of us can develop.
+I'm documenting everything as I learn:
 
-## Join Me on This Journey
+**Tool Reviews** - Honest takes from someone who doesn't care about technical specifications, just whether something actually helps me get work done
 
-Whether you're a complete AI beginner or someone who's been dabbling but wants to go deeper, I hope this blog becomes a useful resource for you. I'll be sharing everything - the wins, the mistakes, the "aha!" moments, and the head-scratching confusion.
+**Prompt Engineering Experiments** - Learning to communicate with AI like I learned to manage stakeholders - clearly, specifically, and with realistic expectations
 
-Because if a project manager from Columbus, Ohio can learn to leverage AI responsibly and effectively - and maybe even pivot their entire career around it - so can you.
+**Real Projects** - Building a stock analysis tool that actually makes sense to regular investors, plus an interactive chess game for beginners (because why not?)
 
-Let's figure this out together.
+**Lessons Learned** - Including the failures, the confusion, and those moments when I definitely bit off more than I could chew
 
-***
+**Career Insights** - I'm moving to Los Angeles soon and transitioning into the AI space. This blog isn't just about learning for fun - it's documenting a real career pivot happening in real time.
 
-*What's your AI story? Are you just getting started, or have you had your own "game-changing" moment? I'd love to hear about it in the comments below.*
+## The Bigger Picture (And Why You Should Care)
+
+Here's what I'm convinced of: we're not just witnessing technological change. We're witnessing a fundamental shift in how work gets done. The people who learn to collaborate effectively with AI won't just have a competitive advantage - they'll be the ones shaping how this technology integrates into society.
+
+But here's what you need to know: you don't need to become a programmer to be part of this transformation. You need to be curious, ethical, and willing to experiment.
+
+Those are skills any professional can develop.
+
+## Ready to Figure This Out Together?
+
+Whether you're just starting to pay attention to AI or you've been dabbling but want to go deeper, I hope this becomes a useful resource. I'll share everything - the wins, the face-palm mistakes, the "aha!" moments, and the head-scratching confusion.
+
+Because if a project manager from Columbus, Ohio can learn to use AI responsibly and effectively - and pivot their entire career around it - so can you.
+
+**Your turn**: What's holding you back from experimenting with AI? Is it the technical intimidation factor, ethical concerns, or something else entirely? I'd love to hear your story in the comments below.
+
+*Next week: I'll walk you through my first real AI experiment - building that stock analysis tool I mentioned. No coding required, just clear thinking and good communication. Subscribe to follow along.*
